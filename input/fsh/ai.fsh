@@ -179,7 +179,7 @@ Usage: #example
 * provision.type = #permit
 * provision.purpose[+] = $purposeOfUse#TREATDS
 * provision.actor[0].reference = Reference(AIdevice)
-* provision.actor[0].role.coding.display = "CDS"
+* provision.actor[0].role.text = "CDS"
 
 Instance: AllAiProvisions
 InstanceOf: ConsentWithLimits
