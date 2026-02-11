@@ -9,3 +9,4 @@ Showing how Consent can be used to permit or deny the use of AI for a patient.
 ## Status
 
 This is a trial IG to explore using FHIR Consent resources.
+.
