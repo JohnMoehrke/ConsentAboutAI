@@ -56,10 +56,12 @@ This extension should be used as a ModifierExtension as it is critical to the pr
 * ^context[=].expression = "Consent.provision"
 * ^context[+].type = #element
 * ^context[=].expression = "Consent.provision.provision"
+/*
 * ^context[+].type = #element
 * ^context[=].expression = "Consent.provision.provision.provision"
 * ^context[+].type = #element
 * ^context[=].expression = "Consent.provision.provision.provision.provision"
+*/
 
 * extension contains 
   control 0..* and
@@ -82,10 +84,11 @@ Title: "Consent with use of the Limits extension"
 Description: "Consent profile that includes the use of the PermissionRuleLimit extension to express limits on the use of data for ML training."
 * provision.modifierExtension contains PermissionRuleLimit named limit 0..*
 * provision.provision.modifierExtension contains PermissionRuleLimit named limit 0..*
+/*
 * provision.provision.provision.modifierExtension contains PermissionRuleLimit named limit 0..*
 * provision.provision.provision.provision.modifierExtension contains PermissionRuleLimit named limit 0..*
 * provision.provision.provision.provision.provision.modifierExtension contains PermissionRuleLimit named limit 0..*
-
+*/
 
 
 Instance: AllowMLtrainingOnDeIdentifiedData
@@ -216,15 +219,16 @@ Usage: #example
 
 * provision[+]
   // permit ML to see Normal data that is de-identified
-  * provision.purpose[+] = $purposeOfUse#MLTRAINING
+  * purpose[+] = $purposeOfUse#MLTRAINING
   * securityLabel[+] = http://terminology.hl7.org/CodeSystem/v3-Confidentiality#N "Normal"
-  * provision.modifierExtension[limit].extension[control].valueCodeableConcept = $obligation#DEID 
+  * modifierExtension[limit].extension[control].valueCodeableConcept = $obligation#DEID 
   * provision[0]
     // deny ML training to see sensitive topics
     * purpose[+] = $purposeOfUse#MLTRAINING
     * securityLabel[+] = http://terminology.hl7.org/CodeSystem/v3-ActCode#ETH
     * securityLabel[+] = http://terminology.hl7.org/CodeSystem/v3-ActCode#BH
     * securityLabel[+] = http://terminology.hl7.org/CodeSystem/v3-ActCode#PREGNANT
+    * modifierExtension[limit].extension[control].valueCodeableConcept = $obligation#DEID 
     // Note this does leave ambiguous any R data that are not these three sensitivity tags.
 
 * provision[+]
