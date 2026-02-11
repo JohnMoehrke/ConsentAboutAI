@@ -18,7 +18,7 @@ Usage: #example
 * controller.reference = "http://example.org/organizations/ex-organization"
 * sourceReference.reference = "http://example.org/documentreferences/ex-documentreference"
 * policyBasis.uri = "http://example.org/consent-policies#ml-training-consent-policy"
-* decision = #permit
+* decision = #deny
 * provision.purpose[+] = $purposeOfUse#MLTRAINING
 
 
@@ -38,11 +38,12 @@ Usage: #example
 * controller.reference = "http://example.org/organizations/ex-organization"
 * sourceReference.reference = "http://example.org/documentreferences/ex-documentreference"
 * policyBasis.uri = "http://example.org/consent-policies#ml-training-consent-policy"
-* decision = #deny
+* decision = #permit
 * provision.purpose[+] = $purposeOfUse#MLTRAINING
 
 
 // Extension to bring the Permission.rule.limit element into the Consent.provision element. This is needed to express the limit on the use of data for ML training to only de-identified data.
+// open discussion on recursive element context https://chat.fhir.org/#narrow/channel/179252-IG-creation/topic/extension.20context.20on.20recursive.20elements
 Extension: PermissionRuleLimit
 Id: permissionRuleLimit
 Title: "Permission Rule Limit"
@@ -102,7 +103,7 @@ Usage: #example
 * controller.reference = "http://example.org/organizations/ex-organization"
 * sourceReference.reference = "http://example.org/documentreferences/ex-documentreference"
 * policyBasis.uri = "http://example.org/consent-policies#ml-training-consent-policy"
-* decision = #permit
+* decision = #deny
 * provision.purpose[+] = $purposeOfUse#MLTRAINING
 * provision.modifierExtension[limit].extension[control].valueCodeableConcept = $obligation#DEID 
 
@@ -122,7 +123,7 @@ Usage: #example
 * controller.reference = "http://example.org/organizations/ex-organization"
 * sourceReference.reference = "http://example.org/documentreferences/ex-documentreference"
 * policyBasis.uri = "http://example.org/consent-policies#cds-consent-policy"
-* decision = #permit
+* decision = #deny
 * provision.purpose[+] = $purposeOfUse#TREATDS
 
 Instance: DenyCDS
@@ -140,7 +141,7 @@ Usage: #example
 * controller.reference = "http://example.org/organizations/ex-organization"
 * sourceReference.reference = "http://example.org/documentreferences/ex-documentreference"
 * policyBasis.uri = "http://example.org/consent-policies#cds-consent-policy"
-* decision = #deny
+* decision = #permit
 * provision.purpose[+] = $purposeOfUse#TREATDS
 
 
@@ -176,7 +177,7 @@ Usage: #example
 * controller.reference = "http://example.org/organizations/ex-organization"
 * sourceReference.reference = "http://example.org/documentreferences/ex-documentreference"
 * policyBasis.uri = "http://example.org/consent-policies#specific-ai-consent"
-* decision = #permit
+* decision = #deny
 * provision.purpose[+] = $purposeOfUse#TREATDS
 * provision.actor[0].reference = Reference(AIdevice)
 * provision.actor[0].role.text = "CDS"
@@ -194,12 +195,11 @@ This consent
 Given that FHIR R4 Consent has only ONE root level provision, we need to extra deep nesting:
 
 Provisions
-- Permit all the purposes
+- deny by default
+- permit ML training for de-identified data
   - deny ML training for sensitive data
-    - permit ML training for de-identified data
-  - deny TPO -- just so we can skip to a permit
-    - permit TPO for normal confidentiality
-    - permit TPO for the care team for sensitive data
+- permit TPO for normal confidentiality
+- permit TPO for the care team for sensitive data
 "
 Usage: #example
 * meta.security = $purposeOfUse#HTEST
@@ -212,14 +212,13 @@ Usage: #example
 * controller.reference = "http://example.org/organizations/ex-organization"
 * sourceReference.reference = "http://example.org/documentreferences/ex-documentreference"
 * policyBasis.uri = "http://example.org/consent-policies#ml-training-consent-policy"
-* decision = #permit
-* provision[0]
-  // Permit of all of the purposeOfUse that are addressed positively in this Consent.
-  * purpose[+] = $purposeOfUse#TREAT
-  * purpose[+] = $purposeOfUse#HPAYMT
-  * purpose[+] = $purposeOfUse#HOPERAT
-  * purpose[+] = $purposeOfUse#MLTRAINING
+* decision = #deny
 
+* provision[+]
+  // permit ML to see Normal data that is de-identified
+  * provision.purpose[+] = $purposeOfUse#MLTRAINING
+  * securityLabel[+] = http://terminology.hl7.org/CodeSystem/v3-Confidentiality#N "Normal"
+  * provision.modifierExtension[limit].extension[control].valueCodeableConcept = $obligation#DEID 
   * provision[0]
     // deny ML training to see sensitive topics
     * purpose[+] = $purposeOfUse#MLTRAINING
@@ -227,27 +226,20 @@ Usage: #example
     * securityLabel[+] = http://terminology.hl7.org/CodeSystem/v3-ActCode#BH
     * securityLabel[+] = http://terminology.hl7.org/CodeSystem/v3-ActCode#PREGNANT
     // Note this does leave ambiguous any R data that are not these three sensitivity tags.
-    * provision[0]
-      // permit ML to see Normal data that is de-identified
-      * provision.purpose[+] = $purposeOfUse#MLTRAINING
-      * securityLabel[+] = http://terminology.hl7.org/CodeSystem/v3-Confidentiality#N "Normal"
-      * provision.modifierExtension[limit].extension[control].valueCodeableConcept = $obligation#DEID 
 
-  * provision[1]
-    // This deny is simply so we can get to a refined permit for TPO
-    * provision[0]
-      // permit TPO with normal confidentiality and the relevant purposes of use
-      * securityLabel[+] = http://terminology.hl7.org/CodeSystem/v3-Confidentiality#N "Normal"
-      * purpose[+] = $purposeOfUse#TREAT
-      * purpose[+] = $purposeOfUse#HPAYMT
-      * purpose[+] = $purposeOfUse#HOPERAT
-    * provision[1]
-      // permit TPO for the careTeam of this patient for sensitive topics
-      * securityLabel[+] = http://terminology.hl7.org/CodeSystem/v3-Confidentiality#R
-      * purpose[+] = $purposeOfUse#TREAT
-      * purpose[+] = $purposeOfUse#HPAYMT
-      * purpose[+] = $purposeOfUse#HOPERAT    
-      * actor.role = http://terminology.hl7.org/CodeSystem/v3-ParticipationFunction#AUTM  
-      * actor.reference.reference = "http://example.org/CareTeam/ex-patient-careteam"
+* provision[+]
+  // permit TPO with normal confidentiality and the relevant purposes of use
+  * securityLabel[+] = http://terminology.hl7.org/CodeSystem/v3-Confidentiality#N "Normal"
+  * purpose[+] = $purposeOfUse#TREAT
+  * purpose[+] = $purposeOfUse#HPAYMT
+  * purpose[+] = $purposeOfUse#HOPERAT
+* provision[+]
+  // permit TPO for the careTeam of this patient for sensitive topics
+  * securityLabel[+] = http://terminology.hl7.org/CodeSystem/v3-Confidentiality#R
+  * purpose[+] = $purposeOfUse#TREAT
+  * purpose[+] = $purposeOfUse#HPAYMT
+  * purpose[+] = $purposeOfUse#HOPERAT    
+  * actor.role = http://terminology.hl7.org/CodeSystem/v3-ParticipationFunction#AUTM  
+  * actor.reference.reference = "http://example.org/CareTeam/ex-patient-careteam"
 
 // Note that R4 Consent does not address what rule applies if NONE of the provisions match. (R6 has a default rule at the top level)
