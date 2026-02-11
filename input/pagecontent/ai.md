@@ -4,8 +4,8 @@ There are various use-cases where a Patient might consent or dissent to various 
 3. A patient might consent to use of their data in de-identified form for training of AI.
 
 Given the Consent model, the Patient might be indicated in a Consent authorizing either
-a. Generically allowing or denying AI by PurposeOfUse
-b. Specifically allowing or denying a specific AI by referencing the Device resource for that AI.
+- Generically allowing or denying AI by PurposeOfUse
+- Specifically allowing or denying a specific AI by referencing the Device resource for that AI.
 
 ### PurposeOfUse
 
@@ -13,43 +13,43 @@ The most clean method is to use the PurposeOfUse as the basis for the provision 
 
 Further we look to [PurposeOfUse Vocabulary](https://terminology.hl7.org/ValueSet-v3-PurposeOfUse.html) to indicate what the reason the AI is giving for accessing data. For example, the PurposeOfUse of `MLTRAINING` is defined for when an AI is looking to train on data. The PurposeOfUse of `TREATDS` is defined for when an AI is looking to provide clinical decision support, or `PMTDS` when AI is looking to provide analysis for payment decisions.
 
-Use of PurposeOfUse does require that any accesses the AI does, or an agent feeding the AI, must use the given PurposeOfUse code when accessing data. This is a trust model that the AI or the agent feeding the AI will accurately indicate the PurposeOfUse when accessing data. However, this is a common trust model used in many other aspects of healthcare data access, and thus is not unique to AI.
+The use of PurposeOfUse does require that any accesses the AI does, or an agent feeding the AI, must use the given PurposeOfUse code when accessing data. This is a trust model that the AI or the agent feeding the AI will accurately indicate the PurposeOfUse when accessing data. However, this is a common trust model used in many other aspects of healthcare data access and thus is not unique to AI.
 
 #### Allow AI for ML Training
 
 ```fsh
 * provision.type = #permit
-* provision.purpose[+] = http://terminology.hl7.org/CodeSystem/v3-ActReason#MLTRAINING
+* provision.purpose[+] = $purposeOfUse#MLTRAINING
 ```
 
-[Allow ML Training](Consent-AllowMLtraining.html)
+Consent example: [Allow ML Training](Consent-AllowMLtraining.html)
 
 #### Deny AI for ML Training
 
 ```fsh
 * provision.type = #deny
-* provision.purpose[+] = http://terminology.hl7.org/CodeSystem/v3-ActReason#MLTRAINING
+* provision.purpose[+] = $purposeOfUse#MLTRAINING
 ```
 
-[Deny ML Training](Consent-DenyMLtraining.html)
+Consent example: [Deny ML Training](Consent-DenyMLtraining.html)
 
 #### Allow AI for Clinical Decision Support
 
 ```fsh
 * provision.type = #permit
-* provision.purpose[+] = http://terminology.hl7.org/CodeSystem/v3-ActReason#TREATDS
+* provision.purpose[+] = $purposeOfUse#TREATDS
 ```
 
-[Allow AI for Clinical Decision Support](Consent-AllowCDS.html)
+Consent example: [Allow AI for Clinical Decision Support](Consent-AllowCDS.html)
 
 #### Deny AI for Clinical Decision Support
 
 ```fsh
 * provision.type = #deny
-* provision.purpose[+] = http://terminology.hl7.org/CodeSystem/v3-ActReason#TREATDS
+* provision.purpose[+] = $purposeOfUse#TREATDS
 ```
 
-[Deny AI for Clinical Decision Support](Consent-DenyCDS.html)
+Consent example: [Deny AI for Clinical Decision Support](Consent-DenyCDS.html)
 
 ### Specific AI Systems or Models
 
@@ -66,7 +66,7 @@ In this case there is simply a provision indicating that the AI is permitted. Th
 * provision.agent.reference = Reference(Device/AIdevice)
 ```
 
-[Allow specific AI for specific purpose](Consent-AllowSpecificAIforSpecificPurpose.html)
+Consent example: [Allow specific AI for specific purpose](Consent-AllowSpecificAIforSpecificPurpose.html)
 
 ### Limitations on AI Access
 
@@ -78,11 +78,11 @@ In FHIR R6 one could have a Consent that holds the provisions as a Permission re
 
 ```fsh
 * provision.type = #permit
-* provision.purpose[+] = http://terminology.hl7.org/CodeSystem/v3-ActReason#MLTRAINING
-* provision.modifierExtension[limit].extension[control].valueCodeableConcept = http://terminology.hl7.org/CodeSystem/v3-ActCode#DEID 
+* provision.purpose[+] = $purposeOfUse#MLTRAINING
+* provision.modifierExtension[limit].extension[control].valueCodeableConcept = $obligation#DEID 
 ```
 
-[Allow ML Training on De-Identified Data](Consent-AllowMLtrainingOnDeIdentifiedData.html)
+Consent example: [Allow ML Training on De-Identified Data](Consent-AllowMLtrainingOnDeIdentifiedData.html)
 
 ### Conclusion
 
