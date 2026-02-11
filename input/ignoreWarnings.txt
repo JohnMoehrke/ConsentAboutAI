@@ -19,3 +19,13 @@ Type_Specific_Checks_DT_URL_Resolve
 # Inactive codes are not a problem here as we do need to SLS historic data
 INACTIVE_CONCEPT_FOUND
 
+# R6 ignorable issues
+IG_DEPENDENCY_CLASH_PACKAGEID
+IG_DEPENDENCY_VERSION_WARNING
+MSG_DEPRECATED
+MSG_EXPERIMENTAL
+ERROR: ImplementationGuide/johnmoehrke.ConsentAboutAI.example: This IG is version 6.0.0-ballot3, while the IG 'hl7.terminology.r5' is from version 5.0.0
+ERROR: ImplementationGuide/johnmoehrke.ConsentAboutAI.example: This IG is version 6.0.0-ballot3, while the IG 'hl7.fhir.uv.extensions.r5' is from version 5.0.0
+ERROR: ImplementationGuide/johnmoehrke.ConsentAboutAI.example: This IG is version 6.0.0-ballot3, while the IG 'hl7.fhir.uv.tools.r5' is from version 5.0.0
+ERROR: ImplementationGuide/johnmoehrke.ConsentAboutAI.example: ImplementationGuide.dependsOn[1]: The canonical URL http://hl7.org/fhir/extensions/ImplementationGuide/hl7.fhir.uv.extensions points to the package hl7.fhir.uv.extensions which is inconsistent with the stated packageId of hl7.fhir.uv.extensions.r5
+WARNING: StructureDefinition/ConsentWithLimits: StructureDefinition.snapshot.element[4].binding.additional[0]: Constraint failed: eld-31: 'additionalBindings should have a key (key.exists())' (defined in http://hl7.org/fhir/StructureDefinition/ElementDefinition) (Best Practice Recommendation)

@@ -18,7 +18,7 @@ The use of PurposeOfUse does require that any accesses the AI does, or an agent 
 #### Allow AI for ML Training
 
 ```fsh
-* provision.type = #permit
+* decision = #permit
 * provision.purpose[+] = $purposeOfUse#MLTRAINING
 ```
 
@@ -27,7 +27,7 @@ Consent example: [Allow ML Training](Consent-AllowMLtraining.html)
 #### Deny AI for ML Training
 
 ```fsh
-* provision.type = #deny
+* decision = #deny
 * provision.purpose[+] = $purposeOfUse#MLTRAINING
 ```
 
@@ -36,7 +36,7 @@ Consent example: [Deny ML Training](Consent-DenyMLtraining.html)
 #### Allow AI for Clinical Decision Support
 
 ```fsh
-* provision.type = #permit
+* decision = #permit
 * provision.purpose[+] = $purposeOfUse#TREATDS
 ```
 
@@ -45,7 +45,7 @@ Consent example: [Allow AI for Clinical Decision Support](Consent-AllowCDS.html)
 #### Deny AI for Clinical Decision Support
 
 ```fsh
-* provision.type = #deny
+* decision = #deny
 * provision.purpose[+] = $purposeOfUse#TREATDS
 ```
 
@@ -62,7 +62,7 @@ This model requires that all access by an AI are attributed to the FHIR Device d
 In this case there is simply a provision indicating that the AI is permitted. There is no purposeOfUse indicated, but that could be an additional restriction. There is no other restrictions on the kinds of actions or the kinds of data, but those could also be additional restrictions.
 
 ```fsh
-* provision.type = #permit
+* decision = #permit
 * provision.agent.reference = Reference(Device/AIdevice)
 ```
 
@@ -77,7 +77,7 @@ In FHIR R6 one could have a Consent that holds the provisions as a Permission re
 #### Allow AI for ML Training on De-Identified Data
 
 ```fsh
-* provision.type = #permit
+* decision = #permit
 * provision.purpose[+] = $purposeOfUse#MLTRAINING
 * provision.modifierExtension[limit].extension[control].valueCodeableConcept = $obligation#DEID 
 ```

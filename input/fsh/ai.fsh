@@ -10,15 +10,15 @@ Description: "Consent for using data for machine learning training purposes."
 Usage: #example
 * meta.security = $purposeOfUse#HTEST
 * status = #active
-* scope = http://terminology.hl7.org/CodeSystem/consentscope#patient-privacy
+//*scope = http://terminology.hl7.org/CodeSystem/consentscope#patient-privacy
 * category[+] = http://loinc.org#64292-6 "Release of information consent"
 * category[+] = http://terminology.hl7.org/CodeSystem/v3-ActCode#IDSCL
-* patient = Reference(Patient/ex-patient)
-* dateTime = "2022-06-13"
-* performer.reference = "http://example.org/organizations/ex-organization"
+* subject = Reference(Patient/ex-patient)
+* date = "2022-06-13"
+* controller.reference = "http://example.org/organizations/ex-organization"
 * sourceReference.reference = "http://example.org/documentreferences/ex-documentreference"
-* policy.uri = "http://example.org/consent-policies#ml-training-consent-policy"
-* provision.type = #permit
+* policyBasis.uri = "http://example.org/consent-policies#ml-training-consent-policy"
+* decision = #permit
 * provision.purpose[+] = $purposeOfUse#MLTRAINING
 
 
@@ -30,15 +30,15 @@ Description: "Consent to disallow using data for machine learning training purpo
 Usage: #example
 * meta.security = $purposeOfUse#HTEST
 * status = #active
-* scope = http://terminology.hl7.org/CodeSystem/consentscope#patient-privacy
+//*scope = http://terminology.hl7.org/CodeSystem/consentscope#patient-privacy
 * category[+] = http://loinc.org#64292-6 "Release of information consent"
 * category[+] = http://terminology.hl7.org/CodeSystem/v3-ActCode#IDSCL
-* patient = Reference(Patient/ex-patient)
-* dateTime = "2022-06-13"
-* performer.reference = "http://example.org/organizations/ex-organization"
+* subject = Reference(Patient/ex-patient)
+* date = "2022-06-13"
+* controller.reference = "http://example.org/organizations/ex-organization"
 * sourceReference.reference = "http://example.org/documentreferences/ex-documentreference"
-* policy.uri = "http://example.org/consent-policies#ml-training-consent-policy"
-* provision.type = #deny
+* policyBasis.uri = "http://example.org/consent-policies#ml-training-consent-policy"
+* decision = #deny
 * provision.purpose[+] = $purposeOfUse#MLTRAINING
 
 
@@ -94,15 +94,15 @@ Description: "Consent for using de-identified data for machine learning training
 Usage: #example
 * meta.security = $purposeOfUse#HTEST
 * status = #active
-* scope = http://terminology.hl7.org/CodeSystem/consentscope#patient-privacy
+//*scope = http://terminology.hl7.org/CodeSystem/consentscope#patient-privacy
 * category[+] = http://loinc.org#64292-6 "Release of information consent"
 * category[+] = http://terminology.hl7.org/CodeSystem/v3-ActCode#IDSCL
-* patient = Reference(Patient/ex-patient)
-* dateTime = "2022-06-13"
-* performer.reference = "http://example.org/organizations/ex-organization"
+* subject = Reference(Patient/ex-patient)
+* date = "2022-06-13"
+* controller.reference = "http://example.org/organizations/ex-organization"
 * sourceReference.reference = "http://example.org/documentreferences/ex-documentreference"
-* policy.uri = "http://example.org/consent-policies#ml-training-consent-policy"
-* provision.type = #permit
+* policyBasis.uri = "http://example.org/consent-policies#ml-training-consent-policy"
+* decision = #permit
 * provision.purpose[+] = $purposeOfUse#MLTRAINING
 * provision.modifierExtension[limit].extension[control].valueCodeableConcept = $obligation#DEID 
 
@@ -114,15 +114,15 @@ Description: "Consent for using data for clinical decision support purposes."
 Usage: #example
 * meta.security = $purposeOfUse#HTEST
 * status = #active
-* scope = http://terminology.hl7.org/CodeSystem/consentscope#patient-privacy
+//*scope = http://terminology.hl7.org/CodeSystem/consentscope#patient-privacy
 * category[+] = http://loinc.org#64292-6 "Release of information consent"
 * category[+] = http://terminology.hl7.org/CodeSystem/v3-ActCode#IDSCL
-* patient = Reference(Patient/ex-patient)
-* dateTime = "2022-06-13"
-* performer.reference = "http://example.org/organizations/ex-organization"
+* subject = Reference(Patient/ex-patient)
+* date = "2022-06-13"
+* controller.reference = "http://example.org/organizations/ex-organization"
 * sourceReference.reference = "http://example.org/documentreferences/ex-documentreference"
-* policy.uri = "http://example.org/consent-policies#cds-consent-policy"
-* provision.type = #permit
+* policyBasis.uri = "http://example.org/consent-policies#cds-consent-policy"
+* decision = #permit
 * provision.purpose[+] = $purposeOfUse#TREATDS
 
 Instance: DenyCDS
@@ -132,15 +132,15 @@ Description: "Consent to disallow using data for clinical decision support purpo
 Usage: #example
 * meta.security = $purposeOfUse#HTEST
 * status = #active
-* scope = http://terminology.hl7.org/CodeSystem/consentscope#patient-privacy
+//*scope = http://terminology.hl7.org/CodeSystem/consentscope#patient-privacy
 * category[+] = http://loinc.org#64292-6 "Release of information consent"
 * category[+] = http://terminology.hl7.org/CodeSystem/v3-ActCode#IDSCL
-* patient = Reference(Patient/ex-patient)
-* dateTime = "2022-06-13"
-* performer.reference = "http://example.org/organizations/ex-organization"
+* subject = Reference(Patient/ex-patient)
+* date = "2022-06-13"
+* controller.reference = "http://example.org/organizations/ex-organization"
 * sourceReference.reference = "http://example.org/documentreferences/ex-documentreference"
-* policy.uri = "http://example.org/consent-policies#cds-consent-policy"
-* provision.type = #deny
+* policyBasis.uri = "http://example.org/consent-policies#cds-consent-policy"
+* decision = #deny
 * provision.purpose[+] = $purposeOfUse#TREATDS
 
 
@@ -156,7 +156,7 @@ Usage: #example
 * manufacturer = "Acme Devices, Inc"
 * type = http://snomed.info/sct#736253002 
 * type.text = "Artificial intelligence device"
-* version.value = "10.23-23423"
+* deviceVersion.value = "10.23-23423"
 * contact.system = #url
 * contact.value = "http://example.org"
 
@@ -168,18 +168,18 @@ In this case a Device is used to represent the specific AI system or model. In t
 Usage: #example
 * meta.security = $purposeOfUse#HTEST
 * status = #active
-* scope = http://terminology.hl7.org/CodeSystem/consentscope#patient-privacy
+//*scope = http://terminology.hl7.org/CodeSystem/consentscope#patient-privacy
 * category[+] = http://loinc.org#64292-6 "Release of information consent"
 * category[+] = http://terminology.hl7.org/CodeSystem/v3-ActCode#IDSCL
-* patient = Reference(Patient/ex-patient)
-* dateTime = "2022-06-13"
-* performer.reference = "http://example.org/organizations/ex-organization"
+* subject = Reference(Patient/ex-patient)
+* date = "2022-06-13"
+* controller.reference = "http://example.org/organizations/ex-organization"
 * sourceReference.reference = "http://example.org/documentreferences/ex-documentreference"
-* policy.uri = "http://example.org/consent-policies#specific-ai-consent"
-* provision.type = #permit
+* policyBasis.uri = "http://example.org/consent-policies#specific-ai-consent"
+* decision = #permit
 * provision.purpose[+] = $purposeOfUse#TREATDS
 * provision.actor[0].reference = Reference(AIdevice)
-* provision.actor[0].role.coding.display = "CDS"
+* provision.actor[0].role.text = "CDS"
 
 Instance: AllAiProvisions
 InstanceOf: ConsentWithLimits
@@ -204,17 +204,16 @@ Provisions
 Usage: #example
 * meta.security = $purposeOfUse#HTEST
 * status = #active
-* scope = http://terminology.hl7.org/CodeSystem/consentscope#patient-privacy
+//*scope = http://terminology.hl7.org/CodeSystem/consentscope#patient-privacy
 * category[+] = http://loinc.org#64292-6 "Release of information consent"
 * category[+] = http://terminology.hl7.org/CodeSystem/v3-ActCode#IDSCL
-* patient = Reference(Patient/ex-patient)
-* dateTime = "2022-06-13"
-* performer.reference = "http://example.org/organizations/ex-organization"
+* subject = Reference(Patient/ex-patient)
+* date = "2022-06-13"
+* controller.reference = "http://example.org/organizations/ex-organization"
 * sourceReference.reference = "http://example.org/documentreferences/ex-documentreference"
-* policy.uri = "http://example.org/consent-policies#ml-training-consent-policy"
-
+* policyBasis.uri = "http://example.org/consent-policies#ml-training-consent-policy"
+* decision = #permit
 * provision[0]
-  * type = #permit
   // Permit of all of the purposeOfUse that are addressed positively in this Consent.
   * purpose[+] = $purposeOfUse#TREAT
   * purpose[+] = $purposeOfUse#HPAYMT
@@ -222,7 +221,6 @@ Usage: #example
   * purpose[+] = $purposeOfUse#MLTRAINING
 
   * provision[0]
-    * type = #deny
     // deny ML training to see sensitive topics
     * purpose[+] = $purposeOfUse#MLTRAINING
     * securityLabel[+] = http://terminology.hl7.org/CodeSystem/v3-ActCode#ETH
@@ -231,23 +229,19 @@ Usage: #example
     // Note this does leave ambiguous any R data that are not these three sensitivity tags.
     * provision[0]
       // permit ML to see Normal data that is de-identified
-      * provision.type = #permit
       * provision.purpose[+] = $purposeOfUse#MLTRAINING
       * securityLabel[+] = http://terminology.hl7.org/CodeSystem/v3-Confidentiality#N "Normal"
       * provision.modifierExtension[limit].extension[control].valueCodeableConcept = $obligation#DEID 
 
   * provision[1]
-    * type = #deny
     // This deny is simply so we can get to a refined permit for TPO
     * provision[0]
-      * type = #permit
       // permit TPO with normal confidentiality and the relevant purposes of use
       * securityLabel[+] = http://terminology.hl7.org/CodeSystem/v3-Confidentiality#N "Normal"
       * purpose[+] = $purposeOfUse#TREAT
       * purpose[+] = $purposeOfUse#HPAYMT
       * purpose[+] = $purposeOfUse#HOPERAT
     * provision[1]
-      * type = #permit
       // permit TPO for the careTeam of this patient for sensitive topics
       * securityLabel[+] = http://terminology.hl7.org/CodeSystem/v3-Confidentiality#R
       * purpose[+] = $purposeOfUse#TREAT
