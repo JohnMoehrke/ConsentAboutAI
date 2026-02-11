@@ -59,7 +59,6 @@ This extension should be used as a ModifierExtension as it is critical to the pr
 * ^context[=].expression = "Consent.provision.provision.provision"
 * ^context[+].type = #element
 * ^context[=].expression = "Consent.provision.provision.provision.provision"
-
 * extension contains 
   control 0..* and
   tag 0..* and
@@ -231,10 +230,10 @@ Usage: #example
     // Note this does leave ambiguous any R data that are not these three sensitivity tags.
     * provision[0]
       // permit ML to see Normal data that is de-identified
-      * provision.type = #permit
-      * provision.purpose[+] = $purposeOfUse#MLTRAINING
+      * type = #permit
+      * purpose[+] = $purposeOfUse#MLTRAINING
       * securityLabel[+] = http://terminology.hl7.org/CodeSystem/v3-Confidentiality#N "Normal"
-      * provision.modifierExtension[limit].extension[control].valueCodeableConcept = $obligation#DEID 
+      * modifierExtension[limit].extension[control].valueCodeableConcept = $obligation#DEID 
 
   * provision[1]
     * type = #deny
