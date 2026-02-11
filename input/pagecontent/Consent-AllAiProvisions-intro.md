@@ -13,4 +13,3 @@ Provisions
   - deny ML training for sensitive data
 - permit TPO for normal confidentiality
 - permit TPO for the care team for sensitive data
-- 
