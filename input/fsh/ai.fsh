@@ -228,7 +228,6 @@ Usage: #example
     * securityLabel[+] = http://terminology.hl7.org/CodeSystem/v3-ActCode#ETH
     * securityLabel[+] = http://terminology.hl7.org/CodeSystem/v3-ActCode#BH
     * securityLabel[+] = http://terminology.hl7.org/CodeSystem/v3-ActCode#PREGNANT
-    * modifierExtension[limit].extension[control].valueCodeableConcept = $obligation#DEID 
     // Note this does leave ambiguous any R data that are not these three sensitivity tags.
 
 * provision[+]
