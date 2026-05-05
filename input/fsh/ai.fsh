@@ -66,17 +66,22 @@ This extension should be used as a ModifierExtension as it is critical to the pr
 * extension contains 
   control 0..* and
   tag 0..* and
-  element 0..*
+  element 0..* and
+  path 0..*
 * extension[control] ^short = "Coded restriction such as a refrain or obligation."
 * extension[control].value[x] only CodeableConcept
 * extension[control].valueCodeableConcept from http://terminology.hl7.org/ValueSet/v3-SecurityControlObservationValue (preferred)
 * extension[tag] ^short = "Meta.security tags to be applied to data that is used under this provision."
 * extension[tag].value[x] only CodeableConcept
 * extension[tag].valueCodeableConcept from http://terminology.hl7.org/ValueSet/v3-InformationSensitivityPolicy (preferred)
-* extension[element] ^short = "Specific elements that must be redacted from the data."
-* extension[element] ^comment = "The path identifies the element and is expressed as a . separated list of ancestor elements, beginning with the name of the resource or extension."
+* extension[element] ^short = "What data elements, by id, must be removed from the data"
+* extension[element] ^definition = "When this rule authorizes data use, the data identified by its element id, must be redacted from the authorized data provided for that authorized use."
+* extension[element] ^comment = "The .element requires that an `id` be present on the element to be redacted, but does not require the use of FHIRPath. The .element mechanism can target elements in a list."
 * extension[element].value[x] only string
-
+* extension[path] ^short = "What data elements, by FHIRPath, must be removed from the data"
+* extension[path] ^definition = "When this rule authorizes data use, the data identified by the FHIRPath, must be redacted from the authorized data provided for that authorized use."
+* extension[path] ^comment = "The FHIRPath expression is limited to a the [simple subset](http://hl7.org/fhir/fhirpath.html#simple) with the additional limitation that .resolve() that is not allowed. This is a more sophisticated mechanism of referring to an element than .element but does require the system resolving the item to be able to use at least FHIRPath. If the author of the limit has the ability to ensure an id will be present then .element might be more widely useable."
+* extension[path].value[x] only string
 
 Profile: ConsentWithLimits
 Parent: Consent
@@ -89,6 +94,33 @@ Description: "Consent profile that includes the use of the PermissionRuleLimit e
 * provision.provision.provision.provision.modifierExtension contains PermissionRuleLimit named limit 0..*
 * provision.provision.provision.provision.provision.modifierExtension contains PermissionRuleLimit named limit 0..*
 */
+
+Instance: ex-consent-with-limits
+InstanceOf: ConsentWithLimits
+Title: "non AI example of Consent with Limits"
+Description: "Consent using all the parts of the limits extension for example sake."
+Usage: #example
+* meta.security = $purposeOfUse#HTEST
+* status = #active
+//*scope = http://terminology.hl7.org/CodeSystem/consentscope#patient-privacy
+* category[+] = http://loinc.org#64292-6 "Release of information consent"
+* category[+] = http://terminology.hl7.org/CodeSystem/v3-ActCode#IDSCL
+* subject = Reference(Patient/ex-patient)
+* date = "2022-06-13"
+* controller.reference = "http://example.org/organizations/ex-organization"
+* sourceReference.reference = "http://example.org/documentreferences/ex-documentreference"
+* policyBasis.uri = "http://example.org/consent-policies#ml-training-consent-policy"
+* decision = #deny
+* provision.purpose[+] = $purposeOfUse#MLTRAINING
+* provision.modifierExtension[limit].extension[control].valueCodeableConcept = $obligation#DEID 
+* provision.modifierExtension[limit].extension[tag].valueCodeableConcept = http://terminology.hl7.org/CodeSystem/v3-ActCode#HIV
+* provision.modifierExtension[limit].extension[element].valueString = "elementId1"
+* provision.modifierExtension[limit].extension[path].valueString = "Observation.subject"
+
+
+
+
+
 
 
 Instance: AllowMLtrainingOnDeIdentifiedData
