@@ -7,7 +7,7 @@ canonical: http://johnmoehrke.github.io/ConsentAboutAI
 name: JohnMoehrkeConsentAboutAI
 title: John Moehrke Consent About AI
 status: draft
-version: 0.1.0
+version: 0.2.0
 #fhirVersion: 4.3.0
 #fhirVersion: 4.0.1
 fhirVersion: 6.0.0-ballot3
@@ -42,8 +42,8 @@ parameters:  # see https://confluence.hl7.org/display/FHIR/Implementation+Guide+
 pages:
   index.md:
     title: Home
-  ai.md:
-    title: AI
+  download.md:
+    title: Downloads and Analysis
 
 
 # ╭────────────────────────────────────────────menu.xml────────────────────────────────────────────╮
@@ -51,5 +51,5 @@ pages:
 # ╰────────────────────────────────────────────────────────────────────────────────────────────────╯
 menu:
   Home: index.html
-  AI: ai.html
   Artifacts: artifacts.html
+  Download: download.html

@@ -2,8 +2,8 @@
 
 Instance:   ex-patient
 InstanceOf: Patient
-Title:      "Dummy Patient example"
-Description: "Dummy patient example for completeness sake. No actual use of this resource other than an example target"
+Title:      "The Patient example"
+Description: "The patient example is a patient named John Jacob Jingleheimer Schmidt, who has a variety of names and identifiers. This example is used to demonstrate the use of multiple names, identifiers, and other patient attributes in FHIR. This is the patient giving consent for the use of their data for AI/ML training, with specific limits on the use of that data."
 Usage: #example
 //* identifier = urn:uuid:2.16.840.1.113883.4.349#MVI // MVI ICN VALUE WITH CHECKSUM>
 // history - http://playgroundjungle.com/2018/02/origins-of-john-jacob-jingleheimer-schmidt.html

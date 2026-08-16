@@ -1,0 +1,20 @@
+Source File	Size	loadResources	load	generateSnapshots	load-configure	scan	loadDepInfo	loadInfo	checkR4R4B	generateNarratives	validate	loadLists	checkConformanceResources	checkConformanceResources2	checkConformanceResources3	generateLogicalMaps	validateExpressions	scanForUsageStats	checkURLsUnique	processProvenanceDetails	generate1	generate2	generateLogicals	makeDependencies	generateExampleZip	generateValidationPack	scanProfilesForR5	scanExamplesForR5
+\fsh-generated\resources\ImplementationGuide-johnmoehrke.ConsentAboutAI.example.json	7104	-	0	0	0	0	0	0	6	28	0	0	0	0	0	0	0	0	0	0	150	81	0	0	0	3	0	0
+fsh-generated/resources/Consent-AllAiProvisions.json	5587	9	0	0	2	0	0	0	0	953	0	0	0	0	0	0	0	0	0	0	56	56	0	0	1	0	0	0
+fsh-generated/resources/Consent-AllowCDS.json	1326	0	0	0	0	0	0	0	0	10	0	0	0	0	0	0	0	0	0	0	44	34	0	0	0	0	0	0
+fsh-generated/resources/Consent-AllowMLtraining.json	1344	0	0	0	0	0	0	0	1	6	0	0	0	0	0	0	0	0	0	0	41	35	0	0	0	0	0	0
+fsh-generated/resources/Consent-AllowMLtrainingOnDeIdentifiedData.json	1938	6	0	0	0	0	0	0	0	4	0	0	0	0	0	0	0	0	0	0	61	31	0	0	0	0	0	0
+fsh-generated/resources/Consent-AllowSpecificAIforSpecificPurpose.json	1517	2	0	0	0	0	0	0	0	5	0	0	0	0	0	0	0	0	0	0	48	34	0	0	0	0	0	0
+fsh-generated/resources/Consent-DenyCDS.json	1323	0	0	0	0	0	0	0	0	5	0	0	0	0	0	0	0	0	0	0	37	44	0	0	0	0	0	0
+fsh-generated/resources/Consent-DenyMLtraining.json	1341	0	0	0	0	0	0	0	1	4	0	0	0	0	0	0	0	0	0	0	36	40	0	0	0	0	0	0
+fsh-generated/resources/Device-AIdevice.json	531	0	0	0	0	0	0	0	0	4	0	0	0	0	0	0	0	0	0	0	15	36	0	0	0	0	0	0
+fsh-generated/resources/Patient-ex-patient.json	1062	0	0	0	0	0	0	0	0	2	0	0	0	0	0	0	0	0	0	1	21	37	0	0	0	0	0	0
+fsh-generated/resources/StructureDefinition-ConsentWithLimits.json	3429	0	0	83	0	0	0	0	0	55	0	0	2	0	0	0	0	2	0	0	532	1446	0	0	0	10	0	0
+\fsh-generated\includes\fsh-link-references.md	510	-	-	-	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0
+\fsh-generated\includes\menu.xml	1120	-	-	-	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0
+\input\pagecontent\Consent-AllAiProvisions-intro.md	716	-	-	-	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0
+\input\pagecontent\download.md	741	-	-	-	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0
+\input\pagecontent\index.md	8899	-	-	-	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0
+\template\config	0	-	-	-	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0
+\template\config\_config.yml	140	-	-	-	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0
+\temp\pages\_includes\artifacts.xml	6463	-	-	-	-	-	-	-	-	-	-	-	-	-	-	-	-	-	-	-	-	2	0	0	0	0	0	0

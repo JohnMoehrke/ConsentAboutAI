@@ -1,0 +1,47 @@
+@prefix fhir: <http://hl7.org/fhir/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sct: <http://snomed.info/id/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# - resource -------------------------------------------------------------------
+
+<http://johnmoehrke.github.io/ConsentAboutAI/Device/AIdevice> a fhir:Device ;
+  fhir:nodeRole fhir:treeRoot ;
+  fhir:Resource.id [ fhir:value "AIdevice"] ;
+  fhir:DomainResource.text [
+     fhir:Narrative.status [ fhir:value "generated" ] ;
+     fhir:Narrative.div "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Generated Narrative: Device AIdevice</b></p><a name=\"AIdevice\"> </a><a name=\"hcAIdevice\"> </a><p><b>identifier</b>: <code>http://example.org/ehr/client-ids</code>/goodhealth</p><p><b>manufacturer</b>: Acme Devices, Inc</p><p><b>type</b>: <span title=\"Codes:{http://snomed.info/sct 736253002}\">Artificial intelligence device</span></p><h3>Versions</h3><table class=\"grid\"><tr><td style=\"display: none\">-</td><td><b>Value</b></td></tr><tr><td style=\"display: none\">*</td><td>10.23-23423</td></tr></table><p><b>contact</b>: <a href=\"http://example.org\">http://example.org</a></p></div>"
+  ] ;
+  fhir:Device.identifier [
+     fhir:index 0 ;
+     fhir:Identifier.system [ fhir:value "http://example.org/ehr/client-ids" ] ;
+     fhir:Identifier.value [ fhir:value "goodhealth" ]
+  ] ;
+  fhir:Device.manufacturer [ fhir:value "Acme Devices, Inc"] ;
+  fhir:Device.type [
+     fhir:CodeableConcept.coding [
+       fhir:index 0 ;
+       a sct:736253002 ;
+       fhir:Coding.system [ fhir:value "http://snomed.info/sct" ] ;
+       fhir:Coding.code [ fhir:value "736253002" ]
+     ] ;
+     fhir:CodeableConcept.text [ fhir:value "Artificial intelligence device" ]
+  ] ;
+  fhir:Device.version [
+     fhir:index 0 ;
+     fhir:Device.version.value [ fhir:value "10.23-23423" ]
+  ] ;
+  fhir:Device.contact [
+     fhir:index 0 ;
+     fhir:ContactPoint.system [ fhir:value "url" ] ;
+     fhir:ContactPoint.value [ fhir:value "http://example.org" ]
+  ] .
+
+# - ontology header ------------------------------------------------------------
+
+<http://johnmoehrke.github.io/ConsentAboutAI/Device/AIdevice.ttl> a owl:Ontology ;
+  owl:imports fhir:fhir.ttl .
+
+# -------------------------------------------------------------------------------------
+
