@@ -18,11 +18,11 @@
      fhir:Identifier.system [ fhir:value "urn:ietf:rfc:3986" ] ;
      fhir:Identifier.value [ fhir:value "urn:oid:1.3.6.1.4.1.66281.2.1.42.1" ]
   ] ;
-  fhir:StructureDefinition.version [ fhir:value "0.1.0"] ;
+  fhir:StructureDefinition.version [ fhir:value "0.2.0"] ;
   fhir:StructureDefinition.name [ fhir:value "ConsentWithLimits"] ;
   fhir:StructureDefinition.title [ fhir:value "Consent with use of the Limits extension"] ;
   fhir:StructureDefinition.status [ fhir:value "draft"] ;
-  fhir:StructureDefinition.date [ fhir:value "2026-08-16T14:45:27-05:00"^^xsd:dateTime] ;
+  fhir:StructureDefinition.date [ fhir:value "2026-08-16T14:50:06-05:00"^^xsd:dateTime] ;
   fhir:StructureDefinition.publisher [ fhir:value "John Moehrke (Moehrke Research LLC)"] ;
   fhir:StructureDefinition.contact [
      fhir:index 0 ;

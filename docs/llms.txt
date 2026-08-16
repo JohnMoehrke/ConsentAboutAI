@@ -1,4 +1,4 @@
-# johnmoehrke.ConsentAboutAI.example#0.1.0: John Moehrke Consent About AI
+# johnmoehrke.ConsentAboutAI.example#0.2.0: John Moehrke Consent About AI
 
 ## Pages
 

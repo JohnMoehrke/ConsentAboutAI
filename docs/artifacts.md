@@ -1,4 +1,4 @@
-# Artifacts Summary - John Moehrke Consent About AI v0.1.0
+# Artifacts Summary - John Moehrke Consent About AI v0.2.0
 
 * [**Table of Contents**](toc.md)
 * **Artifacts Summary**

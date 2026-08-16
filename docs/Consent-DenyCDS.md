@@ -1,4 +1,4 @@
-# Consent to disallow Clinical Decision Support - John Moehrke Consent About AI v0.1.0
+# Consent to disallow Clinical Decision Support - John Moehrke Consent About AI v0.2.0
 
 * [**Table of Contents**](toc.md)
 * [**Artifacts Summary**](artifacts.md)

@@ -6,11 +6,11 @@
     <status value="generated"/><div xmlns="http://www.w3.org/1999/xhtml"><p class="res-header-id"><b>Generated Narrative: ImplementationGuide johnmoehrke.ConsentAboutAI.example</b></p><a name="johnmoehrke.ConsentAboutAI.example"> </a><a name="hcjohnmoehrke.ConsentAboutAI.example"> </a><h2>JohnMoehrkeConsentAboutAI</h2><p>The official URL for this implementation guide is: </p><pre>http://johnmoehrke.github.io/ConsentAboutAI/ImplementationGuide/johnmoehrke.ConsentAboutAI.example</pre></div>
   </text>
   <url value="http://johnmoehrke.github.io/ConsentAboutAI/ImplementationGuide/johnmoehrke.ConsentAboutAI.example"/>
-  <version value="0.1.0"/>
+  <version value="0.2.0"/>
   <name value="JohnMoehrkeConsentAboutAI"/>
   <title value="John Moehrke Consent About AI"/>
   <status value="draft"/>
-  <date value="2026-08-16T14:45:27-05:00"/>
+  <date value="2026-08-16T14:50:06-05:00"/>
   <publisher value="John Moehrke (Moehrke Research LLC)"/>
   <contact>
     <name value="John Moehrke (Moehrke Research LLC)"/>

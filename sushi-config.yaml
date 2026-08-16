@@ -7,7 +7,7 @@ canonical: http://johnmoehrke.github.io/ConsentAboutAI
 name: JohnMoehrkeConsentAboutAI
 title: John Moehrke Consent About AI
 status: draft
-version: 0.1.0
+version: 0.2.0
 #fhirVersion: 4.3.0
 fhirVersion: 4.0.1
 copyrightYear: 2021+

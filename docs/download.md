@@ -1,4 +1,4 @@
-# Downloads and Analysis - John Moehrke Consent About AI v0.1.0
+# Downloads and Analysis - John Moehrke Consent About AI v0.2.0
 
 * [**Table of Contents**](toc.md)
 * **Downloads and Analysis**

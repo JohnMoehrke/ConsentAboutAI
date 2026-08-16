@@ -1,4 +1,4 @@
-# Consent with use of the Limits extension - John Moehrke Consent About AI v0.1.0
+# Consent with use of the Limits extension - John Moehrke Consent About AI v0.2.0
 
 * [**Table of Contents**](toc.md)
 * [**Artifacts Summary**](artifacts.md)
@@ -8,7 +8,7 @@
 
 | | |
 | :--- | :--- |
-| *Official URL*:http://johnmoehrke.github.io/ConsentAboutAI/StructureDefinition/ConsentWithLimits | *Version*:0.1.0 |
+| *Official URL*:http://johnmoehrke.github.io/ConsentAboutAI/StructureDefinition/ConsentWithLimits | *Version*:0.2.0 |
 | Draft as of 2026-08-16 | *Computable Name*:ConsentWithLimits |
 | *Other Identifiers:*OID:1.3.6.1.4.1.66281.2.1.42.1 | |
 
@@ -42,11 +42,11 @@ Other representations of profile: [CSV](StructureDefinition-ConsentWithLimits.cs
     "system" : "urn:ietf:rfc:3986",
     "value" : "urn:oid:1.3.6.1.4.1.66281.2.1.42.1"
   }],
-  "version" : "0.1.0",
+  "version" : "0.2.0",
   "name" : "ConsentWithLimits",
   "title" : "Consent with use of the Limits extension",
   "status" : "draft",
-  "date" : "2026-08-16T14:45:27-05:00",
+  "date" : "2026-08-16T14:50:06-05:00",
   "publisher" : "John Moehrke (Moehrke Research LLC)",
   "contact" : [{
     "name" : "John Moehrke (Moehrke Research LLC)",

@@ -1,4 +1,4 @@
-# Home - John Moehrke Consent About AI v0.1.0
+# Home - John Moehrke Consent About AI v0.2.0
 
 * [**Table of Contents**](toc.md)
 * **Home**
@@ -7,7 +7,7 @@
 
 | | |
 | :--- | :--- |
-| *Official URL*:http://johnmoehrke.github.io/ConsentAboutAI/ImplementationGuide/johnmoehrke.ConsentAboutAI.example | *Version*:0.1.0 |
+| *Official URL*:http://johnmoehrke.github.io/ConsentAboutAI/ImplementationGuide/johnmoehrke.ConsentAboutAI.example | *Version*:0.2.0 |
 | Draft as of 2026-08-16 | *Computable Name*:JohnMoehrkeConsentAboutAI |
 | *Other Identifiers:*OID:1.3.6.1.4.1.66281.2.1 | |
 
@@ -202,11 +202,11 @@ The source code for this Implementation Guide can be found on [GitHub](https://g
   "resourceType" : "ImplementationGuide",
   "id" : "johnmoehrke.ConsentAboutAI.example",
   "url" : "http://johnmoehrke.github.io/ConsentAboutAI/ImplementationGuide/johnmoehrke.ConsentAboutAI.example",
-  "version" : "0.1.0",
+  "version" : "0.2.0",
   "name" : "JohnMoehrkeConsentAboutAI",
   "title" : "John Moehrke Consent About AI",
   "status" : "draft",
-  "date" : "2026-08-16T14:45:27-05:00",
+  "date" : "2026-08-16T14:50:06-05:00",
   "publisher" : "John Moehrke (Moehrke Research LLC)",
   "contact" : [{
     "name" : "John Moehrke (Moehrke Research LLC)",

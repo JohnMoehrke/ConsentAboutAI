@@ -20,11 +20,11 @@
     <system value="urn:ietf:rfc:3986"/>
     <value value="urn:oid:1.3.6.1.4.1.66281.2.1.42.1"/>
   </identifier>
-  <version value="0.1.0"/>
+  <version value="0.2.0"/>
   <name value="ConsentWithLimits"/>
   <title value="Consent with use of the Limits extension"/>
   <status value="draft"/>
-  <date value="2026-08-16T14:45:27-05:00"/>
+  <date value="2026-08-16T14:50:06-05:00"/>
   <publisher value="John Moehrke (Moehrke Research LLC)"/>
   <contact>
     <name value="John Moehrke (Moehrke Research LLC)"/>
