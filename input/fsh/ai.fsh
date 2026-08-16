@@ -43,6 +43,7 @@ Usage: #example
 
 
 // Extension to bring the Permission.rule.limit element into the Consent.provision element. This is needed to express the limit on the use of data for ML training to only de-identified data.
+/* now can use formal extension http://hl7.org/fhir/StructureDefinition/consent-provision-limit
 Extension: PermissionRuleLimit
 Id: permissionRuleLimit
 Title: "Permission Rule Limit"
@@ -72,17 +73,16 @@ This extension should be used as a ModifierExtension as it is critical to the pr
 * extension[element] ^short = "Specific elements that must be redacted from the data."
 * extension[element] ^comment = "The path identifies the element and is expressed as a . separated list of ancestor elements, beginning with the name of the resource or extension."
 * extension[element].value[x] only string
-
+*/
 
 Profile: ConsentWithLimits
 Parent: Consent
 Title: "Consent with use of the Limits extension"
-Description: "Consent profile that includes the use of the PermissionRuleLimit extension to express limits on the use of data for ML training."
-* provision.modifierExtension contains PermissionRuleLimit named limit 0..*
-* provision.provision.modifierExtension contains PermissionRuleLimit named limit 0..*
-* provision.provision.provision.modifierExtension contains PermissionRuleLimit named limit 0..*
-* provision.provision.provision.provision.modifierExtension contains PermissionRuleLimit named limit 0..*
-* provision.provision.provision.provision.provision.modifierExtension contains PermissionRuleLimit named limit 0..*
+Description: "Consent profile that includes the use of the consent-provision-limit extension to express limits on the use of data for ML training."
+* provision.modifierExtension contains http://hl7.org/fhir/StructureDefinition/consent-provision-limit named limit 0..*
+* provision.provision.modifierExtension contains http://hl7.org/fhir/StructureDefinition/consent-provision-limit named limit 0..*
+* provision.provision.provision.modifierExtension contains http://hl7.org/fhir/StructureDefinition/consent-provision-limit named limit 0..*
+//* provision.provision.provision.provision.modifierExtension contains http://hl7.org/fhir/StructureDefinition/consent-provision-limit named limit 0..*
 
 
 
@@ -187,7 +187,7 @@ Description: "Consent that includes provisions using the various AI mechanisms a
 
 This consent 
 1. permits the patient's care team to have full access
-2. permits TPO purposes to have access to Normal data, but not sensitive dta
+2. permits TPO purposes to have access to Normal data, but not sensitive data
 3. permits ML training purposes to have access to Normal de-identified data, but not sensitive data
 
 Given that FHIR R4 Consent has only ONE root level provision, we need to extra deep nesting:

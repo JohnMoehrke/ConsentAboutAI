@@ -1,0 +1,32 @@
+JohnMoehrkeConsentAboutAI : Validation Results
+=========================================
+
+err = 1, warn = 0, info = 0
+$--
+Generated $--. FHIR version $-- for johnmoehrke.ConsentAboutAI.example#$-- (canonical = http://johnmoehrke.github.io/ConsentAboutAI)
+ Build Errors : 0 / 0 / 0
+ C:\Users\johnm\git\ME\ConsentAboutAI\fsh-generated\resources\Consent-AllAiProvisions : 1 / 0 / 1
+ C:\Users\johnm\git\ME\ConsentAboutAI\fsh-generated\resources\Consent-AllowCDS : 0 / 0 / 1
+ C:\Users\johnm\git\ME\ConsentAboutAI\fsh-generated\resources\Consent-AllowMLtraining : 0 / 0 / 1
+ C:\Users\johnm\git\ME\ConsentAboutAI\fsh-generated\resources\Consent-AllowMLtrainingOnDeIdentifiedData : 0 / 0 / 1
+ C:\Users\johnm\git\ME\ConsentAboutAI\fsh-generated\resources\Consent-AllowSpecificAIforSpecificPurpose : 0 / 0 / 1
+ C:\Users\johnm\git\ME\ConsentAboutAI\fsh-generated\resources\Consent-DenyCDS : 0 / 0 / 1
+ C:\Users\johnm\git\ME\ConsentAboutAI\fsh-generated\resources\Consent-DenyMLtraining : 0 / 0 / 1
+ C:\Users\johnm\git\ME\ConsentAboutAI\fsh-generated\resources\Device-AIdevice : 0 / 0 / 1
+ C:\Users\johnm\git\ME\ConsentAboutAI\fsh-generated\resources\ImplementationGuide-johnmoehrke.ConsentAboutAI.example : 0 / 0 / 1
+ C:\Users\johnm\git\ME\ConsentAboutAI\fsh-generated\resources\Patient-ex-patient : 0 / 0 / 1
+ C:\Users\johnm\git\ME\ConsentAboutAI\fsh-generated\resources\StructureDefinition-ConsentWithLimits : 0 / 0 / 2
+</table>
+== n/a ==
+== fsh-generated\resources\Consent-AllAiProvisions.json ==
+ERROR: Consent/AllAiProvisions: Consent.provision.provision[0].provision[0]: The modifier extension http://hl7.org/fhir/StructureDefinition/consent-provision-limit v5.3.0 is not allowed to be used at this point (this element is [BackboneElement, Consent.provision.provision.provision]; allowed = e:Consent.provision)
+== fsh-generated\resources\Consent-AllowCDS.json ==
+== fsh-generated\resources\Consent-AllowMLtraining.json ==
+== fsh-generated\resources\Consent-AllowMLtrainingOnDeIdentifiedData.json ==
+== fsh-generated\resources\Consent-AllowSpecificAIforSpecificPurpose.json ==
+== fsh-generated\resources\Consent-DenyCDS.json ==
+== fsh-generated\resources\Consent-DenyMLtraining.json ==
+== fsh-generated\resources\Device-AIdevice.json ==
+== fsh-generated\resources\ImplementationGuide-johnmoehrke.ConsentAboutAI.example.json ==
+== fsh-generated\resources\Patient-ex-patient.json ==
+== fsh-generated\resources\StructureDefinition-ConsentWithLimits.json ==

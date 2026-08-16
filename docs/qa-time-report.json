@@ -1,0 +1,475 @@
+{
+  "date" : "Sun, 16 Aug, 2026 14:45:27 -0500",
+  "doco" : "For each file: start is seconds after start activity occurred. Length = milliseconds activity took",
+  "files" : [{
+    "name" : "\\fsh-generated\\resources\\ImplementationGuide-johnmoehrke.ConsentAboutAI.example.json",
+    "size" : 7104,
+    "processes" : [{
+      "activity" : "load",
+      "start" : 22,
+      "length" : 16
+    },
+    {
+      "activity" : "checkR4R4B",
+      "start" : 23,
+      "length" : 7
+    },
+    {
+      "activity" : "generateNarratives",
+      "start" : 23,
+      "length" : 27
+    },
+    {
+      "activity" : "validate",
+      "start" : 25,
+      "length" : 1848
+    },
+    {
+      "activity" : "validate",
+      "start" : 27,
+      "length" : 3
+    },
+    {
+      "activity" : "generate1",
+      "start" : 28,
+      "length" : 112
+    },
+    {
+      "activity" : "generate2",
+      "start" : 31,
+      "length" : 92
+    },
+    {
+      "activity" : "generateValidationPack",
+      "start" : 57,
+      "length" : 2
+    }]
+  },
+  {
+    "name" : "fsh-generated/resources/Consent-AllAiProvisions.json",
+    "size" : 5587,
+    "processes" : [{
+      "activity" : "loadResources",
+      "start" : 22,
+      "length" : 8
+    },
+    {
+      "activity" : "load-configure",
+      "start" : 23,
+      "length" : 2
+    },
+    {
+      "activity" : "checkR4R4B",
+      "start" : 23,
+      "length" : 1
+    },
+    {
+      "activity" : "generateNarratives",
+      "start" : 23,
+      "length" : 829
+    },
+    {
+      "activity" : "validate",
+      "start" : 27,
+      "length" : 181
+    },
+    {
+      "activity" : "generate1",
+      "start" : 28,
+      "length" : 80
+    },
+    {
+      "activity" : "generate2",
+      "start" : 31,
+      "length" : 55
+    }]
+  },
+  {
+    "name" : "fsh-generated/resources/Consent-AllowCDS.json",
+    "size" : 1326,
+    "processes" : [{
+      "activity" : "loadResources",
+      "start" : 22,
+      "length" : 2
+    },
+    {
+      "activity" : "generateNarratives",
+      "start" : 24,
+      "length" : 9
+    },
+    {
+      "activity" : "validate",
+      "start" : 27,
+      "length" : 9
+    },
+    {
+      "activity" : "generate1",
+      "start" : 28,
+      "length" : 38
+    },
+    {
+      "activity" : "generate2",
+      "start" : 31,
+      "length" : 28
+    }]
+  },
+  {
+    "name" : "fsh-generated/resources/Consent-AllowMLtraining.json",
+    "size" : 1344,
+    "processes" : [{
+      "activity" : "loadResources",
+      "start" : 22,
+      "length" : 2
+    },
+    {
+      "activity" : "load",
+      "start" : 22,
+      "length" : 1
+    },
+    {
+      "activity" : "generateNarratives",
+      "start" : 24,
+      "length" : 5
+    },
+    {
+      "activity" : "validate",
+      "start" : 27,
+      "length" : 8
+    },
+    {
+      "activity" : "generate1",
+      "start" : 28,
+      "length" : 39
+    },
+    {
+      "activity" : "generate2",
+      "start" : 31,
+      "length" : 27
+    }]
+  },
+  {
+    "name" : "fsh-generated/resources/Consent-AllowMLtrainingOnDeIdentifiedData.json",
+    "size" : 1938,
+    "processes" : [{
+      "activity" : "loadResources",
+      "start" : 22,
+      "length" : 2
+    },
+    {
+      "activity" : "generateNarratives",
+      "start" : 24,
+      "length" : 4
+    },
+    {
+      "activity" : "validate",
+      "start" : 27,
+      "length" : 14
+    },
+    {
+      "activity" : "generate1",
+      "start" : 28,
+      "length" : 41
+    },
+    {
+      "activity" : "generate2",
+      "start" : 31,
+      "length" : 33
+    }]
+  },
+  {
+    "name" : "fsh-generated/resources/Consent-AllowSpecificAIforSpecificPurpose.json",
+    "size" : 1517,
+    "processes" : [{
+      "activity" : "loadResources",
+      "start" : 22,
+      "length" : 2
+    },
+    {
+      "activity" : "generateNarratives",
+      "start" : 24,
+      "length" : 7
+    },
+    {
+      "activity" : "validate",
+      "start" : 27,
+      "length" : 7
+    },
+    {
+      "activity" : "generate1",
+      "start" : 28,
+      "length" : 36
+    },
+    {
+      "activity" : "generate2",
+      "start" : 31,
+      "length" : 33
+    }]
+  },
+  {
+    "name" : "fsh-generated/resources/Consent-DenyCDS.json",
+    "size" : 1323,
+    "processes" : [{
+      "activity" : "loadResources",
+      "start" : 22,
+      "length" : 1
+    },
+    {
+      "activity" : "checkR4R4B",
+      "start" : 23,
+      "length" : 1
+    },
+    {
+      "activity" : "generateNarratives",
+      "start" : 24,
+      "length" : 4
+    },
+    {
+      "activity" : "validate",
+      "start" : 27,
+      "length" : 5
+    },
+    {
+      "activity" : "generate1",
+      "start" : 28,
+      "length" : 40
+    },
+    {
+      "activity" : "generate2",
+      "start" : 31,
+      "length" : 31
+    }]
+  },
+  {
+    "name" : "fsh-generated/resources/Consent-DenyMLtraining.json",
+    "size" : 1341,
+    "processes" : [{
+      "activity" : "loadResources",
+      "start" : 22,
+      "length" : 1
+    },
+    {
+      "activity" : "generateNarratives",
+      "start" : 24,
+      "length" : 5
+    },
+    {
+      "activity" : "validate",
+      "start" : 27,
+      "length" : 6
+    },
+    {
+      "activity" : "generate1",
+      "start" : 28,
+      "length" : 39
+    },
+    {
+      "activity" : "generate2",
+      "start" : 31,
+      "length" : 28
+    }]
+  },
+  {
+    "name" : "fsh-generated/resources/Device-AIdevice.json",
+    "size" : 531,
+    "processes" : [{
+      "activity" : "loadResources",
+      "start" : 22,
+      "length" : 2
+    },
+    {
+      "activity" : "generateNarratives",
+      "start" : 24,
+      "length" : 8
+    },
+    {
+      "activity" : "validate",
+      "start" : 27,
+      "length" : 5
+    },
+    {
+      "activity" : "generate1",
+      "start" : 28,
+      "length" : 15
+    },
+    {
+      "activity" : "generate2",
+      "start" : 31,
+      "length" : 24
+    }]
+  },
+  {
+    "name" : "fsh-generated/resources/Patient-ex-patient.json",
+    "size" : 1062,
+    "processes" : [{
+      "activity" : "loadResources",
+      "start" : 22,
+      "length" : 1
+    },
+    {
+      "activity" : "generateNarratives",
+      "start" : 24,
+      "length" : 2
+    },
+    {
+      "activity" : "validate",
+      "start" : 27,
+      "length" : 6
+    },
+    {
+      "activity" : "generate1",
+      "start" : 28,
+      "length" : 17
+    },
+    {
+      "activity" : "generate2",
+      "start" : 31,
+      "length" : 42
+    }]
+  },
+  {
+    "name" : "fsh-generated/resources/StructureDefinition-ConsentWithLimits.json",
+    "size" : 3429,
+    "processes" : [{
+      "activity" : "loadResources",
+      "start" : 22,
+      "length" : 2
+    },
+    {
+      "activity" : "load",
+      "start" : 22,
+      "length" : 13
+    },
+    {
+      "activity" : "generateSnapshots",
+      "start" : 22,
+      "length" : 69
+    },
+    {
+      "activity" : "generateNarratives",
+      "start" : 24,
+      "length" : 54
+    },
+    {
+      "activity" : "validate",
+      "start" : 24,
+      "length" : 599
+    },
+    {
+      "activity" : "checkConformanceResources",
+      "start" : 27,
+      "length" : 2
+    },
+    {
+      "activity" : "validate",
+      "start" : 27,
+      "length" : 1
+    },
+    {
+      "activity" : "generate1",
+      "start" : 28,
+      "length" : 589
+    },
+    {
+      "activity" : "generate2",
+      "start" : 31,
+      "length" : 1342
+    },
+    {
+      "activity" : "generate2",
+      "start" : 32,
+      "length" : 692
+    },
+    {
+      "activity" : "generateValidationPack",
+      "start" : 57,
+      "length" : 9
+    }]
+  },
+  {
+    "name" : "\\fsh-generated\\includes\\fsh-link-references.md",
+    "size" : 510,
+    "processes" : [{
+      "activity" : "validate",
+      "start" : 27,
+      "length" : 1
+    },
+    {
+      "activity" : "generate2",
+      "start" : 32,
+      "length" : 1
+    }]
+  },
+  {
+    "name" : "\\fsh-generated\\includes\\menu.xml",
+    "size" : 1120,
+    "processes" : [{
+      "activity" : "generate2",
+      "start" : 32,
+      "length" : 1
+    }]
+  },
+  {
+    "name" : "\\input\\pagecontent\\Consent-AllAiProvisions-intro.md",
+    "size" : 716,
+    "processes" : [{
+      "activity" : "generate2",
+      "start" : 32,
+      "length" : 1
+    }]
+  },
+  {
+    "name" : "\\input\\pagecontent\\download.md",
+    "size" : 741,
+    "processes" : [{
+      "activity" : "validate",
+      "start" : 27,
+      "length" : 2
+    },
+    {
+      "activity" : "generate2",
+      "start" : 32,
+      "length" : 1
+    }]
+  },
+  {
+    "name" : "\\input\\pagecontent\\index.md",
+    "size" : 8899,
+    "processes" : [{
+      "activity" : "validate",
+      "start" : 27,
+      "length" : 1
+    },
+    {
+      "activity" : "generate2",
+      "start" : 32,
+      "length" : 1
+    }]
+  },
+  {
+    "name" : "\\template\\config",
+    "size" : 0,
+    "processes" : [{
+      "activity" : "validate",
+      "start" : 27,
+      "length" : 1
+    }]
+  },
+  {
+    "name" : "\\template\\config\\_config.yml",
+    "size" : 140,
+    "processes" : [{
+      "activity" : "validate",
+      "start" : 27,
+      "length" : 1
+    }]
+  },
+  {
+    "name" : "\\temp\\pages\\_includes\\artifacts.xml",
+    "size" : 6463,
+    "processes" : [{
+      "activity" : "generate2",
+      "start" : 32,
+      "length" : 2
+    }]
+  }]
+}
