@@ -44,6 +44,7 @@ Usage: #example
 
 // Extension to bring the Permission.rule.limit element into the Consent.provision element. This is needed to express the limit on the use of data for ML training to only de-identified data.
 // open discussion on recursive element context https://chat.fhir.org/#narrow/channel/179252-IG-creation/topic/extension.20context.20on.20recursive.20elements
+/* can now use consent-provision-limit-extension.
 Extension: PermissionRuleLimit
 Id: permissionRuleLimit
 Title: "Permission Rule Limit"
@@ -56,13 +57,6 @@ This extension should be used as a ModifierExtension as it is critical to the pr
 * ^context[=].expression = "Consent.provision"
 * ^context[+].type = #element
 * ^context[=].expression = "Consent.provision.provision"
-/*
-* ^context[+].type = #element
-* ^context[=].expression = "Consent.provision.provision.provision"
-* ^context[+].type = #element
-* ^context[=].expression = "Consent.provision.provision.provision.provision"
-*/
-
 * extension contains 
   control 0..* and
   tag 0..* and
@@ -82,17 +76,18 @@ This extension should be used as a ModifierExtension as it is critical to the pr
 * extension[path] ^definition = "When this rule authorizes data use, the data identified by the FHIRPath, must be redacted from the authorized data provided for that authorized use."
 * extension[path] ^comment = "The FHIRPath expression is limited to a the [simple subset](http://hl7.org/fhir/fhirpath.html#simple) with the additional limitation that .resolve() that is not allowed. This is a more sophisticated mechanism of referring to an element than .element but does require the system resolving the item to be able to use at least FHIRPath. If the author of the limit has the ability to ensure an id will be present then .element might be more widely useable."
 * extension[path].value[x] only string
+*/
 
 Profile: ConsentWithLimits
 Parent: Consent
 Title: "Consent with use of the Limits extension"
 Description: "Consent profile that includes the use of the PermissionRuleLimit extension to express limits on the use of data for ML training."
-* provision.modifierExtension contains PermissionRuleLimit named limit 0..*
-* provision.provision.modifierExtension contains PermissionRuleLimit named limit 0..*
+* provision.modifierExtension contains http://hl7.org/fhir/StructureDefinition/consent-provision-limit named limit 0..*
+* provision.provision.modifierExtension contains http://hl7.org/fhir/StructureDefinition/consent-provision-limit named limit 0..*
 /*
-* provision.provision.provision.modifierExtension contains PermissionRuleLimit named limit 0..*
-* provision.provision.provision.provision.modifierExtension contains PermissionRuleLimit named limit 0..*
-* provision.provision.provision.provision.provision.modifierExtension contains PermissionRuleLimit named limit 0..*
+* provision.provision.provision.modifierExtension contains http://hl7.org/fhir/StructureDefinition/consent-provision-limit named limit 0..*
+* provision.provision.provision.provision.modifierExtension contains http://hl7.org/fhir/StructureDefinition/consent-provision-limit named limit 0..*
+* provision.provision.provision.provision.provision.modifierExtension contains http://hl7.org/fhir/StructureDefinition/consent-provision-limit named limit 0..*
 */
 
 Instance: ex-consent-with-limits
@@ -114,7 +109,7 @@ Usage: #example
 * provision.purpose[+] = $purposeOfUse#MLTRAINING
 * provision.modifierExtension[limit].extension[control].valueCodeableConcept = $obligation#DEID 
 * provision.modifierExtension[limit].extension[tag].valueCodeableConcept = http://terminology.hl7.org/CodeSystem/v3-ActCode#HIV
-* provision.modifierExtension[limit].extension[element].valueString = "elementId1"
+* provision.modifierExtension[limit].extension[element].valueId = "elementId1"
 * provision.modifierExtension[limit].extension[path].valueString = "Observation.subject"
 
 

@@ -146,7 +146,7 @@ Consent example: [Allow specific AI for specific purpose](Consent-AllowSpecificA
 
 ### Limitations on AI Access
 
-In the FHIR Permission there is a concept of a "limit" which is limits placed on a `permit` rule. Where the limit might be an obligation or refrain, might be a specific additional data tag, or might be explicit removal of data elements by `id` or by FHIRPath. A "limit" should never be allowed to expose data where that limit can't be enforced. Specifically meaning that the recipient of the data must be trusted to enforce the obligation or refrain indicated. This IG defines the [PermissionRuleLimit Extension](StructureDefinition-permissionRuleLimit.html) so that the same concept can be used on a `Consent.provision`, and profiles its use in [ConsentWithLimits](StructureDefinition-ConsentWithLimits.html).
+In the FHIR Extension Registry has a "limit" extension, which is limits placed on a `permit` rule. Where the limit might be an obligation or refrain, might be a specific additional data tag, or might be explicit removal of data elements by `id` or by FHIRPath. A "limit" should never be allowed to expose data where that limit can't be enforced. Specifically meaning that the recipient of the data must be trusted to enforce the obligation or refrain indicated.  [Consent-provision-limit Extension](http://hl7.org/fhir/StructureDefinition/consent-provision-limit) is defined in the Extension Registry, and profiled in [ConsentWithLimits](StructureDefinition-ConsentWithLimits.html).
 
 Example using all the parts of the limit: [non AI example of Consent with Limits](Consent-ex-consent-with-limits.html)
 
