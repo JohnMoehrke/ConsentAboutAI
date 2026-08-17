@@ -75,6 +75,7 @@ This extension should be used as a ModifierExtension as it is critical to the pr
 * extension[element].value[x] only string
 */
 
+/* asked about nested context - https://chat.fhir.org/#narrow/channel/179252-IG-creation/topic/extension.20context.20on.20nested.20element/with/616962935 */
 Profile: ConsentWithLimits
 Parent: Consent
 Title: "Consent with use of the Limits extension"
