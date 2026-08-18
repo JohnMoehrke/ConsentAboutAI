@@ -43,7 +43,6 @@ Usage: #example
 
 
 // Extension to bring the Permission.rule.limit element into the Consent.provision element. This is needed to express the limit on the use of data for ML training to only de-identified data.
-/* now can use formal extension http://hl7.org/fhir/StructureDefinition/consent-provision-limit
 Extension: PermissionRuleLimit
 Id: permissionRuleLimit
 Title: "Permission Rule Limit"
@@ -56,10 +55,6 @@ This extension should be used as a ModifierExtension as it is critical to the pr
 * ^context[=].expression = "Consent.provision"
 * ^context[+].type = #element
 * ^context[=].expression = "Consent.provision.provision"
-* ^context[+].type = #element
-* ^context[=].expression = "Consent.provision.provision.provision"
-* ^context[+].type = #element
-* ^context[=].expression = "Consent.provision.provision.provision.provision"
 * extension contains 
   control 0..* and
   tag 0..* and
@@ -73,17 +68,17 @@ This extension should be used as a ModifierExtension as it is critical to the pr
 * extension[element] ^short = "Specific elements that must be redacted from the data."
 * extension[element] ^comment = "The path identifies the element and is expressed as a . separated list of ancestor elements, beginning with the name of the resource or extension."
 * extension[element].value[x] only string
-*/
+
 
 /* asked about nested context - https://chat.fhir.org/#narrow/channel/179252-IG-creation/topic/extension.20context.20on.20nested.20element/with/616962935 */
 Profile: ConsentWithLimits
 Parent: Consent
 Title: "Consent with use of the Limits extension"
 Description: "Consent profile that includes the use of the consent-provision-limit extension to express limits on the use of data for ML training."
-* provision.modifierExtension contains http://hl7.org/fhir/StructureDefinition/consent-provision-limit named limit 0..*
-* provision.provision.modifierExtension contains http://hl7.org/fhir/StructureDefinition/consent-provision-limit named limit 0..*
-* provision.provision.provision.modifierExtension contains http://hl7.org/fhir/StructureDefinition/consent-provision-limit named limit 0..*
-//* provision.provision.provision.provision.modifierExtension contains http://hl7.org/fhir/StructureDefinition/consent-provision-limit named limit 0..*
+* provision.modifierExtension contains PermissionRuleLimit named limit 0..*
+* provision.provision.modifierExtension contains PermissionRuleLimit named limit 0..*
+* provision.provision.provision.modifierExtension contains PermissionRuleLimit named limit 0..*
+//* provision.provision.provision.provision.modifierExtension contains PermissionRuleLimit named limit 0..*
 
 
 
