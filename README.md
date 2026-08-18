@@ -22,6 +22,13 @@ Because FHIR R4 `Consent` has a single root `provision`, nested provisions alter
 - CI build for FHIR R6: [build.fhir.org/ig/JohnMoehrke/ConsentAboutAI branch R6](https://build.fhir.org/ig/JohnMoehrke/ConsentAboutAI/branches/R6/index.html)
 - GitHub source: [github.com/JohnMoehrke/ConsentAboutAI](https://github.com/JohnMoehrke/ConsentAboutAI)
 
+## Related Consent Implementation Guides
+
+- [Emancipation using Consent](https://github.com/JohnMoehrke/emancipation)
+- [Related Person Consent](https://github.com/JohnMoehrke/RelatedPersonConsent)
+- [Consent with Segmentation](https://github.com/JohnMoehrke/ConsentWithSegmentation)
+- [Consent with XACML encoded rules](https://github.com/JohnMoehrke/xacml-consent)
+
 ## Status
 
 This is a trial IG to explore using FHIR Consent resources. The content is from the perspective of the author and is not endorsed by HL7 or any other organization. It is intended to start a discussion and to solicit feedback.
