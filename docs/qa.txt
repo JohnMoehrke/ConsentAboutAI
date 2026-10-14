@@ -1,11 +1,11 @@
 JohnMoehrkeConsentAboutAI : Validation Results
 =========================================
 
-err = 1, warn = 0, info = 0
-IG Publisher Version: 2.3.2
-Generated Sun Aug 16 14:51:13 CDT 2026. FHIR version 4.0.1 for johnmoehrke.ConsentAboutAI.example#0.2.0 (canonical = http://johnmoehrke.github.io/ConsentAboutAI)
+err = 0, warn = 0, info = 0, broken links = 0
+IG Publisher Version: 3.0.0
+Generated Wed Oct 14 10:54:12 CDT 2026. FHIR version 4.0.1 for johnmoehrke.ConsentAboutAI.example#0.2.0 (canonical = http://johnmoehrke.github.io/ConsentAboutAI)
  Build Errors : 0 / 0 / 0
- C:\Users\johnm\git\ME\ConsentAboutAI\fsh-generated\resources\Consent-AllAiProvisions : 1 / 0 / 1
+ C:\Users\johnm\git\ME\ConsentAboutAI\fsh-generated\resources\Consent-AllAiProvisions : 0 / 0 / 1
  C:\Users\johnm\git\ME\ConsentAboutAI\fsh-generated\resources\Consent-AllowCDS : 0 / 0 / 1
  C:\Users\johnm\git\ME\ConsentAboutAI\fsh-generated\resources\Consent-AllowMLtraining : 0 / 0 / 1
  C:\Users\johnm\git\ME\ConsentAboutAI\fsh-generated\resources\Consent-AllowMLtrainingOnDeIdentifiedData : 0 / 0 / 1
@@ -19,7 +19,6 @@ Generated Sun Aug 16 14:51:13 CDT 2026. FHIR version 4.0.1 for johnmoehrke.Conse
 </table>
 == n/a ==
 == fsh-generated\resources\Consent-AllAiProvisions.json ==
-ERROR: Consent/AllAiProvisions: Consent.provision.provision[0].provision[0]: The modifier extension http://hl7.org/fhir/StructureDefinition/consent-provision-limit v5.3.0 is not allowed to be used at this point (this element is [BackboneElement, Consent.provision.provision.provision]; allowed = e:Consent.provision)
 == fsh-generated\resources\Consent-AllowCDS.json ==
 == fsh-generated\resources\Consent-AllowMLtraining.json ==
 == fsh-generated\resources\Consent-AllowMLtrainingOnDeIdentifiedData.json ==
