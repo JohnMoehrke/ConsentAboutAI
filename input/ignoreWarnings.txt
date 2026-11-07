@@ -8,12 +8,9 @@
 The assigned auto-oid-root value '1.3.6.1.4.1.66281.2.1' is not registered in https://github.com/FHIR/ig-registry/blob/master/oid-assignments.json so isn't known to be valid
 The extension http://hl7.org/fhir/StructureDefinition/elementdefinition-maxValueSet%
 # R6 ignorable issues
-IG_DEPENDENCY_CLASH_PACKAGEID
-IG_DEPENDENCY_VERSION_WARNING
-MSG_DEPRECATED
 MSG_EXPERIMENTAL
-WARNING: StructureDefinition/ConsentWithLimits: StructureDefinition.snapshot.element[4].binding.additional[0]: Constraint failed: eld-31: 'additionalBindings should have a key (key.exists())' (defined in http://hl7.org/fhir/StructureDefinition/ElementDefinition) (Best Practice Recommendation)
+Constraint failed: eld-31: 'additionalBindings should have a key (key.exists())' at Consent.language (defined in http://hl7.org/fhir/StructureDefinition/ElementDefinition) (Best Practice Recommendation)
 
 # known
 WARNING: ImplementationGuide: The assigned auto-oid-root value '1.3.6.1.4.1.66281.2.1' is not registered in https://github.com/FHIR/ig-registry/blob/master/oid-assignments.json so isn't known to be valid
-INFORMATION: ImplementationGuide/johnmoehrke.ConsentAboutAI.example: ImplementationGuide.license: Reference to draft CodeSystem http://hl7.org/fhir/spdx-license|84728b7
+Reference to draft CodeSystem http://hl7.org/fhir/spdx-license|84728b7 from active ValueSet http://hl7.org/fhir/ValueSet/spdx-license|6.0.0-snapshot1
