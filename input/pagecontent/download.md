@@ -7,6 +7,8 @@ You can also download:
 
 The source code for this Implementation Guide can be found on [John Moehrke ConsentAboutAI Github Repo](https://github.com/JohnMoehrke/ConsentAboutAI).
 
+### Publisher Analysis
+
 #### Cross Version Analysis
 
 {% include cross-version-analysis.xhtml %}
