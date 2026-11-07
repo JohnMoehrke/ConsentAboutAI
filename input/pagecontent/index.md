@@ -38,11 +38,11 @@ subject of the consent
 }
 class Consent {
 status: active
-scope: patient-privacy
 category: Release of information
-dateTime
-policy.uri
-provision.type: permit or deny
+subject
+date
+policyBasis.uri
+decision: permit or deny (the default)
 provision.purpose: MLTRAINING, TREATDS, TPO
 provision.securityLabel
 provision.actor.reference
@@ -63,18 +63,19 @@ content
 class Organization {
 organization capturing and enforcing the consent
 }
-class ProvisionLimit {
-consent-provision-limit extension
+class PermissionRuleLimit {
+permissionRuleLimit extension
 control: DEID and other obligations
 tag
 element
+path
 }
 
-Consent --> Patient : patient
+Consent --> Patient : subject
 Consent --> DocumentReference : sourceReference
-Consent --> Organization : performer
+Consent --> Organization : controller
 Consent --> Device : provision.actor.reference
-Consent --> ProvisionLimit : provision.modifierExtension
+Consent --> PermissionRuleLimit : provision.modifierExtension
 DocumentReference --> Patient : subject
 ```
 
@@ -86,10 +87,12 @@ Further we look to [PurposeOfUse Vocabulary](https://terminology.hl7.org/ValueSe
 
 The use of PurposeOfUse does require that any accesses the AI does, or an agent feeding the AI, must use the given PurposeOfUse code when accessing data. This is a trust model that the AI or the agent feeding the AI will accurately indicate the PurposeOfUse when accessing data. However, this is a common trust model used in many other aspects of healthcare data access and thus is not unique to AI.
 
+In FHIR R6 the `Consent.decision` element carries the default action, and each `Consent.provision` is an exception to that default. So a Consent that allows only ML training is expressed as a default of `deny` with a provision naming the `MLTRAINING` purpose, and a Consent that forbids only ML training is a default of `permit` with the same provision.
+
 #### Allow AI for ML Training
 
 ```fsh
-* provision.type = #permit
+* decision = #deny
 * provision.purpose[+] = $purposeOfUse#MLTRAINING
 ```
 
@@ -98,7 +101,7 @@ Consent example: [Allow ML Training](Consent-AllowMLtraining.html)
 #### Deny AI for ML Training
 
 ```fsh
-* provision.type = #deny
+* decision = #permit
 * provision.purpose[+] = $purposeOfUse#MLTRAINING
 ```
 
@@ -107,7 +110,7 @@ Consent example: [Deny ML Training](Consent-DenyMLtraining.html)
 #### Allow AI for Clinical Decision Support
 
 ```fsh
-* provision.type = #permit
+* decision = #deny
 * provision.purpose[+] = $purposeOfUse#TREATDS
 ```
 
@@ -116,7 +119,7 @@ Consent example: [Allow AI for Clinical Decision Support](Consent-AllowCDS.html)
 #### Deny AI for Clinical Decision Support
 
 ```fsh
-* provision.type = #deny
+* decision = #permit
 * provision.purpose[+] = $purposeOfUse#TREATDS
 ```
 
@@ -133,7 +136,7 @@ This model requires that all access by an AI are attributed to the FHIR Device d
 In this case there is simply a provision indicating that the AI is permitted for a given purpose. There are no restrictions on the kinds of actions or the kinds of data, but those could be added as additional restrictions.
 
 ```fsh
-* provision.type = #permit
+* decision = #deny
 * provision.purpose[+] = $purposeOfUse#TREATDS
 * provision.actor[0].reference = Reference(AIdevice)
 * provision.actor[0].role.text = "CDS"
@@ -143,12 +146,14 @@ Consent example: [Allow specific AI for specific purpose](Consent-AllowSpecificA
 
 ### Limitations on AI Access
 
-In the FHIR Consent/Permission there is a concept of a "limit" which is limits placed on a `permit` provision/rule. Where the limit might be an obligation or refrain, might be a specific additional data tag, or might be explicit removal of data elements.  A "limit" should never be allowed to expose data where that limit can't be enforced. Specifically meaning that the recipient of the data must be trusted to enforce the obligation or refrain indicated. [Extension Registry Consent Provision Limit](https://build.fhir.org/ig/HL7/fhir-extensions/StructureDefinition-consent-provision-limit.html)
+In the FHIR Extension Registry has a "limit" extension, which is limits placed on a `permit` rule. Where the limit might be an obligation or refrain, might be a specific additional data tag, or might be explicit removal of data elements by `id` or by FHIRPath. A "limit" should never be allowed to expose data where that limit can't be enforced. Specifically meaning that the recipient of the data must be trusted to enforce the obligation or refrain indicated.  [Consent-provision-limit Extension](http://hl7.org/fhir/StructureDefinition/consent-provision-limit) is defined in the Extension Registry, and profiled in [ConsentWithLimits](StructureDefinition-ConsentWithLimits.html).
+
+Example using all the parts of the limit: [non AI example of Consent with Limits](Consent-ex-consent-with-limits.html)
 
 #### Allow AI for ML Training on De-Identified Data
 
 ```fsh
-* provision.type = #permit
+* decision = #deny
 * provision.purpose[+] = $purposeOfUse#MLTRAINING
 * provision.modifierExtension[limit].extension[control].valueCodeableConcept = $obligation#DEID 
 ```
@@ -157,24 +162,21 @@ Consent example: [Allow ML Training on De-Identified Data](Consent-AllowMLtraini
 
 ### Combining AI provisions with normal clinical use
 
-FHIR R4 Consent has only ONE root level `provision`. That root establishes the overall direction, and each nested `provision` is an exception to the rule immediately above it, alternating between `permit` and `deny` at each level. To express several independent AI rules alongside the usual Treatment, Payment, and Operations rules, the nesting therefore has to be deeper than the rules themselves suggest.
+FHIR R6 Consent carries the default action in `Consent.decision` and allows many root level `provision` elements, each an exception to that default. A nested `provision` is in turn an exception to the provision that contains it. This makes a mixed Consent much flatter than the equivalent in R4.
 
 ```text
-permit all of the addressed purposes
-  deny ML training for sensitive data
-    permit ML training for de-identified Normal data
-  deny -- only so a refined permit can be expressed
-    permit TPO for Normal confidentiality
-    permit TPO for the care team including sensitive data
+decision: deny by default
+  permit ML training for de-identified Normal data
+    deny ML training for sensitive data
+  permit TPO for Normal confidentiality
+  permit TPO for the care team including sensitive data
 ```
-
-Note that R4 Consent does not define what applies when none of the provisions match; FHIR R6 adds a default rule at the top level.
 
 Consent example: [Consent with all kinds of Provisions](Consent-AllAiProvisions.html)
 
 ### Conclusion
 
-The above examples are showing simply how a Consent.provision iteration can carry permit and deny to indicate consent or dissent for AI. The examples are not exhaustive, and there are many other combinations of provisions that could be used to indicate consent or dissent for AI. The examples are also not indicating any specific data elements that are being allowed or denied, but those could be added as additional restrictions on the provision.
+The above examples are showing simply how a Consent decision and its provisions can carry permit and deny to indicate consent or dissent for AI. The examples are not exhaustive, and there are many other combinations of provisions that could be used to indicate consent or dissent for AI. The examples are also not indicating any specific data elements that are being allowed or denied, but those could be added as additional restrictions on the provision.
 
 The reader should be able to take a quilted Consent that has various provisions indicating consent or dissent for various clinical use (TPO), and add in provisions indicating consent or dissent for various AI use-cases, and thus have a single Consent that indicates the patient's preferences for both traditional clinical use and AI use.
 
