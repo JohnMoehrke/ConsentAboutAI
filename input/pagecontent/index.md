@@ -230,7 +230,7 @@ decision: deny by default
 
 Consent example: [Consent with all kinds of Provisions](Consent-AllAiProvisions.html)
 
-The [Consent with provisions three levels deep](Consent-ThreeLevelsDeep.html) example shows a specific AI Device permitted as an exception to a general deny of AI clinical decision support, nesting provisions three levels deep. The [Consent about AI](StructureDefinition-ai-consent.html) profile replicates the AI provisioning at two levels of nesting, which the IG publisher recognizes as applying to any depth of nesting.
+The [Consent with provisions three levels deep](Consent-ThreeLevelsDeep.html) example shows a specific AI Device permitted as an exception to a deny of AI clinical decision support on Restricted data, nesting provisions three levels deep. The [Consent about AI](StructureDefinition-ai-consent.html) profile replicates the AI provisioning at two levels of nesting, which the IG publisher recognizes as applying to any depth of nesting.
 
 Consent example: [Consent with provisions three levels deep](Consent-ThreeLevelsDeep.html)
 

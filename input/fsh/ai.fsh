@@ -246,9 +246,9 @@ Usage: #example
 * identifier.system = "http://example.org/ehr/client-ids"
 * identifier.value = "goodhealth"
 * manufacturer = "Acme Devices, Inc"
-* type = $aiDeviceType#Artificial-Intelligence
-* type.coding[+] = http://snomed.info/sct#736253002 
-* type.text = "Artificial intelligence device"
+* type[0].coding[0] = $aiDeviceType#Artificial-Intelligence
+* type[0].coding[1] = http://snomed.info/sct#736253002 
+* type[0].text = "Artificial intelligence device"
 * deviceVersion.value = "10.23-23423"
 * contact.system = #url
 * contact.value = "http://example.org"
@@ -360,9 +360,10 @@ Description: "Consent that nests provisions three levels deep to assure that the
 
 Provisions
 - decision: deny by default
-- permit TPO and AI clinical decision support purposes (level 1)
-  - deny AI clinical decision support (level 2)
-    - permit a specific AI Device for clinical decision support on Normal data, with a limit prohibiting reuse (level 3)
+- permit TPO (level 1, not an AI provision)
+- permit AI clinical decision support (level 1)
+  - deny AI clinical decision support for Restricted data (level 2)
+    - permit a specific AI Device for clinical decision support on Restricted data, with a limit prohibiting reuse (level 3)
 "
 Usage: #example
 * meta.security = $purposeOfUse#HTEST
@@ -377,20 +378,24 @@ Usage: #example
 * decision = #deny
 
 * provision[0]
-  // permit all of the purposeOfUse that are addressed positively in this Consent (level 1)
+  // permit TPO (level 1, not an AI provision)
   * purpose[+] = $purposeOfUse#TREAT
   * purpose[+] = $purposeOfUse#HPAYMT
   * purpose[+] = $purposeOfUse#HOPERAT
+
+* provision[1]
+  // permit AI clinical decision support (level 1)
   * purpose[+] = $purposeOfUse#TREATDS
 
   * provision[0]
-    // deny AI clinical decision support generally (level 2)
+    // deny AI clinical decision support for Restricted data (level 2)
     * purpose[+] = $purposeOfUse#TREATDS
+    * securityLabel[+] = http://terminology.hl7.org/CodeSystem/v3-Confidentiality#R
 
     * provision[0]
-      // permit a specific AI Device for clinical decision support on Normal data, prohibiting reuse (level 3)
+      // permit a specific AI Device for clinical decision support on Restricted data, prohibiting reuse (level 3)
       * purpose[+] = $purposeOfUse#TREATDS
-      * securityLabel[+] = http://terminology.hl7.org/CodeSystem/v3-Confidentiality#N "Normal"
+      * securityLabel[+] = http://terminology.hl7.org/CodeSystem/v3-Confidentiality#R
       * actor[0].reference = Reference(AIdevice)
       * actor[0].role.text = "CDS"
       * modifierExtension[$limit].extension[control].valueCodeableConcept = $obligation#NOREUSE

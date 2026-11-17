@@ -18,6 +18,7 @@ Reference to draft CodeSystem http://hl7.org/fhir/spdx-license|84728b7 from acti
 # yes, this example is showing TPO consent with AI consent, so this slice is not AI
 INFORMATION: Consent/AllAiProvisions: Consent.provision[1]: This element does not match any known slice defined in the profile http://johnmoehrke.github.io/ConsentAboutAI/StructureDefinition/ai-consent|0.2.0 (this may not be a problem, but you should check that it's not intended to match a slice)
 INFORMATION: Consent/AllAiProvisions: Consent.provision[2]: This element does not match any known slice defined in the profile http://johnmoehrke.github.io/ConsentAboutAI/StructureDefinition/ai-consent|0.2.0 (this may not be a problem, but you should check that it's not intended to match a slice)
+INFORMATION: Consent/ThreeLevelsDeep: Consent.provision[0]: This element does not match any known slice defined in the profile http://johnmoehrke.github.io/ConsentAboutAI/StructureDefinition/ai-consent|0.2.0 (this may not be a problem, but you should check that it's not intended to match a slice)
 
 # pinning to latest
 PIN_VERSION
