@@ -37,12 +37,17 @@ parameters:  # see https://confluence.hl7.org/display/FHIR/Implementation+Guide+
   apply-version: 'true'
   path-binary: input/images
   auto-oid-root: 1.3.6.1.4.1.66281.2.1
+  pin-canonicals: pin-multiples
 
 dependencies:
   hl7.fhir.uv.extensions.r4:
     version: current
     id: extensions
     uri: http://hl7.org/fhir/extensions/ImplementationGuide/hl7.fhir.uv.extensions
+  hl7.fhir.uv.aitransparency:
+    version: current
+    id: aitransparency
+    uri: http://hl7.org/fhir/uv/aitransparency/ImplementationGuide/hl7.fhir.uv.aitransparency
 
 pages:
   index.md:

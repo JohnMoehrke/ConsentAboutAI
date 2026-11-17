@@ -27,7 +27,18 @@ Given the Consent model, the Patient might be indicated in a Consent authorizing
 - Generically allowing or denying AI by PurposeOfUse
 - Specifically allowing or denying a specific AI by referencing the Device resource for that AI.
 
-A Consent is the healthcare organization's actionable record of the patient's decision. It should carry only rules that an access-control engine can evaluate and that the organization can actually enforce. The signed paperwork that captures the ceremony of the consent remains the authoritative legal record, and is referenced from the Consent.
+A Consent is the healthcare organization's actionable record of the patient's decision. It would carry only rules that an access-control engine can evaluate and that the organization can actually enforce. The signed paperwork that captures the ceremony of the consent remains the authoritative legal record, and is referenced from the Consent.
+
+### Actors
+
+Actors are the abstract technical systems upon which the requirements of this guide are imposed. An Actor is not a human, so the patient is not an Actor. The AI system described by the AI-Device is also not an Actor, as this guide imposes no requirements directly upon it; the requirements fall upon the systems that author, enforce, and request against the Consents.
+
+- [Access Control](ActorDefinition-AccessControl.html) — the technical system given the responsibility to enforce the Consents recorded according to this guide. §AIC-9^AccessControl:The Access Control actor **SHALL** enforce the provisions of the Consents recorded according to this guide, including the PurposeOfUse declared by the requesting system, any specific AI Device identified, and any limits placed upon a permit.§
+- [AI-Consent Author](ActorDefinition-AiConsentAuthor.html) — the technical system that records the patient's decisions about AI as Consents conforming to the [Consent about AI](StructureDefinition-ai-consent.html) profile.
+- [Data Requester](ActorDefinition-DataRequester.html) — the AI system that directly requests and accesses data.
+- [AI Agent](ActorDefinition-AiAgent.html) — the agent (gateway) that accesses data on behalf of an AI, feeding that data to the AI.
+
+Each Actor has a CapabilityStatement describing its technical capabilities: [Access Control](CapabilityStatement-AccessControlCapability.html), [AI-Consent Author](CapabilityStatement-AiConsentAuthorCapability.html), [Data Requester](CapabilityStatement-DataRequesterCapability.html), and [AI Agent](CapabilityStatement-AiAgentCapability.html).
 
 ### Resource Model
 
@@ -43,14 +54,16 @@ category: Release of information
 dateTime
 policy.uri
 provision.type: permit or deny
-provision.purpose: MLTRAINING, TREATDS, TPO
+provision.purpose: MLTRAINING, TREATDS, PMTDS (TPO in combined consents)
 provision.securityLabel
 provision.actor.reference
 provision.modifierExtension[limit]
+provision.provision: nested to any depth
 }
 class Device {
 the specific AI system or model
-type: Artificial intelligence device
+conforms to AI-Device profile
+type: Artificial-Intelligence
 manufacturer
 version
 }
@@ -78,13 +91,22 @@ Consent --> ProvisionLimit : provision.modifierExtension
 DocumentReference --> Patient : subject
 ```
 
+### Consent about AI Profile
+
+The constraints described in this guide are formalized in the [Consent about AI](StructureDefinition-ai-consent.html) profile. §AIC-1^AiConsentAuthor:A Consent expressing a patient's decision to permit or deny use of AI **SHALL** conform to the Consent about AI profile.§
+
+The profile requires the patient, the dateTime, and a root provision carrying the type (permit or deny) and the applicable PurposeOfUse code(s). AI-specific rules are expressed in the `aiProvision` slice on the nested provisions, which is distinguished by a `purpose` from the [AI Purposes Of Use](ValueSet-ai-purposeofuse.html) ValueSet. Within the `aiProvision` slice:
+
+- §AIC-2^AiConsentAuthor,AccessControl:the `aiDevice` actor slice **MAY** identify a specific AI system or model as a Device conforming to the [AI Device](https://build.fhir.org/ig/HL7/aitransparency-ig/StructureDefinition-AI-Device.html) profile§, and
+- §AIC-3^AiConsentAuthor,AccessControl:the `limit` modifierExtension **MAY** carry limits, such as an obligation to de-identify, placed on a permit.§
+
 ### PurposeOfUse
 
-The most clean method is to use the PurposeOfUse as the basis for the provision in the Consent. This allows the Consent to be independent of the specific AI system or model, and thus not require updates as new AI systems or models are developed. The PurposeOfUse can be used to indicate the reason for the AI access, such as `MLTRAINING` for training of AI, or `TREATDS` for clinical decision support.
+The most clean method is to use the PurposeOfUse as the basis for the provision in the Consent. This allows the Consent to be independent of the specific AI system or model, and thus not require updates as new AI systems or models are developed. §AIC-4^AiConsentAuthor,AccessControl:When a provision addresses AI use generically, the `provision.purpose` **SHALL** carry the applicable PurposeOfUse code from the [AI Purposes Of Use](ValueSet-ai-purposeofuse.html) ValueSet, such as `MLTRAINING` for training of AI, or `TREATDS` for clinical decision support.§
 
 Further we look to [PurposeOfUse Vocabulary](https://terminology.hl7.org/ValueSet-v3-PurposeOfUse.html) to indicate what the reason the AI is giving for accessing data. For example, the PurposeOfUse of `MLTRAINING` is defined for when an AI is looking to train on data. The PurposeOfUse of `TREATDS` is defined for when an AI is looking to provide clinical decision support, or `PMTDS` when AI is looking to provide analysis for payment decisions.
 
-The use of PurposeOfUse does require that any accesses the AI does, or an agent feeding the AI, must use the given PurposeOfUse code when accessing data. This is a trust model that the AI or the agent feeding the AI will accurately indicate the PurposeOfUse when accessing data. However, this is a common trust model used in many other aspects of healthcare data access and thus is not unique to AI.
+§AIC-5^DataRequester,AiAgent:Any access by the AI, or by an agent feeding the AI, **SHALL** declare the applicable PurposeOfUse code when accessing data, such as TREATDS, MLTRAINING, or PMTDS.§ This is a trust model that the AI or the agent feeding the AI will accurately indicate the PurposeOfUse when accessing data. However, this is a common trust model used in many other aspects of healthcare data access and thus is not unique to AI.
 
 #### Allow AI for ML Training
 
@@ -122,11 +144,31 @@ Consent example: [Allow AI for Clinical Decision Support](Consent-AllowCDS.html)
 
 Consent example: [Deny AI for Clinical Decision Support](Consent-DenyCDS.html)
 
+#### Allow AI for Payment Decision Support
+
+```fsh
+* provision.type = #permit
+* provision.purpose[+] = $purposeOfUse#PMTDS
+```
+
+Consent example: [Allow AI for Payment Decision Support](Consent-AllowPaymentDS.html)
+
+#### Deny AI for Payment Decision Support
+
+```fsh
+* provision.type = #deny
+* provision.purpose[+] = $purposeOfUse#PMTDS
+```
+
+Consent example: [Deny AI for Payment Decision Support](Consent-DenyPaymentDS.html)
+
 ### Specific AI Systems or Models
 
-For this we look to current identification of [AI as a FHIR Device resource](https://build.fhir.org/ig/HL7/aitransparency-ig/StructureDefinition-AI-Device.html). This Device would be indicated in a Consent when a specific AI system or model is identified in a `Consent.provision.actor.reference` with a `permit` or `deny` provision.
+For this we look to current identification of [AI as a FHIR Device resource](https://build.fhir.org/ig/HL7/aitransparency-ig/StructureDefinition-AI-Device.html). §AIC-6^AiConsentAuthor,AccessControl:When a specific AI system or model is permitted or denied, the Consent **SHALL** identify that AI in `provision.actor.reference` as a Device conforming to the AI Device profile, with a `permit` or `deny` provision.§ The [Consent about AI](StructureDefinition-ai-consent.html) profile expresses this as the `aiDevice` actor slice within the `aiProvision` slice.
 
-This model requires that all access by an AI are attributed to the FHIR Device describing the AI. This might not be the case given how the AI is orchestrated. This model also is fragile as a new model or software would be a new Device, and thus would require a new provision in the Consent to indicate consent or dissent for that new AI.
+§AIC-7^DataRequester,AiAgent:All data access by the AI **SHALL** be attributed to the FHIR Device describing that AI.§ This might not be the case given how the AI is orchestrated. This model also is fragile as a new model or software would be a new Device, and thus would require a new provision in the Consent to indicate consent or dissent for that new AI.
+
+Device example: [AI Device](Device-AIdevice.html)
 
 #### Allow a specific AI for a specific purpose
 
@@ -141,9 +183,24 @@ In this case there is simply a provision indicating that the AI is permitted for
 
 Consent example: [Allow specific AI for specific purpose](Consent-AllowSpecificAIforSpecificPurpose.html)
 
+#### Deny a specific AI for a specific purpose
+
+In this case there is simply a provision indicating that the AI is denied for a given purpose.
+
+```fsh
+* provision.type = #deny
+* provision.purpose[+] = $purposeOfUse#TREATDS
+* provision.actor[0].reference = Reference(AIdevice)
+* provision.actor[0].role.text = "CDS"
+```
+
+Consent example: [Deny specific AI for specific purpose](Consent-DenySpecificAIforSpecificPurpose.html)
+
 ### Limitations on AI Access
 
-In the FHIR Consent/Permission there is a concept of a "limit" which is limits placed on a `permit` provision/rule. Where the limit might be an obligation or refrain, might be a specific additional data tag, or might be explicit removal of data elements.  A "limit" should never be allowed to expose data where that limit can't be enforced. Specifically meaning that the recipient of the data must be trusted to enforce the obligation or refrain indicated. [Extension Registry Consent Provision Limit](https://build.fhir.org/ig/HL7/fhir-extensions/StructureDefinition-consent-provision-limit.html)
+In the FHIR Consent/Permission there is a concept of a "limit" which is limits placed on a `permit` provision/rule. Where the limit might be an obligation or refrain, might be a specific additional data tag, or might be explicit removal of data elements.  A "limit" can not result in exposing data where that limit can't be enforced. Specifically meaning that the recipient of the data needs to be trusted to enforce the obligation or refrain indicated. [Extension Registry Consent Provision Limit](https://build.fhir.org/ig/HL7/fhir-extensions/StructureDefinition-consent-provision-limit.html)
+
+The [Consent about AI](StructureDefinition-ai-consent.html) profile defines a `limit` modifierExtension slice on both the root provision and the `aiProvision` slice.
 
 #### Allow AI for ML Training on De-Identified Data
 
@@ -172,12 +229,16 @@ Note that R4 Consent does not define what applies when none of the provisions ma
 
 Consent example: [Consent with all kinds of Provisions](Consent-AllAiProvisions.html)
 
+The [Consent with provisions three levels deep](Consent-ThreeLevelsDeep.html) example shows a specific AI Device permitted as an exception to a general deny of AI clinical decision support, nesting provisions three levels deep. The [Consent about AI](StructureDefinition-ai-consent.html) profile replicates the AI provisioning at two levels of nesting, which the IG publisher recognizes as applying to any depth of nesting.
+
+Consent example: [Consent with provisions three levels deep](Consent-ThreeLevelsDeep.html)
+
 ### Conclusion
 
 The above examples are showing simply how a Consent.provision iteration can carry permit and deny to indicate consent or dissent for AI. The examples are not exhaustive, and there are many other combinations of provisions that could be used to indicate consent or dissent for AI. The examples are also not indicating any specific data elements that are being allowed or denied, but those could be added as additional restrictions on the provision.
 
-The reader should be able to take a quilted Consent that has various provisions indicating consent or dissent for various clinical use (TPO), and add in provisions indicating consent or dissent for various AI use-cases, and thus have a single Consent that indicates the patient's preferences for both traditional clinical use and AI use.
+§AIC-8^AiConsentAuthor,AccessControl:The Consent requirements indicated here **MAY** be indicated as a standalone Consent, or the provisions **MAY** be combined with other Privacy Consent requirements.§ A quilted Consent that has various provisions indicating consent or dissent for various clinical use (TPO), and add in provisions indicating consent or dissent for various AI use-cases, and thus have a single Consent that indicates the patient's preferences for both traditional clinical use and AI use.
 
-### Source
+### Requirements
 
-The source code for this Implementation Guide can be found on [GitHub](https://github.com/JohnMoehrke/ConsentAboutAI). See also the [Downloads and Analysis](download.html) page.
+§§§

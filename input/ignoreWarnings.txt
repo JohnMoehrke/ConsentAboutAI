@@ -7,3 +7,12 @@
 # understood
 The assigned auto-oid-root value '1.3.6.1.4.1.66281.2.1' is not registered in https://github.com/FHIR/ig-registry/blob/master/oid-assignments.json so isn't known to be valid
 The extension http://hl7.org/fhir/StructureDefinition/elementdefinition-maxValueSet%
+
+# yes, this example is showing TPO consent with AI consent, so this slice is not AI
+INFORMATION: Consent/AllAiProvisions: Consent.provision.provision[1]: This element does not match any known slice defined in the profile http://johnmoehrke.github.io/ConsentAboutAI/StructureDefinition/ai-consent|0.2.0 (this may not be a problem, but you should check that it's not intended to match a slice)
+
+# pinning to latest
+PIN_VERSION
+
+# understood this is not anything we can do anything about 
+MSG_DEPRECATED

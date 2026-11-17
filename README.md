@@ -28,10 +28,15 @@ Because FHIR R4 `Consent` has a single root `provision`, nested provisions alter
 - [Related Person Consent](https://github.com/JohnMoehrke/RelatedPersonConsent)
 - [Consent with Segmentation](https://github.com/JohnMoehrke/ConsentWithSegmentation)
 - [Consent with XACML encoded rules](https://github.com/JohnMoehrke/xacml-consent)
+- [AI-Transparency on FHIR](https://hl7.org/fhir/ai-transparency)
 
 ## Status
 
 This is a trial IG to explore using FHIR Consent resources. The content is from the perspective of the author and is not endorsed by HL7 or any other organization. It is intended to start a discussion and to solicit feedback.
+
+### Tooling problem
+
+The IG publisher should allow for the infinite profiling of the nested provisions, but Sushi does not seem to understand this.
 
 ## Blog Article
 
