@@ -28,11 +28,9 @@ Description: """
 A Consent profile for recording a patient's decision to permit or deny use of AI.
 
 - The scope is patient-privacy.
-- The category indicates Release of Information consent and information disclosure.
 - The patient and dateTime are required.
-- The performer is the Organization capturing and enforcing the consent.
-- The signed consent paperwork, when referenced, is a DocumentReference.
 - The root provision carries the type (permit or deny) and the applicable PurposeOfUse code(s), such as MLTRAINING or TREATDS.
+- sub provisions may be AI specific
 - When a specific AI system or model is permitted or denied, the provision.actor.reference identifies that AI as a Device.
 - A provision may carry a consent-provision-limit modifierExtension, such as an obligation to de-identify.
 """
@@ -48,12 +46,16 @@ A Consent profile for recording a patient's decision to permit or deny use of AI
 * provision obeys aic-ai-device
 * provision.type 1..1 MS
 * provision.period MS
-* provision.purpose 1..* MS
+* provision.purpose ^slicing.discriminator.type = #value
+* provision.purpose ^slicing.discriminator.path = "$this"
+* provision.purpose ^slicing.rules = #open
+* provision.purpose contains aiPurposeOfUse 1..*
+* provision.purpose[aiPurposeOfUse] from AiPurposeOfUse (required)
 * provision.purpose ^short = "PurposeOfUse code(s) addressed, such as MLTRAINING or TREATDS"
-* provision.purpose ^comment = "Any access by the AI, or by an agent feeding the AI, SHALL declare the applicable PurposeOfUse code when accessing data."
+* provision.purpose ^comment = "The consent is an AiConsent if it carries at least one purposeOfUse AI relevant code. In R4 the root provision holds all possible purposeOfUse."
 * provision.actor MS
 * provision.actor ^comment = "When a specific AI system or model is permitted or denied, the actor.reference SHALL identify that AI as a Device, and all data access by the AI SHALL be attributed to that Device."
-* provision.modifierExtension contains $limit named limit 0..1
+* provision.modifierExtension contains $limit named limit 0..*
 * provision.modifierExtension[limit] ^short = "Limits, such as an obligation to de-identify, placed on a permit provision"
 * provision.provision ^slicing.discriminator.type = #value
 * provision.provision ^slicing.discriminator.path = "purpose"
@@ -62,15 +64,18 @@ A Consent profile for recording a patient's decision to permit or deny use of AI
 * provision.provision obeys aic-ai-device
 * provision.provision[aiProvision] ^short = "Provision addressing an AI purpose of use"
 * provision.provision[aiProvision].type 1..1 MS
-* provision.provision[aiProvision].purpose 1..* MS
-* provision.provision[aiProvision].purpose from AiPurposeOfUse (required)
+* provision.provision[aiProvision].purpose ^slicing.discriminator.type = #value
+* provision.provision[aiProvision].purpose ^slicing.discriminator.path = "$this"
+* provision.provision[aiProvision].purpose ^slicing.rules = #open
+* provision.provision[aiProvision].purpose contains aiPurposeOfUse 1..*
+* provision.provision[aiProvision].purpose[aiPurposeOfUse] from AiPurposeOfUse (required)
 * provision.provision[aiProvision].actor ^slicing.discriminator.type = #type
 * provision.provision[aiProvision].actor ^slicing.discriminator.path = "reference.resolve()"
 * provision.provision[aiProvision].actor ^slicing.rules = #open
 * provision.provision[aiProvision].actor contains aiDevice 0..*
 * provision.provision[aiProvision].actor[aiDevice] ^short = "The specific AI system or model being permitted or denied"
 * provision.provision[aiProvision].actor[aiDevice].reference only Reference($AIDevice)
-* provision.provision[aiProvision].modifierExtension contains $limit named limit 0..1
+* provision.provision[aiProvision].modifierExtension contains $limit named limit 0..*
 * provision.provision[aiProvision].modifierExtension[limit] ^short = "Limits, such as an obligation to de-identify, placed on a permit provision"
 // The level 2 profiling is replicated at level 3; the publisher recognizes replicated profiling at two levels as applying to infinite levels.
 * provision.provision[aiProvision].provision ^slicing.discriminator.type = #value
@@ -80,15 +85,18 @@ A Consent profile for recording a patient's decision to permit or deny use of AI
 * provision.provision[aiProvision].provision obeys aic-ai-device
 * provision.provision[aiProvision].provision[aiProvision] ^short = "Provision addressing an AI purpose of use"
 * provision.provision[aiProvision].provision[aiProvision].type 1..1 MS
-* provision.provision[aiProvision].provision[aiProvision].purpose 1..* MS
-* provision.provision[aiProvision].provision[aiProvision].purpose from AiPurposeOfUse (required)
+* provision.provision[aiProvision].provision[aiProvision].purpose ^slicing.discriminator.type = #value
+* provision.provision[aiProvision].provision[aiProvision].purpose ^slicing.discriminator.path = "$this"
+* provision.provision[aiProvision].provision[aiProvision].purpose ^slicing.rules = #open
+* provision.provision[aiProvision].provision[aiProvision].purpose contains aiPurposeOfUse 1..*
+* provision.provision[aiProvision].provision[aiProvision].purpose[aiPurposeOfUse] from AiPurposeOfUse (required)
 * provision.provision[aiProvision].provision[aiProvision].actor ^slicing.discriminator.type = #type
 * provision.provision[aiProvision].provision[aiProvision].actor ^slicing.discriminator.path = "reference.resolve()"
 * provision.provision[aiProvision].provision[aiProvision].actor ^slicing.rules = #open
 * provision.provision[aiProvision].provision[aiProvision].actor contains aiDevice 0..*
 * provision.provision[aiProvision].provision[aiProvision].actor[aiDevice] ^short = "The specific AI system or model being permitted or denied"
 * provision.provision[aiProvision].provision[aiProvision].actor[aiDevice].reference only Reference($AIDevice)
-* provision.provision[aiProvision].provision[aiProvision].modifierExtension contains $limit named limit 0..1
+* provision.provision[aiProvision].provision[aiProvision].modifierExtension contains $limit named limit 0..*
 * provision.provision[aiProvision].provision[aiProvision].modifierExtension[limit] ^short = "Limits, such as an obligation to de-identify, placed on a permit provision"
 
 /* asked about nested context - https://chat.fhir.org/#narrow/channel/179252-IG-creation/topic/extension.20context.20on.20nested.20element/with/616962935 */
