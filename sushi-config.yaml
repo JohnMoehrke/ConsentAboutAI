@@ -38,13 +38,14 @@ parameters:  # see https://confluence.hl7.org/display/FHIR/Implementation+Guide+
   apply-version: 'true'
   path-binary: input/images
   auto-oid-root: 1.3.6.1.4.1.66281.2.1
+  pin-canonicals: pin-multiples
 
 dependencies:
   hl7.fhir.uv.extensions.r5:
     version: current
     id: extensions
     uri: http://hl7.org/fhir/extensions/ImplementationGuide/hl7.fhir.uv.extensions
-  
+
 pages:
   index.md:
     title: Home
