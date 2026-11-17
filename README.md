@@ -17,7 +17,6 @@ The IG demonstrates two complementary patterns, plus a way to attach conditions 
 
 Because FHIR R4 `Consent` has a single root `provision`, nested provisions alternate between `permit` and `deny`, each being an exception to the rule above it. The IG includes an example that combines AI provisions with ordinary Treatment, Payment, and Operations rules in one Consent.
 
-- Formal publication: [johnmoehrke.github.io/ConsentAboutAI](https://johnmoehrke.github.io/ConsentAboutAI)
 - CI build: [build.fhir.org/ig/JohnMoehrke/ConsentAboutAI](http://build.fhir.org/ig/JohnMoehrke/ConsentAboutAI/branches/main/index.html)
 - CI build for FHIR R6: [build.fhir.org/ig/JohnMoehrke/ConsentAboutAI branch R6](https://build.fhir.org/ig/JohnMoehrke/ConsentAboutAI/branches/R6/index.html)
 - GitHub source: [github.com/JohnMoehrke/ConsentAboutAI](https://github.com/JohnMoehrke/ConsentAboutAI)
