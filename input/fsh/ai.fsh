@@ -4,7 +4,21 @@ Alias: $purposeOfUse = http://terminology.hl7.org/CodeSystem/v3-ActReason
 Alias: $obligation = http://terminology.hl7.org/CodeSystem/v3-ActCode
 Alias: $limit = http://hl7.org/fhir/StructureDefinition/consent-provision-limit
 Alias: $obligationExt = http://hl7.org/fhir/StructureDefinition/obligation
-Alias: $aiDeviceType = http://terminology.hl7.org/CodeSystem/AIdeviceTypeCS
+Alias: $aiDeviceType = http://johnmoehrke.github.io/ConsentAboutAI/CodeSystem/AIdeviceTypeCS
+
+// HACK: The AI device type CodeSystem is defined by the AI-Transparency IG, which is only available for R4,
+// and that CodeSystem is not yet published in THO (terminology.hl7.org). This local definition, published under
+// this IG's own canonical, carries the one code this IG uses, so that the R6 build can validate the coding.
+// Remove this local definition, and switch the codings back to the AI-Transparency CodeSystem, when
+// AI-Transparency becomes available for R6, or when the CodeSystem is in THO.
+CodeSystem: AIdeviceTypeCS
+Id: AIdeviceTypeCS
+Title: "AI Device Type CodeSystem (temporary local copy)"
+Description: "HACK: a temporary local CodeSystem for the AI device type, carrying only the one code this IG uses. The equivalent CodeSystem is defined by the AI-Transparency IG, which is not yet available for R6, and it is not yet published in THO (terminology.hl7.org). Remove this local definition, and switch the codings to the AI-Transparency CodeSystem, when either becomes available."
+* ^experimental = false
+* ^caseSensitive = true
+* ^content = #complete
+* #Artificial-Intelligence "Artificial Intelligence"
 
 ValueSet: AiPurposeOfUse
 Id: ai-purposeofuse
@@ -18,7 +32,7 @@ Description: "The PurposeOfUse codes for AI uses of data: machine learning train
 Invariant: aic-ai-device
 Description: "When the provision purpose includes an AI purpose of use, an actor that is a Device must carry the Artificial-Intelligence device type coding. No purpose, or non-AI purposes, place no constraint on the actor. Note the AI-Transparency AI-Device profile is not available for R6, so the device type coding is enforced instead."
 Severity: #error
-Expression: "purpose.where(memberOf('http://johnmoehrke.github.io/ConsentAboutAI/ValueSet/ai-purposeofuse')).exists() implies actor.reference.resolve().ofType(Device).all(type.coding.where(system = 'http://terminology.hl7.org/CodeSystem/AIdeviceTypeCS' and code = 'Artificial-Intelligence').exists())"
+Expression: "purpose.where(memberOf('http://johnmoehrke.github.io/ConsentAboutAI/ValueSet/ai-purposeofuse')).exists() implies actor.reference.resolve().ofType(Device).all(type.coding.where(system = 'http://johnmoehrke.github.io/ConsentAboutAI/CodeSystem/AIdeviceTypeCS' and code = 'Artificial-Intelligence').exists())"
 
 Profile: AiConsent
 Parent: Consent
