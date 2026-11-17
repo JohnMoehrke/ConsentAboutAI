@@ -3,14 +3,60 @@
 ## Pages
 
 * [Home](en/index.md)
+* [Access Control](en/ActorDefinition-AccessControl-testing.md)
+* [Access Control](en/ActorDefinition-AccessControl.ai.md)
+* [](en/ActorDefinition-AccessControl.change.history.md)
+* [Access Control](en/ActorDefinition-AccessControl.md)
+* [Access Control - JSON Representation](en/ActorDefinition-AccessControl.json.md)
+* [Access Control - TTL Representation](en/ActorDefinition-AccessControl.ttl.md)
+* [Access Control - XML Representation](en/ActorDefinition-AccessControl.xml.md)
+* [AI Agent](en/ActorDefinition-AiAgent-testing.md)
+* [AI Agent](en/ActorDefinition-AiAgent.ai.md)
+* [](en/ActorDefinition-AiAgent.change.history.md)
+* [AI Agent](en/ActorDefinition-AiAgent.md)
+* [AI Agent - JSON Representation](en/ActorDefinition-AiAgent.json.md)
+* [AI Agent - TTL Representation](en/ActorDefinition-AiAgent.ttl.md)
+* [AI Agent - XML Representation](en/ActorDefinition-AiAgent.xml.md)
+* [AI-Consent Author](en/ActorDefinition-AiConsentAuthor-testing.md)
+* [AI-Consent Author](en/ActorDefinition-AiConsentAuthor.ai.md)
+* [](en/ActorDefinition-AiConsentAuthor.change.history.md)
+* [AI-Consent Author](en/ActorDefinition-AiConsentAuthor.md)
+* [AI-Consent Author - JSON Representation](en/ActorDefinition-AiConsentAuthor.json.md)
+* [AI-Consent Author - TTL Representation](en/ActorDefinition-AiConsentAuthor.ttl.md)
+* [AI-Consent Author - XML Representation](en/ActorDefinition-AiConsentAuthor.xml.md)
+* [Data Requester](en/ActorDefinition-DataRequester-testing.md)
+* [Data Requester](en/ActorDefinition-DataRequester.ai.md)
+* [](en/ActorDefinition-DataRequester.change.history.md)
+* [Data Requester](en/ActorDefinition-DataRequester.md)
+* [Data Requester - JSON Representation](en/ActorDefinition-DataRequester.json.md)
+* [Data Requester - TTL Representation](en/ActorDefinition-DataRequester.ttl.md)
+* [Data Requester - XML Representation](en/ActorDefinition-DataRequester.xml.md)
 * [Artifacts Summary](en/artifacts.md)
 * [Downloads and Analysis](en/download.md)
 
 ## Resources
 
+### ValueSets
+
+* [AI Purposes Of Use](en/ValueSet-ai-purposeofuse.md)
+
 ### Resource Profiles
 
-* [Consent with use of the Limits extension](en/StructureDefinition-ConsentWithLimits.md)
+* [Consent about AI](en/StructureDefinition-ai-consent.md)
+
+### Basics
+
+* [AccessControl](en/Basic-AccessControl.md)
+* [AiAgent](en/Basic-AiAgent.md)
+* [AiConsentAuthor](en/Basic-AiConsentAuthor.md)
+* [DataRequester](en/Basic-DataRequester.md)
+
+### CapabilityStatements
+
+* [Access Control Actor CapabilityStatement](en/CapabilityStatement-AccessControlCapability.md)
+* [AI Agent Actor CapabilityStatement](en/CapabilityStatement-AiAgentCapability.md)
+* [AI-Consent Author Actor CapabilityStatement](en/CapabilityStatement-AiConsentAuthorCapability.md)
+* [Data Requester Actor CapabilityStatement](en/CapabilityStatement-DataRequesterCapability.md)
 
 ### ImplementationGuides
 
@@ -22,8 +68,12 @@
 * [AllowCDS (Consent)](en/Consent-AllowCDS.md)
 * [AllowMLtraining (Consent)](en/Consent-AllowMLtraining.md)
 * [AllowMLtrainingOnDeIdentifiedData (Consent)](en/Consent-AllowMLtrainingOnDeIdentifiedData.md)
+* [AllowPaymentDS (Consent)](en/Consent-AllowPaymentDS.md)
 * [AllowSpecificAIforSpecificPurpose (Consent)](en/Consent-AllowSpecificAIforSpecificPurpose.md)
 * [DenyCDS (Consent)](en/Consent-DenyCDS.md)
 * [DenyMLtraining (Consent)](en/Consent-DenyMLtraining.md)
+* [DenyPaymentDS (Consent)](en/Consent-DenyPaymentDS.md)
+* [DenySpecificAIforSpecificPurpose (Consent)](en/Consent-DenySpecificAIforSpecificPurpose.md)
+* [ThreeLevelsDeep (Consent)](en/Consent-ThreeLevelsDeep.md)
 * [AIdevice (Device)](en/Device-AIdevice.md)
 * [ex-patient (Patient)](en/Patient-ex-patient.md)

@@ -1,4 +1,68 @@
 [{
+  "id" : "AccessControl",
+  "type" : "ActorDefinition",
+  "url" : "http://johnmoehrke.github.io/ConsentAboutAI/ActorDefinition/AccessControl",
+  "version" : "0.2.0",
+  "name" : "AccessControl",
+  "oids" : ["1.3.6.1.4.1.66281.2.1.12.1"]
+},
+{
+  "id" : "AiAgent",
+  "type" : "ActorDefinition",
+  "url" : "http://johnmoehrke.github.io/ConsentAboutAI/ActorDefinition/AiAgent",
+  "version" : "0.2.0",
+  "name" : "AiAgent",
+  "oids" : ["1.3.6.1.4.1.66281.2.1.12.2"]
+},
+{
+  "id" : "AiConsentAuthor",
+  "type" : "ActorDefinition",
+  "url" : "http://johnmoehrke.github.io/ConsentAboutAI/ActorDefinition/AiConsentAuthor",
+  "version" : "0.2.0",
+  "name" : "AiConsentAuthor",
+  "oids" : ["1.3.6.1.4.1.66281.2.1.12.3"]
+},
+{
+  "id" : "DataRequester",
+  "type" : "ActorDefinition",
+  "url" : "http://johnmoehrke.github.io/ConsentAboutAI/ActorDefinition/DataRequester",
+  "version" : "0.2.0",
+  "name" : "DataRequester",
+  "oids" : ["1.3.6.1.4.1.66281.2.1.12.4"]
+},
+{
+  "id" : "AccessControlCapability",
+  "type" : "CapabilityStatement",
+  "url" : "http://johnmoehrke.github.io/ConsentAboutAI/CapabilityStatement/AccessControlCapability",
+  "version" : "0.2.0",
+  "name" : "AccessControlCapability",
+  "oids" : ["1.3.6.1.4.1.66281.2.1.13.1"]
+},
+{
+  "id" : "AiAgentCapability",
+  "type" : "CapabilityStatement",
+  "url" : "http://johnmoehrke.github.io/ConsentAboutAI/CapabilityStatement/AiAgentCapability",
+  "version" : "0.2.0",
+  "name" : "AiAgentCapability",
+  "oids" : ["1.3.6.1.4.1.66281.2.1.13.2"]
+},
+{
+  "id" : "AiConsentAuthorCapability",
+  "type" : "CapabilityStatement",
+  "url" : "http://johnmoehrke.github.io/ConsentAboutAI/CapabilityStatement/AiConsentAuthorCapability",
+  "version" : "0.2.0",
+  "name" : "AiConsentAuthorCapability",
+  "oids" : ["1.3.6.1.4.1.66281.2.1.13.3"]
+},
+{
+  "id" : "DataRequesterCapability",
+  "type" : "CapabilityStatement",
+  "url" : "http://johnmoehrke.github.io/ConsentAboutAI/CapabilityStatement/DataRequesterCapability",
+  "version" : "0.2.0",
+  "name" : "DataRequesterCapability",
+  "oids" : ["1.3.6.1.4.1.66281.2.1.13.4"]
+},
+{
   "id" : "johnmoehrke.ConsentAboutAI.example",
   "type" : "ImplementationGuide",
   "url" : "http://johnmoehrke.github.io/ConsentAboutAI/ImplementationGuide/johnmoehrke.ConsentAboutAI.example",
@@ -7,10 +71,18 @@
   "oids" : ["1.3.6.1.4.1.66281.2.1"]
 },
 {
-  "id" : "ConsentWithLimits",
+  "id" : "ai-consent",
   "type" : "StructureDefinition",
-  "url" : "http://johnmoehrke.github.io/ConsentAboutAI/StructureDefinition/ConsentWithLimits",
+  "url" : "http://johnmoehrke.github.io/ConsentAboutAI/StructureDefinition/ai-consent",
   "version" : "0.2.0",
-  "name" : "ConsentWithLimits",
-  "oids" : ["1.3.6.1.4.1.66281.2.1.42.1"]
+  "name" : "AiConsent",
+  "oids" : ["1.3.6.1.4.1.66281.2.1.42.3"]
+},
+{
+  "id" : "ai-purposeofuse",
+  "type" : "ValueSet",
+  "url" : "http://johnmoehrke.github.io/ConsentAboutAI/ValueSet/ai-purposeofuse",
+  "version" : "0.2.0",
+  "name" : "AiPurposeOfUse",
+  "oids" : ["1.3.6.1.4.1.66281.2.1.48.1"]
 }]

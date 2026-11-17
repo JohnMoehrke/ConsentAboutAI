@@ -4,14 +4,14 @@
   "language" : "en",
   "text" : {
     "status" : "generated",
-    "div" : "<div xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"en\" lang=\"en\"><p class=\"res-header-id\"><b>Generated Narrative: ImplementationGuide johnmoehrke.ConsentAboutAI.example</b></p><a name=\"johnmoehrke.ConsentAboutAI.example\"> </a><a name=\"hcjohnmoehrke.ConsentAboutAI.example\"> </a><div style=\"display: inline-block; background-color: #d9e0e7; padding: 6px; margin: 4px; border: 1px solid #8da1b4; border-radius: 5px; line-height: 60%\"><p style=\"margin-bottom: 0px\">Language: en</p></div><h2>JohnMoehrkeConsentAboutAI</h2><p>The official URL for this implementation guide is: </p><pre>http://johnmoehrke.github.io/ConsentAboutAI/ImplementationGuide/johnmoehrke.ConsentAboutAI.example</pre></div>"
+    "div" : "<div xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"en\" lang=\"en\"><p class=\"res-header-id\"><b>Generated Narrative: ImplementationGuide johnmoehrke.ConsentAboutAI.example</b></p><a name=\"johnmoehrke.ConsentAboutAI.example\"> </a><a name=\"hcjohnmoehrke.ConsentAboutAI.example\"> </a><div style=\"display: inline-block; background-color: #fbffeb; padding: 6px; margin: 4px; border: 1px solid #8da1b4; border-radius: 5px; line-height: 60%\"><p style=\"margin-bottom: 0px\">Language: en</p></div><h2>JohnMoehrkeConsentAboutAI</h2><p>The official URL for this implementation guide is: </p><pre>http://johnmoehrke.github.io/ConsentAboutAI/ImplementationGuide/johnmoehrke.ConsentAboutAI.example</pre></div>"
   },
   "url" : "http://johnmoehrke.github.io/ConsentAboutAI/ImplementationGuide/johnmoehrke.ConsentAboutAI.example",
   "version" : "0.2.0",
   "name" : "JohnMoehrkeConsentAboutAI",
   "title" : "John Moehrke Consent About AI",
   "status" : "draft",
-  "date" : "2026-10-14T10:52:49-05:00",
+  "date" : "2026-11-17T11:58:11-06:00",
   "publisher" : "John Moehrke (Moehrke Research LLC)",
   "contact" : [{
     "name" : "John Moehrke (Moehrke Research LLC)",
@@ -41,12 +41,18 @@
     }],
     "uri" : "http://terminology.hl7.org/ImplementationGuide/hl7.terminology",
     "packageId" : "hl7.terminology.r4",
-    "version" : "7.4.0"
+    "version" : "7.5.0"
   },
   {
     "id" : "extensions",
     "uri" : "http://hl7.org/fhir/extensions/ImplementationGuide/hl7.fhir.uv.extensions",
     "packageId" : "hl7.fhir.uv.extensions.r4",
+    "version" : "current"
+  },
+  {
+    "id" : "aitransparency",
+    "uri" : "http://hl7.org/fhir/uv/aitransparency/ImplementationGuide/hl7.fhir.uv.aitransparency",
+    "packageId" : "hl7.fhir.uv.aitransparency",
     "version" : "current"
   }],
   "definition" : {
@@ -194,6 +200,17 @@
       {
         "url" : "value",
         "valueString" : "1.3.6.1.4.1.66281.2.1"
+      }],
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
+    },
+    {
+      "extension" : [{
+        "url" : "code",
+        "valueCode" : "pin-canonicals"
+      },
+      {
+        "url" : "value",
+        "valueString" : "pin-multiples"
       }],
       "url" : "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter"
     },
@@ -409,14 +426,110 @@
     "resource" : [{
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ActorDefinition"
+      }],
+      "reference" : {
+        "reference" : "ActorDefinition/AccessControl"
+      },
+      "name" : "Access Control",
+      "description" : "The abstract technical system given the responsibility to enforce the Consents recorded according to this guide.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "CapabilityStatement"
+      }],
+      "reference" : {
+        "reference" : "CapabilityStatement/AccessControlCapability"
+      },
+      "name" : "Access Control Actor CapabilityStatement",
+      "description" : "CapabilityStatement for the Access Control actor, which reads and evaluates Consents conforming to the Consent about AI profile in order to enforce them.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ActorDefinition"
+      }],
+      "reference" : {
+        "reference" : "ActorDefinition/AiAgent"
+      },
+      "name" : "AI Agent",
+      "description" : "The agent (gateway) that accesses data on behalf of an AI, feeding that data to the AI.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "CapabilityStatement"
+      }],
+      "reference" : {
+        "reference" : "CapabilityStatement/AiAgentCapability"
+      },
+      "name" : "AI Agent Actor CapabilityStatement",
+      "description" : "CapabilityStatement for the AI Agent actor, the agent (gateway) that accesses data on behalf of an AI, feeding that data to the AI.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
         "valueString" : "Device"
       }],
       "reference" : {
         "reference" : "Device/AIdevice"
       },
       "name" : "AI Device",
-      "description" : "A Device that indicates an AI system or model. This is not using the AI-Transparency profile in order to keep this IG simple.",
+      "description" : "A Device that indicates an AI system or model, compliant with the [AI Transparency AI-Device profile](https://build.fhir.org/ig/HL7/aitransparency-ig/StructureDefinition-AI-Device.html).",
       "exampleBoolean" : true
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ValueSet"
+      }],
+      "reference" : {
+        "reference" : "ValueSet/ai-purposeofuse"
+      },
+      "name" : "AI Purposes Of Use",
+      "description" : "The PurposeOfUse codes for AI uses of data: machine learning training, clinical decision support, and payment decision support.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ActorDefinition"
+      }],
+      "reference" : {
+        "reference" : "ActorDefinition/AiConsentAuthor"
+      },
+      "name" : "AI-Consent Author",
+      "description" : "The technical system that records the patient's decisions about AI as Consent resources conforming to the Consent about AI profile.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "CapabilityStatement"
+      }],
+      "reference" : {
+        "reference" : "CapabilityStatement/AiConsentAuthorCapability"
+      },
+      "name" : "AI-Consent Author Actor CapabilityStatement",
+      "description" : "CapabilityStatement for the AI-Consent Author actor, which records the patient's decisions about AI as Consents conforming to the Consent about AI profile.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "StructureDefinition:resource"
+      }],
+      "reference" : {
+        "reference" : "StructureDefinition/ai-consent"
+      },
+      "name" : "Consent about AI",
+      "description" : "A Consent profile for recording a patient's decision to permit or deny use of AI.\n\n- The scope is patient-privacy.\n- The patient and dateTime are required.\n- The root provision carries the type (permit or deny) and the applicable PurposeOfUse code(s), such as MLTRAINING or TREATDS.\n- sub provisions may be AI specific\n- When a specific AI system or model is permitted or denied, the provision.actor.reference identifies that AI as a Device.\n- A provision may carry a consent-provision-limit modifierExtension, such as an obligation to de-identify.",
+      "exampleBoolean" : false
     },
     {
       "extension" : [{
@@ -428,7 +541,7 @@
       },
       "name" : "Consent for Clinical Decision Support",
       "description" : "Consent for using data for clinical decision support purposes.",
-      "exampleBoolean" : true
+      "exampleCanonical" : "http://johnmoehrke.github.io/ConsentAboutAI/StructureDefinition/ai-consent"
     },
     {
       "extension" : [{
@@ -440,7 +553,7 @@
       },
       "name" : "Consent for Machine Learning Training",
       "description" : "Consent for using data for machine learning training purposes.",
-      "exampleBoolean" : true
+      "exampleCanonical" : "http://johnmoehrke.github.io/ConsentAboutAI/StructureDefinition/ai-consent"
     },
     {
       "extension" : [{
@@ -452,7 +565,19 @@
       },
       "name" : "Consent for Machine Learning Training on De-Identified Data",
       "description" : "Consent for using de-identified data for machine learning training purposes.",
-      "exampleCanonical" : "http://johnmoehrke.github.io/ConsentAboutAI/StructureDefinition/ConsentWithLimits"
+      "exampleCanonical" : "http://johnmoehrke.github.io/ConsentAboutAI/StructureDefinition/ai-consent"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Consent"
+      }],
+      "reference" : {
+        "reference" : "Consent/AllowPaymentDS"
+      },
+      "name" : "Consent for Payment Decision Support",
+      "description" : "Consent for using data for payment decision support purposes.",
+      "exampleCanonical" : "http://johnmoehrke.github.io/ConsentAboutAI/StructureDefinition/ai-consent"
     },
     {
       "extension" : [{
@@ -464,7 +589,19 @@
       },
       "name" : "Consent to allow specific AI for a specific purpose",
       "description" : "Consent to allow the use of a specific AI device for a specific purpose.\r\nIn this case a Device is used to represent the specific AI system or model. In this case the purpose is for CDS use.",
-      "exampleBoolean" : true
+      "exampleCanonical" : "http://johnmoehrke.github.io/ConsentAboutAI/StructureDefinition/ai-consent"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Consent"
+      }],
+      "reference" : {
+        "reference" : "Consent/DenySpecificAIforSpecificPurpose"
+      },
+      "name" : "Consent to deny specific AI for a specific purpose",
+      "description" : "Consent to deny the use of a specific AI device for a specific purpose.\r\nIn this case a Device is used to represent the specific AI system or model. In this case the purpose is for CDS use.",
+      "exampleCanonical" : "http://johnmoehrke.github.io/ConsentAboutAI/StructureDefinition/ai-consent"
     },
     {
       "extension" : [{
@@ -476,7 +613,7 @@
       },
       "name" : "Consent to disallow Clinical Decision Support",
       "description" : "Consent to disallow using data for clinical decision support purposes.",
-      "exampleBoolean" : true
+      "exampleCanonical" : "http://johnmoehrke.github.io/ConsentAboutAI/StructureDefinition/ai-consent"
     },
     {
       "extension" : [{
@@ -488,7 +625,19 @@
       },
       "name" : "Consent to disallow Machine Learning Training",
       "description" : "Consent to disallow using data for machine learning training purposes.",
-      "exampleBoolean" : true
+      "exampleCanonical" : "http://johnmoehrke.github.io/ConsentAboutAI/StructureDefinition/ai-consent"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "Consent"
+      }],
+      "reference" : {
+        "reference" : "Consent/DenyPaymentDS"
+      },
+      "name" : "Consent to disallow Payment Decision Support",
+      "description" : "Consent to disallow using data for payment decision support purposes.",
+      "exampleCanonical" : "http://johnmoehrke.github.io/ConsentAboutAI/StructureDefinition/ai-consent"
     },
     {
       "extension" : [{
@@ -500,18 +649,42 @@
       },
       "name" : "Consent with all kinds of Provisions",
       "description" : "Consent that includes provisions using the various AI mechanisms along with normal TPO.\r\n\r\nThis consent \r\n1. permits the patient's care team to have full access\r\n2. permits TPO purposes to have access to Normal data, but not sensitive data\r\n3. permits ML training purposes to have access to Normal de-identified data, but not sensitive data\r\n\r\nGiven that FHIR R4 Consent has only ONE root level provision, we need to extra deep nesting:\r\n\r\nProvisions\r\n- Permit all the purposes\r\n  - deny ML training for sensitive data\r\n    - permit ML training for de-identified data\r\n  - deny TPO -- just so we can skip to a permit\r\n    - permit TPO for normal confidentiality\r\n    - permit TPO for the care team for sensitive data",
-      "exampleCanonical" : "http://johnmoehrke.github.io/ConsentAboutAI/StructureDefinition/ConsentWithLimits"
+      "exampleCanonical" : "http://johnmoehrke.github.io/ConsentAboutAI/StructureDefinition/ai-consent"
     },
     {
       "extension" : [{
         "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
-        "valueString" : "StructureDefinition:resource"
+        "valueString" : "Consent"
       }],
       "reference" : {
-        "reference" : "StructureDefinition/ConsentWithLimits"
+        "reference" : "Consent/ThreeLevelsDeep"
       },
-      "name" : "Consent with use of the Limits extension",
-      "description" : "Consent profile that includes the use of the consent-provision-limit extension to express limits on the use of data for ML training.",
+      "name" : "Consent with provisions three levels deep",
+      "description" : "Consent that nests provisions three levels deep to assure that the AiConsent profiling applies at the third level.\r\n\r\nProvisions\r\n- permit TPO and AI clinical decision support purposes (level 1)\r\n  - deny AI clinical decision support (level 2)\r\n    - permit a specific AI Device for clinical decision support on Normal data, with a limit prohibiting reuse (level 3)",
+      "exampleCanonical" : "http://johnmoehrke.github.io/ConsentAboutAI/StructureDefinition/ai-consent"
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "ActorDefinition"
+      }],
+      "reference" : {
+        "reference" : "ActorDefinition/DataRequester"
+      },
+      "name" : "Data Requester",
+      "description" : "The AI system that directly requests and accesses data.",
+      "exampleBoolean" : false
+    },
+    {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/resource-information",
+        "valueString" : "CapabilityStatement"
+      }],
+      "reference" : {
+        "reference" : "CapabilityStatement/DataRequesterCapability"
+      },
+      "name" : "Data Requester Actor CapabilityStatement",
+      "description" : "CapabilityStatement for the Data Requester actor, the AI system that directly requests and accesses data.",
       "exampleBoolean" : false
     },
     {

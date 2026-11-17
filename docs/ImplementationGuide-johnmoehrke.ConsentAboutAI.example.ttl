@@ -11,14 +11,14 @@
   fhir:Resource.language [ fhir:value "en"] ;
   fhir:DomainResource.text [
      fhir:Narrative.status [ fhir:value "generated" ] ;
-     fhir:Narrative.div "<div xml:lang=\"en\" xmlns=\"http://www.w3.org/1999/xhtml\" lang=\"en\"><p class=\"res-header-id\"><b>Generated Narrative: ImplementationGuide johnmoehrke.ConsentAboutAI.example</b></p><a name=\"johnmoehrke.ConsentAboutAI.example\"> </a><a name=\"hcjohnmoehrke.ConsentAboutAI.example\"> </a><div style=\"display: inline-block; background-color: #d9e0e7; padding: 6px; margin: 4px; border: 1px solid #8da1b4; border-radius: 5px; line-height: 60%\"><p style=\"margin-bottom: 0px\">Language: en</p></div><h2>JohnMoehrkeConsentAboutAI</h2><p>The official URL for this implementation guide is: </p><pre>http://johnmoehrke.github.io/ConsentAboutAI/ImplementationGuide/johnmoehrke.ConsentAboutAI.example</pre></div>"
+     fhir:Narrative.div "<div xml:lang=\"en\" xmlns=\"http://www.w3.org/1999/xhtml\" lang=\"en\"><p class=\"res-header-id\"><b>Generated Narrative: ImplementationGuide johnmoehrke.ConsentAboutAI.example</b></p><a name=\"johnmoehrke.ConsentAboutAI.example\"> </a><a name=\"hcjohnmoehrke.ConsentAboutAI.example\"> </a><div style=\"display: inline-block; background-color: #fbffeb; padding: 6px; margin: 4px; border: 1px solid #8da1b4; border-radius: 5px; line-height: 60%\"><p style=\"margin-bottom: 0px\">Language: en</p></div><h2>JohnMoehrkeConsentAboutAI</h2><p>The official URL for this implementation guide is: </p><pre>http://johnmoehrke.github.io/ConsentAboutAI/ImplementationGuide/johnmoehrke.ConsentAboutAI.example</pre></div>"
   ] ;
   fhir:ImplementationGuide.url [ fhir:value "http://johnmoehrke.github.io/ConsentAboutAI/ImplementationGuide/johnmoehrke.ConsentAboutAI.example"] ;
   fhir:ImplementationGuide.version [ fhir:value "0.2.0"] ;
   fhir:ImplementationGuide.name [ fhir:value "JohnMoehrkeConsentAboutAI"] ;
   fhir:ImplementationGuide.title [ fhir:value "John Moehrke Consent About AI"] ;
   fhir:ImplementationGuide.status [ fhir:value "draft"] ;
-  fhir:ImplementationGuide.date [ fhir:value "2026-10-14T10:52:49-05:00"^^xsd:dateTime] ;
+  fhir:ImplementationGuide.date [ fhir:value "2026-11-17T11:58:11-06:00"^^xsd:dateTime] ;
   fhir:ImplementationGuide.publisher [ fhir:value "John Moehrke (Moehrke Research LLC)"] ;
   fhir:ImplementationGuide.contact [
      fhir:index 0 ;
@@ -60,7 +60,7 @@
        fhir:link <http://terminology.hl7.org/ImplementationGuide/hl7.terminology>
      ] ;
      fhir:ImplementationGuide.dependsOn.packageId [ fhir:value "hl7.terminology.r4" ] ;
-     fhir:ImplementationGuide.dependsOn.version [ fhir:value "7.4.0" ]
+     fhir:ImplementationGuide.dependsOn.version [ fhir:value "7.5.0" ]
   ], [
      fhir:index 1 ;
      fhir:Element.id [ fhir:value "extensions" ] ;
@@ -69,6 +69,15 @@
        fhir:link <http://hl7.org/fhir/extensions/ImplementationGuide/hl7.fhir.uv.extensions>
      ] ;
      fhir:ImplementationGuide.dependsOn.packageId [ fhir:value "hl7.fhir.uv.extensions.r4" ] ;
+     fhir:ImplementationGuide.dependsOn.version [ fhir:value "current" ]
+  ], [
+     fhir:index 2 ;
+     fhir:Element.id [ fhir:value "aitransparency" ] ;
+     fhir:ImplementationGuide.dependsOn.uri [
+       fhir:value "http://hl7.org/fhir/uv/aitransparency/ImplementationGuide/hl7.fhir.uv.aitransparency" ;
+       fhir:link <http://hl7.org/fhir/uv/aitransparency/ImplementationGuide/hl7.fhir.uv.aitransparency>
+     ] ;
+     fhir:ImplementationGuide.dependsOn.packageId [ fhir:value "hl7.fhir.uv.aitransparency" ] ;
      fhir:ImplementationGuide.dependsOn.version [ fhir:value "current" ]
   ] ;
   fhir:ImplementationGuide.definition [
@@ -237,11 +246,11 @@
        fhir:Element.extension [
          fhir:index 0 ;
          fhir:Extension.url [ fhir:value "code" ] ;
-         fhir:Extension.valueCode [ fhir:value "autoload-resources" ]
+         fhir:Extension.valueCode [ fhir:value "pin-canonicals" ]
        ], [
          fhir:index 1 ;
          fhir:Extension.url [ fhir:value "value" ] ;
-         fhir:Extension.valueString [ fhir:value "true" ]
+         fhir:Extension.valueString [ fhir:value "pin-multiples" ]
        ] ;
        fhir:Extension.url [ fhir:value "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter" ]
      ], [
@@ -249,11 +258,11 @@
        fhir:Element.extension [
          fhir:index 0 ;
          fhir:Extension.url [ fhir:value "code" ] ;
-         fhir:Extension.valueCode [ fhir:value "path-liquid-template" ]
+         fhir:Extension.valueCode [ fhir:value "autoload-resources" ]
        ], [
          fhir:index 1 ;
          fhir:Extension.url [ fhir:value "value" ] ;
-         fhir:Extension.valueString [ fhir:value "template/liquid" ]
+         fhir:Extension.valueString [ fhir:value "true" ]
        ] ;
        fhir:Extension.url [ fhir:value "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter" ]
      ], [
@@ -265,11 +274,23 @@
        ], [
          fhir:index 1 ;
          fhir:Extension.url [ fhir:value "value" ] ;
-         fhir:Extension.valueString [ fhir:value "input/liquid" ]
+         fhir:Extension.valueString [ fhir:value "template/liquid" ]
        ] ;
        fhir:Extension.url [ fhir:value "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter" ]
      ], [
        fhir:index 17 ;
+       fhir:Element.extension [
+         fhir:index 0 ;
+         fhir:Extension.url [ fhir:value "code" ] ;
+         fhir:Extension.valueCode [ fhir:value "path-liquid-template" ]
+       ], [
+         fhir:index 1 ;
+         fhir:Extension.url [ fhir:value "value" ] ;
+         fhir:Extension.valueString [ fhir:value "input/liquid" ]
+       ] ;
+       fhir:Extension.url [ fhir:value "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter" ]
+     ], [
+       fhir:index 18 ;
        fhir:Element.extension [
          fhir:index 0 ;
          fhir:Extension.url [ fhir:value "code" ] ;
@@ -281,7 +302,7 @@
        ] ;
        fhir:Extension.url [ fhir:value "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter" ]
      ], [
-       fhir:index 18 ;
+       fhir:index 19 ;
        fhir:Element.extension [
          fhir:index 0 ;
          fhir:Extension.url [ fhir:value "code" ] ;
@@ -293,7 +314,7 @@
        ] ;
        fhir:Extension.url [ fhir:value "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter" ]
      ], [
-       fhir:index 19 ;
+       fhir:index 20 ;
        fhir:Element.extension [
          fhir:index 0 ;
          fhir:Extension.url [ fhir:value "code" ] ;
@@ -305,7 +326,7 @@
        ] ;
        fhir:Extension.url [ fhir:value "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter" ]
      ], [
-       fhir:index 20 ;
+       fhir:index 21 ;
        fhir:Element.extension [
          fhir:index 0 ;
          fhir:Extension.url [ fhir:value "code" ] ;
@@ -317,7 +338,7 @@
        ] ;
        fhir:Extension.url [ fhir:value "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter" ]
      ], [
-       fhir:index 21 ;
+       fhir:index 22 ;
        fhir:Element.extension [
          fhir:index 0 ;
          fhir:Extension.url [ fhir:value "code" ] ;
@@ -329,7 +350,7 @@
        ] ;
        fhir:Extension.url [ fhir:value "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter" ]
      ], [
-       fhir:index 22 ;
+       fhir:index 23 ;
        fhir:Element.extension [
          fhir:index 0 ;
          fhir:Extension.url [ fhir:value "code" ] ;
@@ -341,7 +362,7 @@
        ] ;
        fhir:Extension.url [ fhir:value "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter" ]
      ], [
-       fhir:index 23 ;
+       fhir:index 24 ;
        fhir:Element.extension [
          fhir:index 0 ;
          fhir:Extension.url [ fhir:value "code" ] ;
@@ -353,7 +374,7 @@
        ] ;
        fhir:Extension.url [ fhir:value "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter" ]
      ], [
-       fhir:index 24 ;
+       fhir:index 25 ;
        fhir:Element.extension [
          fhir:index 0 ;
          fhir:Extension.url [ fhir:value "code" ] ;
@@ -365,7 +386,7 @@
        ] ;
        fhir:Extension.url [ fhir:value "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter" ]
      ], [
-       fhir:index 25 ;
+       fhir:index 26 ;
        fhir:Element.extension [
          fhir:index 0 ;
          fhir:Extension.url [ fhir:value "code" ] ;
@@ -377,7 +398,7 @@
        ] ;
        fhir:Extension.url [ fhir:value "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter" ]
      ], [
-       fhir:index 26 ;
+       fhir:index 27 ;
        fhir:Element.extension [
          fhir:index 0 ;
          fhir:Extension.url [ fhir:value "code" ] ;
@@ -389,7 +410,7 @@
        ] ;
        fhir:Extension.url [ fhir:value "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter" ]
      ], [
-       fhir:index 27 ;
+       fhir:index 28 ;
        fhir:Element.extension [
          fhir:index 0 ;
          fhir:Extension.url [ fhir:value "code" ] ;
@@ -401,7 +422,7 @@
        ] ;
        fhir:Extension.url [ fhir:value "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter" ]
      ], [
-       fhir:index 28 ;
+       fhir:index 29 ;
        fhir:Element.extension [
          fhir:index 0 ;
          fhir:Extension.url [ fhir:value "code" ] ;
@@ -413,7 +434,7 @@
        ] ;
        fhir:Extension.url [ fhir:value "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter" ]
      ], [
-       fhir:index 29 ;
+       fhir:index 30 ;
        fhir:Element.extension [
          fhir:index 0 ;
          fhir:Extension.url [ fhir:value "code" ] ;
@@ -425,7 +446,7 @@
        ] ;
        fhir:Extension.url [ fhir:value "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter" ]
      ], [
-       fhir:index 30 ;
+       fhir:index 31 ;
        fhir:Element.extension [
          fhir:index 0 ;
          fhir:Extension.url [ fhir:value "code" ] ;
@@ -437,7 +458,7 @@
        ] ;
        fhir:Extension.url [ fhir:value "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter" ]
      ], [
-       fhir:index 31 ;
+       fhir:index 32 ;
        fhir:Element.extension [
          fhir:index 0 ;
          fhir:Extension.url [ fhir:value "code" ] ;
@@ -449,7 +470,7 @@
        ] ;
        fhir:Extension.url [ fhir:value "http://hl7.org/fhir/tools/StructureDefinition/ig-parameter" ]
      ], [
-       fhir:index 32 ;
+       fhir:index 33 ;
        fhir:Element.extension [
          fhir:index 0 ;
          fhir:Extension.url [ fhir:value "code" ] ;
@@ -466,6 +487,62 @@
        fhir:Element.extension [
          fhir:index 0 ;
          fhir:Extension.url [ fhir:value "http://hl7.org/fhir/tools/StructureDefinition/resource-information" ] ;
+         fhir:Extension.valueString [ fhir:value "ActorDefinition" ]
+       ] ;
+       fhir:ImplementationGuide.definition.resource.reference [
+         fhir:link <http://johnmoehrke.github.io/ConsentAboutAI/ActorDefinition/AccessControl> ;
+         fhir:Reference.reference [ fhir:value "ActorDefinition/AccessControl" ]
+       ] ;
+       fhir:ImplementationGuide.definition.resource.name [ fhir:value "Access Control" ] ;
+       fhir:ImplementationGuide.definition.resource.description [ fhir:value "The abstract technical system given the responsibility to enforce the Consents recorded according to this guide." ] ;
+       fhir:ImplementationGuide.definition.resource.exampleBoolean [ fhir:value "false"^^xsd:boolean ]
+     ], [
+       fhir:index 1 ;
+       fhir:Element.extension [
+         fhir:index 0 ;
+         fhir:Extension.url [ fhir:value "http://hl7.org/fhir/tools/StructureDefinition/resource-information" ] ;
+         fhir:Extension.valueString [ fhir:value "CapabilityStatement" ]
+       ] ;
+       fhir:ImplementationGuide.definition.resource.reference [
+         fhir:link <http://johnmoehrke.github.io/ConsentAboutAI/CapabilityStatement/AccessControlCapability> ;
+         fhir:Reference.reference [ fhir:value "CapabilityStatement/AccessControlCapability" ]
+       ] ;
+       fhir:ImplementationGuide.definition.resource.name [ fhir:value "Access Control Actor CapabilityStatement" ] ;
+       fhir:ImplementationGuide.definition.resource.description [ fhir:value "CapabilityStatement for the Access Control actor, which reads and evaluates Consents conforming to the Consent about AI profile in order to enforce them." ] ;
+       fhir:ImplementationGuide.definition.resource.exampleBoolean [ fhir:value "false"^^xsd:boolean ]
+     ], [
+       fhir:index 2 ;
+       fhir:Element.extension [
+         fhir:index 0 ;
+         fhir:Extension.url [ fhir:value "http://hl7.org/fhir/tools/StructureDefinition/resource-information" ] ;
+         fhir:Extension.valueString [ fhir:value "ActorDefinition" ]
+       ] ;
+       fhir:ImplementationGuide.definition.resource.reference [
+         fhir:link <http://johnmoehrke.github.io/ConsentAboutAI/ActorDefinition/AiAgent> ;
+         fhir:Reference.reference [ fhir:value "ActorDefinition/AiAgent" ]
+       ] ;
+       fhir:ImplementationGuide.definition.resource.name [ fhir:value "AI Agent" ] ;
+       fhir:ImplementationGuide.definition.resource.description [ fhir:value "The agent (gateway) that accesses data on behalf of an AI, feeding that data to the AI." ] ;
+       fhir:ImplementationGuide.definition.resource.exampleBoolean [ fhir:value "false"^^xsd:boolean ]
+     ], [
+       fhir:index 3 ;
+       fhir:Element.extension [
+         fhir:index 0 ;
+         fhir:Extension.url [ fhir:value "http://hl7.org/fhir/tools/StructureDefinition/resource-information" ] ;
+         fhir:Extension.valueString [ fhir:value "CapabilityStatement" ]
+       ] ;
+       fhir:ImplementationGuide.definition.resource.reference [
+         fhir:link <http://johnmoehrke.github.io/ConsentAboutAI/CapabilityStatement/AiAgentCapability> ;
+         fhir:Reference.reference [ fhir:value "CapabilityStatement/AiAgentCapability" ]
+       ] ;
+       fhir:ImplementationGuide.definition.resource.name [ fhir:value "AI Agent Actor CapabilityStatement" ] ;
+       fhir:ImplementationGuide.definition.resource.description [ fhir:value "CapabilityStatement for the AI Agent actor, the agent (gateway) that accesses data on behalf of an AI, feeding that data to the AI." ] ;
+       fhir:ImplementationGuide.definition.resource.exampleBoolean [ fhir:value "false"^^xsd:boolean ]
+     ], [
+       fhir:index 4 ;
+       fhir:Element.extension [
+         fhir:index 0 ;
+         fhir:Extension.url [ fhir:value "http://hl7.org/fhir/tools/StructureDefinition/resource-information" ] ;
          fhir:Extension.valueString [ fhir:value "Device" ]
        ] ;
        fhir:ImplementationGuide.definition.resource.reference [
@@ -473,10 +550,66 @@
          fhir:Reference.reference [ fhir:value "Device/AIdevice" ]
        ] ;
        fhir:ImplementationGuide.definition.resource.name [ fhir:value "AI Device" ] ;
-       fhir:ImplementationGuide.definition.resource.description [ fhir:value "A Device that indicates an AI system or model. This is not using the AI-Transparency profile in order to keep this IG simple." ] ;
+       fhir:ImplementationGuide.definition.resource.description [ fhir:value "A Device that indicates an AI system or model, compliant with the [AI Transparency AI-Device profile](https://build.fhir.org/ig/HL7/aitransparency-ig/StructureDefinition-AI-Device.html)." ] ;
        fhir:ImplementationGuide.definition.resource.exampleBoolean [ fhir:value "true"^^xsd:boolean ]
      ], [
-       fhir:index 1 ;
+       fhir:index 5 ;
+       fhir:Element.extension [
+         fhir:index 0 ;
+         fhir:Extension.url [ fhir:value "http://hl7.org/fhir/tools/StructureDefinition/resource-information" ] ;
+         fhir:Extension.valueString [ fhir:value "ValueSet" ]
+       ] ;
+       fhir:ImplementationGuide.definition.resource.reference [
+         fhir:link <http://johnmoehrke.github.io/ConsentAboutAI/ValueSet/ai-purposeofuse> ;
+         fhir:Reference.reference [ fhir:value "ValueSet/ai-purposeofuse" ]
+       ] ;
+       fhir:ImplementationGuide.definition.resource.name [ fhir:value "AI Purposes Of Use" ] ;
+       fhir:ImplementationGuide.definition.resource.description [ fhir:value "The PurposeOfUse codes for AI uses of data: machine learning training, clinical decision support, and payment decision support." ] ;
+       fhir:ImplementationGuide.definition.resource.exampleBoolean [ fhir:value "false"^^xsd:boolean ]
+     ], [
+       fhir:index 6 ;
+       fhir:Element.extension [
+         fhir:index 0 ;
+         fhir:Extension.url [ fhir:value "http://hl7.org/fhir/tools/StructureDefinition/resource-information" ] ;
+         fhir:Extension.valueString [ fhir:value "ActorDefinition" ]
+       ] ;
+       fhir:ImplementationGuide.definition.resource.reference [
+         fhir:link <http://johnmoehrke.github.io/ConsentAboutAI/ActorDefinition/AiConsentAuthor> ;
+         fhir:Reference.reference [ fhir:value "ActorDefinition/AiConsentAuthor" ]
+       ] ;
+       fhir:ImplementationGuide.definition.resource.name [ fhir:value "AI-Consent Author" ] ;
+       fhir:ImplementationGuide.definition.resource.description [ fhir:value "The technical system that records the patient's decisions about AI as Consent resources conforming to the Consent about AI profile." ] ;
+       fhir:ImplementationGuide.definition.resource.exampleBoolean [ fhir:value "false"^^xsd:boolean ]
+     ], [
+       fhir:index 7 ;
+       fhir:Element.extension [
+         fhir:index 0 ;
+         fhir:Extension.url [ fhir:value "http://hl7.org/fhir/tools/StructureDefinition/resource-information" ] ;
+         fhir:Extension.valueString [ fhir:value "CapabilityStatement" ]
+       ] ;
+       fhir:ImplementationGuide.definition.resource.reference [
+         fhir:link <http://johnmoehrke.github.io/ConsentAboutAI/CapabilityStatement/AiConsentAuthorCapability> ;
+         fhir:Reference.reference [ fhir:value "CapabilityStatement/AiConsentAuthorCapability" ]
+       ] ;
+       fhir:ImplementationGuide.definition.resource.name [ fhir:value "AI-Consent Author Actor CapabilityStatement" ] ;
+       fhir:ImplementationGuide.definition.resource.description [ fhir:value "CapabilityStatement for the AI-Consent Author actor, which records the patient's decisions about AI as Consents conforming to the Consent about AI profile." ] ;
+       fhir:ImplementationGuide.definition.resource.exampleBoolean [ fhir:value "false"^^xsd:boolean ]
+     ], [
+       fhir:index 8 ;
+       fhir:Element.extension [
+         fhir:index 0 ;
+         fhir:Extension.url [ fhir:value "http://hl7.org/fhir/tools/StructureDefinition/resource-information" ] ;
+         fhir:Extension.valueString [ fhir:value "StructureDefinition:resource" ]
+       ] ;
+       fhir:ImplementationGuide.definition.resource.reference [
+         fhir:link <http://johnmoehrke.github.io/ConsentAboutAI/StructureDefinition/ai-consent> ;
+         fhir:Reference.reference [ fhir:value "StructureDefinition/ai-consent" ]
+       ] ;
+       fhir:ImplementationGuide.definition.resource.name [ fhir:value "Consent about AI" ] ;
+       fhir:ImplementationGuide.definition.resource.description [ fhir:value "A Consent profile for recording a patient's decision to permit or deny use of AI.\n\n- The scope is patient-privacy.\n- The patient and dateTime are required.\n- The root provision carries the type (permit or deny) and the applicable PurposeOfUse code(s), such as MLTRAINING or TREATDS.\n- sub provisions may be AI specific\n- When a specific AI system or model is permitted or denied, the provision.actor.reference identifies that AI as a Device.\n- A provision may carry a consent-provision-limit modifierExtension, such as an obligation to de-identify." ] ;
+       fhir:ImplementationGuide.definition.resource.exampleBoolean [ fhir:value "false"^^xsd:boolean ]
+     ], [
+       fhir:index 9 ;
        fhir:Element.extension [
          fhir:index 0 ;
          fhir:Extension.url [ fhir:value "http://hl7.org/fhir/tools/StructureDefinition/resource-information" ] ;
@@ -488,9 +621,12 @@
        ] ;
        fhir:ImplementationGuide.definition.resource.name [ fhir:value "Consent for Clinical Decision Support" ] ;
        fhir:ImplementationGuide.definition.resource.description [ fhir:value "Consent for using data for clinical decision support purposes." ] ;
-       fhir:ImplementationGuide.definition.resource.exampleBoolean [ fhir:value "true"^^xsd:boolean ]
+       fhir:ImplementationGuide.definition.resource.exampleCanonical [
+         fhir:value "http://johnmoehrke.github.io/ConsentAboutAI/StructureDefinition/ai-consent" ;
+         fhir:link <http://johnmoehrke.github.io/ConsentAboutAI/StructureDefinition/ai-consent>
+       ]
      ], [
-       fhir:index 2 ;
+       fhir:index 10 ;
        fhir:Element.extension [
          fhir:index 0 ;
          fhir:Extension.url [ fhir:value "http://hl7.org/fhir/tools/StructureDefinition/resource-information" ] ;
@@ -502,9 +638,12 @@
        ] ;
        fhir:ImplementationGuide.definition.resource.name [ fhir:value "Consent for Machine Learning Training" ] ;
        fhir:ImplementationGuide.definition.resource.description [ fhir:value "Consent for using data for machine learning training purposes." ] ;
-       fhir:ImplementationGuide.definition.resource.exampleBoolean [ fhir:value "true"^^xsd:boolean ]
+       fhir:ImplementationGuide.definition.resource.exampleCanonical [
+         fhir:value "http://johnmoehrke.github.io/ConsentAboutAI/StructureDefinition/ai-consent" ;
+         fhir:link <http://johnmoehrke.github.io/ConsentAboutAI/StructureDefinition/ai-consent>
+       ]
      ], [
-       fhir:index 3 ;
+       fhir:index 11 ;
        fhir:Element.extension [
          fhir:index 0 ;
          fhir:Extension.url [ fhir:value "http://hl7.org/fhir/tools/StructureDefinition/resource-information" ] ;
@@ -517,11 +656,28 @@
        fhir:ImplementationGuide.definition.resource.name [ fhir:value "Consent for Machine Learning Training on De-Identified Data" ] ;
        fhir:ImplementationGuide.definition.resource.description [ fhir:value "Consent for using de-identified data for machine learning training purposes." ] ;
        fhir:ImplementationGuide.definition.resource.exampleCanonical [
-         fhir:value "http://johnmoehrke.github.io/ConsentAboutAI/StructureDefinition/ConsentWithLimits" ;
-         fhir:link <http://johnmoehrke.github.io/ConsentAboutAI/StructureDefinition/ConsentWithLimits>
+         fhir:value "http://johnmoehrke.github.io/ConsentAboutAI/StructureDefinition/ai-consent" ;
+         fhir:link <http://johnmoehrke.github.io/ConsentAboutAI/StructureDefinition/ai-consent>
        ]
      ], [
-       fhir:index 4 ;
+       fhir:index 12 ;
+       fhir:Element.extension [
+         fhir:index 0 ;
+         fhir:Extension.url [ fhir:value "http://hl7.org/fhir/tools/StructureDefinition/resource-information" ] ;
+         fhir:Extension.valueString [ fhir:value "Consent" ]
+       ] ;
+       fhir:ImplementationGuide.definition.resource.reference [
+         fhir:link <http://johnmoehrke.github.io/ConsentAboutAI/Consent/AllowPaymentDS> ;
+         fhir:Reference.reference [ fhir:value "Consent/AllowPaymentDS" ]
+       ] ;
+       fhir:ImplementationGuide.definition.resource.name [ fhir:value "Consent for Payment Decision Support" ] ;
+       fhir:ImplementationGuide.definition.resource.description [ fhir:value "Consent for using data for payment decision support purposes." ] ;
+       fhir:ImplementationGuide.definition.resource.exampleCanonical [
+         fhir:value "http://johnmoehrke.github.io/ConsentAboutAI/StructureDefinition/ai-consent" ;
+         fhir:link <http://johnmoehrke.github.io/ConsentAboutAI/StructureDefinition/ai-consent>
+       ]
+     ], [
+       fhir:index 13 ;
        fhir:Element.extension [
          fhir:index 0 ;
          fhir:Extension.url [ fhir:value "http://hl7.org/fhir/tools/StructureDefinition/resource-information" ] ;
@@ -533,9 +689,29 @@
        ] ;
        fhir:ImplementationGuide.definition.resource.name [ fhir:value "Consent to allow specific AI for a specific purpose" ] ;
        fhir:ImplementationGuide.definition.resource.description [ fhir:value "Consent to allow the use of a specific AI device for a specific purpose.\r\nIn this case a Device is used to represent the specific AI system or model. In this case the purpose is for CDS use." ] ;
-       fhir:ImplementationGuide.definition.resource.exampleBoolean [ fhir:value "true"^^xsd:boolean ]
+       fhir:ImplementationGuide.definition.resource.exampleCanonical [
+         fhir:value "http://johnmoehrke.github.io/ConsentAboutAI/StructureDefinition/ai-consent" ;
+         fhir:link <http://johnmoehrke.github.io/ConsentAboutAI/StructureDefinition/ai-consent>
+       ]
      ], [
-       fhir:index 5 ;
+       fhir:index 14 ;
+       fhir:Element.extension [
+         fhir:index 0 ;
+         fhir:Extension.url [ fhir:value "http://hl7.org/fhir/tools/StructureDefinition/resource-information" ] ;
+         fhir:Extension.valueString [ fhir:value "Consent" ]
+       ] ;
+       fhir:ImplementationGuide.definition.resource.reference [
+         fhir:link <http://johnmoehrke.github.io/ConsentAboutAI/Consent/DenySpecificAIforSpecificPurpose> ;
+         fhir:Reference.reference [ fhir:value "Consent/DenySpecificAIforSpecificPurpose" ]
+       ] ;
+       fhir:ImplementationGuide.definition.resource.name [ fhir:value "Consent to deny specific AI for a specific purpose" ] ;
+       fhir:ImplementationGuide.definition.resource.description [ fhir:value "Consent to deny the use of a specific AI device for a specific purpose.\r\nIn this case a Device is used to represent the specific AI system or model. In this case the purpose is for CDS use." ] ;
+       fhir:ImplementationGuide.definition.resource.exampleCanonical [
+         fhir:value "http://johnmoehrke.github.io/ConsentAboutAI/StructureDefinition/ai-consent" ;
+         fhir:link <http://johnmoehrke.github.io/ConsentAboutAI/StructureDefinition/ai-consent>
+       ]
+     ], [
+       fhir:index 15 ;
        fhir:Element.extension [
          fhir:index 0 ;
          fhir:Extension.url [ fhir:value "http://hl7.org/fhir/tools/StructureDefinition/resource-information" ] ;
@@ -547,9 +723,12 @@
        ] ;
        fhir:ImplementationGuide.definition.resource.name [ fhir:value "Consent to disallow Clinical Decision Support" ] ;
        fhir:ImplementationGuide.definition.resource.description [ fhir:value "Consent to disallow using data for clinical decision support purposes." ] ;
-       fhir:ImplementationGuide.definition.resource.exampleBoolean [ fhir:value "true"^^xsd:boolean ]
+       fhir:ImplementationGuide.definition.resource.exampleCanonical [
+         fhir:value "http://johnmoehrke.github.io/ConsentAboutAI/StructureDefinition/ai-consent" ;
+         fhir:link <http://johnmoehrke.github.io/ConsentAboutAI/StructureDefinition/ai-consent>
+       ]
      ], [
-       fhir:index 6 ;
+       fhir:index 16 ;
        fhir:Element.extension [
          fhir:index 0 ;
          fhir:Extension.url [ fhir:value "http://hl7.org/fhir/tools/StructureDefinition/resource-information" ] ;
@@ -561,9 +740,29 @@
        ] ;
        fhir:ImplementationGuide.definition.resource.name [ fhir:value "Consent to disallow Machine Learning Training" ] ;
        fhir:ImplementationGuide.definition.resource.description [ fhir:value "Consent to disallow using data for machine learning training purposes." ] ;
-       fhir:ImplementationGuide.definition.resource.exampleBoolean [ fhir:value "true"^^xsd:boolean ]
+       fhir:ImplementationGuide.definition.resource.exampleCanonical [
+         fhir:value "http://johnmoehrke.github.io/ConsentAboutAI/StructureDefinition/ai-consent" ;
+         fhir:link <http://johnmoehrke.github.io/ConsentAboutAI/StructureDefinition/ai-consent>
+       ]
      ], [
-       fhir:index 7 ;
+       fhir:index 17 ;
+       fhir:Element.extension [
+         fhir:index 0 ;
+         fhir:Extension.url [ fhir:value "http://hl7.org/fhir/tools/StructureDefinition/resource-information" ] ;
+         fhir:Extension.valueString [ fhir:value "Consent" ]
+       ] ;
+       fhir:ImplementationGuide.definition.resource.reference [
+         fhir:link <http://johnmoehrke.github.io/ConsentAboutAI/Consent/DenyPaymentDS> ;
+         fhir:Reference.reference [ fhir:value "Consent/DenyPaymentDS" ]
+       ] ;
+       fhir:ImplementationGuide.definition.resource.name [ fhir:value "Consent to disallow Payment Decision Support" ] ;
+       fhir:ImplementationGuide.definition.resource.description [ fhir:value "Consent to disallow using data for payment decision support purposes." ] ;
+       fhir:ImplementationGuide.definition.resource.exampleCanonical [
+         fhir:value "http://johnmoehrke.github.io/ConsentAboutAI/StructureDefinition/ai-consent" ;
+         fhir:link <http://johnmoehrke.github.io/ConsentAboutAI/StructureDefinition/ai-consent>
+       ]
+     ], [
+       fhir:index 18 ;
        fhir:Element.extension [
          fhir:index 0 ;
          fhir:Extension.url [ fhir:value "http://hl7.org/fhir/tools/StructureDefinition/resource-information" ] ;
@@ -576,25 +775,56 @@
        fhir:ImplementationGuide.definition.resource.name [ fhir:value "Consent with all kinds of Provisions" ] ;
        fhir:ImplementationGuide.definition.resource.description [ fhir:value "Consent that includes provisions using the various AI mechanisms along with normal TPO.\r\n\r\nThis consent \r\n1. permits the patient's care team to have full access\r\n2. permits TPO purposes to have access to Normal data, but not sensitive data\r\n3. permits ML training purposes to have access to Normal de-identified data, but not sensitive data\r\n\r\nGiven that FHIR R4 Consent has only ONE root level provision, we need to extra deep nesting:\r\n\r\nProvisions\r\n- Permit all the purposes\r\n  - deny ML training for sensitive data\r\n    - permit ML training for de-identified data\r\n  - deny TPO -- just so we can skip to a permit\r\n    - permit TPO for normal confidentiality\r\n    - permit TPO for the care team for sensitive data" ] ;
        fhir:ImplementationGuide.definition.resource.exampleCanonical [
-         fhir:value "http://johnmoehrke.github.io/ConsentAboutAI/StructureDefinition/ConsentWithLimits" ;
-         fhir:link <http://johnmoehrke.github.io/ConsentAboutAI/StructureDefinition/ConsentWithLimits>
+         fhir:value "http://johnmoehrke.github.io/ConsentAboutAI/StructureDefinition/ai-consent" ;
+         fhir:link <http://johnmoehrke.github.io/ConsentAboutAI/StructureDefinition/ai-consent>
        ]
      ], [
-       fhir:index 8 ;
+       fhir:index 19 ;
        fhir:Element.extension [
          fhir:index 0 ;
          fhir:Extension.url [ fhir:value "http://hl7.org/fhir/tools/StructureDefinition/resource-information" ] ;
-         fhir:Extension.valueString [ fhir:value "StructureDefinition:resource" ]
+         fhir:Extension.valueString [ fhir:value "Consent" ]
        ] ;
        fhir:ImplementationGuide.definition.resource.reference [
-         fhir:link <http://johnmoehrke.github.io/ConsentAboutAI/StructureDefinition/ConsentWithLimits> ;
-         fhir:Reference.reference [ fhir:value "StructureDefinition/ConsentWithLimits" ]
+         fhir:link <http://johnmoehrke.github.io/ConsentAboutAI/Consent/ThreeLevelsDeep> ;
+         fhir:Reference.reference [ fhir:value "Consent/ThreeLevelsDeep" ]
        ] ;
-       fhir:ImplementationGuide.definition.resource.name [ fhir:value "Consent with use of the Limits extension" ] ;
-       fhir:ImplementationGuide.definition.resource.description [ fhir:value "Consent profile that includes the use of the consent-provision-limit extension to express limits on the use of data for ML training." ] ;
+       fhir:ImplementationGuide.definition.resource.name [ fhir:value "Consent with provisions three levels deep" ] ;
+       fhir:ImplementationGuide.definition.resource.description [ fhir:value "Consent that nests provisions three levels deep to assure that the AiConsent profiling applies at the third level.\r\n\r\nProvisions\r\n- permit TPO and AI clinical decision support purposes (level 1)\r\n  - deny AI clinical decision support (level 2)\r\n    - permit a specific AI Device for clinical decision support on Normal data, with a limit prohibiting reuse (level 3)" ] ;
+       fhir:ImplementationGuide.definition.resource.exampleCanonical [
+         fhir:value "http://johnmoehrke.github.io/ConsentAboutAI/StructureDefinition/ai-consent" ;
+         fhir:link <http://johnmoehrke.github.io/ConsentAboutAI/StructureDefinition/ai-consent>
+       ]
+     ], [
+       fhir:index 20 ;
+       fhir:Element.extension [
+         fhir:index 0 ;
+         fhir:Extension.url [ fhir:value "http://hl7.org/fhir/tools/StructureDefinition/resource-information" ] ;
+         fhir:Extension.valueString [ fhir:value "ActorDefinition" ]
+       ] ;
+       fhir:ImplementationGuide.definition.resource.reference [
+         fhir:link <http://johnmoehrke.github.io/ConsentAboutAI/ActorDefinition/DataRequester> ;
+         fhir:Reference.reference [ fhir:value "ActorDefinition/DataRequester" ]
+       ] ;
+       fhir:ImplementationGuide.definition.resource.name [ fhir:value "Data Requester" ] ;
+       fhir:ImplementationGuide.definition.resource.description [ fhir:value "The AI system that directly requests and accesses data." ] ;
        fhir:ImplementationGuide.definition.resource.exampleBoolean [ fhir:value "false"^^xsd:boolean ]
      ], [
-       fhir:index 9 ;
+       fhir:index 21 ;
+       fhir:Element.extension [
+         fhir:index 0 ;
+         fhir:Extension.url [ fhir:value "http://hl7.org/fhir/tools/StructureDefinition/resource-information" ] ;
+         fhir:Extension.valueString [ fhir:value "CapabilityStatement" ]
+       ] ;
+       fhir:ImplementationGuide.definition.resource.reference [
+         fhir:link <http://johnmoehrke.github.io/ConsentAboutAI/CapabilityStatement/DataRequesterCapability> ;
+         fhir:Reference.reference [ fhir:value "CapabilityStatement/DataRequesterCapability" ]
+       ] ;
+       fhir:ImplementationGuide.definition.resource.name [ fhir:value "Data Requester Actor CapabilityStatement" ] ;
+       fhir:ImplementationGuide.definition.resource.description [ fhir:value "CapabilityStatement for the Data Requester actor, the AI system that directly requests and accesses data." ] ;
+       fhir:ImplementationGuide.definition.resource.exampleBoolean [ fhir:value "false"^^xsd:boolean ]
+     ], [
+       fhir:index 22 ;
        fhir:Element.extension [
          fhir:index 0 ;
          fhir:Extension.url [ fhir:value "http://hl7.org/fhir/tools/StructureDefinition/resource-information" ] ;
