@@ -41,12 +41,11 @@ Title: "Consent about AI"
 Description: """
 A Consent profile for recording a patient's decision to permit or deny use of AI.
 
-- The category indicates Release of Information consent and information disclosure.
-- The subject and date are required.
-- The controller is the Organization capturing and enforcing the consent.
-- The signed consent paperwork, when referenced, is a DocumentReference.
-- The decision carries the default (permit or deny), and each provision is an exception carrying the applicable PurposeOfUse code(s), such as MLTRAINING or TREATDS.
-- When a specific AI system or model is permitted or denied, the provision.actor.reference identifies that AI as a Device carrying the Artificial-Intelligence device type.
+- The scope is patient-privacy.
+- The patient and dateTime are required.
+- The root provision carries the type (permit or deny) and the applicable PurposeOfUse code(s), such as MLTRAINING or TREATDS.
+- sub provisions may be AI specific
+- When a specific AI system or model is permitted or denied, the provision.actor.reference identifies that AI as a Device.
 - A provision may carry a consent-provision-limit modifierExtension, such as an obligation to de-identify.
 """
 // Obligations tying this profile to the Actors: the AI-Consent Author populates conformant Consents; the Access Control processes (enforces) them.
@@ -62,17 +61,20 @@ A Consent profile for recording a patient's decision to permit or deny use of AI
 * provision obeys aic-ai-device
 * provision.provision obeys aic-ai-device
 // The limit may appear on any provision; defined at two levels of nesting, which the publisher recognizes as applying to infinite levels.
-* provision.modifierExtension contains $limit named limit 0..1
+* provision.modifierExtension contains $limit named limit 0..*
 * provision.modifierExtension[limit] ^short = "Limits, such as an obligation to de-identify, placed on a permit provision"
-* provision.provision.modifierExtension contains $limit named limit 0..1
+* provision.provision.modifierExtension contains $limit named limit 0..*
 * provision.provision.modifierExtension[limit] ^short = "Limits, such as an obligation to de-identify, placed on a permit provision"
 * provision ^slicing.discriminator.type = #value
 * provision ^slicing.discriminator.path = "purpose"
 * provision ^slicing.rules = #open
 * provision contains aiProvision 0..*
 * provision[aiProvision] ^short = "Provision addressing an AI purpose of use"
-* provision[aiProvision].purpose 1..* MS
-* provision[aiProvision].purpose from AiPurposeOfUse (required)
+* provision[aiProvision].purpose ^slicing.discriminator.type = #value
+* provision[aiProvision].purpose ^slicing.discriminator.path = "$this"
+* provision[aiProvision].purpose ^slicing.rules = #open
+* provision[aiProvision].purpose contains aiPurposeOfUse 1..*
+* provision[aiProvision].purpose[aiPurposeOfUse] from AiPurposeOfUse (required)
 * provision[aiProvision].purpose ^short = "PurposeOfUse code(s) addressed, such as MLTRAINING or TREATDS"
 * provision[aiProvision].purpose ^comment = "Any access by the AI, or by an agent feeding the AI, SHALL declare the applicable PurposeOfUse code when accessing data."
 * provision[aiProvision].actor MS
@@ -89,8 +91,11 @@ A Consent profile for recording a patient's decision to permit or deny use of AI
 * provision[aiProvision].provision ^slicing.rules = #open
 * provision[aiProvision].provision contains aiProvision 0..*
 * provision[aiProvision].provision[aiProvision] ^short = "Provision addressing an AI purpose of use"
-* provision[aiProvision].provision[aiProvision].purpose 1..* MS
-* provision[aiProvision].provision[aiProvision].purpose from AiPurposeOfUse (required)
+* provision[aiProvision].provision[aiProvision].purpose ^slicing.discriminator.type = #value
+* provision[aiProvision].provision[aiProvision].purpose ^slicing.discriminator.path = "$this"
+* provision[aiProvision].provision[aiProvision].purpose ^slicing.rules = #open
+* provision[aiProvision].provision[aiProvision].purpose contains aiPurposeOfUse 1..*
+* provision[aiProvision].provision[aiProvision].purpose[aiPurposeOfUse] from AiPurposeOfUse (required)
 * provision[aiProvision].provision[aiProvision].actor ^slicing.discriminator.type = #type
 * provision[aiProvision].provision[aiProvision].actor ^slicing.discriminator.path = "reference.resolve()"
 * provision[aiProvision].provision[aiProvision].actor ^slicing.rules = #open
