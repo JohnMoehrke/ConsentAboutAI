@@ -19,9 +19,8 @@ The IG demonstrates two complementary patterns, plus a way to attach conditions 
 
 In FHIR R6, `Consent.decision` carries the default action and each `Consent.provision` is an exception to it. Because R6 allows many root level provisions, a Consent that mixes AI rules with ordinary Treatment, Payment, and Operations rules stays comparatively flat. The IG includes a worked example of exactly that.
 
-- CI build for this R6 branch: [build.fhir.org/ig/JohnMoehrke/ConsentAboutAI branch R6](https://build.fhir.org/ig/JohnMoehrke/ConsentAboutAI/branches/R6/index.html)
-- CI build for the R4 main branch: [build.fhir.org/ig/JohnMoehrke/ConsentAboutAI](http://build.fhir.org/ig/JohnMoehrke/ConsentAboutAI/branches/main/index.html)
-- Formal publication (R4): [johnmoehrke.github.io/ConsentAboutAI](https://johnmoehrke.github.io/ConsentAboutAI)
+- CI build: [build.fhir.org/ig/JohnMoehrke/ConsentAboutAI](http://build.fhir.org/ig/JohnMoehrke/ConsentAboutAI/branches/main/index.html)
+- CI build for FHIR R6: [build.fhir.org/ig/JohnMoehrke/ConsentAboutAI branch R6](https://build.fhir.org/ig/JohnMoehrke/ConsentAboutAI/branches/R6/index.html)
 - GitHub source: [github.com/JohnMoehrke/ConsentAboutAI](https://github.com/JohnMoehrke/ConsentAboutAI)
 
 ## Related Consent Implementation Guides

@@ -12,4 +12,6 @@ www
 /_genonce.bat
 /_genonce.sh
 .index.json
+/_build.sh
+/_build.bat
 docs
