@@ -49,11 +49,11 @@ subject of the consent
 }
 class Consent {
 status: active
-scope: patient-privacy
 category: Release of information
-dateTime
-policy.uri
-provision.type: permit or deny
+subject
+date
+policyBasis.uri
+decision: permit or deny (the default)
 provision.purpose: MLTRAINING, TREATDS, PMTDS (TPO in combined consents)
 provision.securityLabel
 provision.actor.reference
@@ -62,10 +62,9 @@ provision.provision: nested to any depth
 }
 class Device {
 the specific AI system or model
-conforms to AI-Device profile
-type: Artificial-Intelligence
+type: Artificial-Intelligence (AIdeviceTypeCS)
 manufacturer
-version
+deviceVersion
 }
 class DocumentReference {
 signed consent paperwork
@@ -81,11 +80,12 @@ consent-provision-limit extension
 control: DEID and other obligations
 tag
 element
+path
 }
 
-Consent --> Patient : patient
+Consent --> Patient : subject
 Consent --> DocumentReference : sourceReference
-Consent --> Organization : performer
+Consent --> Organization : controller
 Consent --> Device : provision.actor.reference
 Consent --> ProvisionLimit : provision.modifierExtension
 DocumentReference --> Patient : subject
@@ -95,9 +95,9 @@ DocumentReference --> Patient : subject
 
 The constraints described in this guide are formalized in the [Consent about AI](StructureDefinition-ai-consent.html) profile. §AIC-1^AiConsentAuthor:A Consent expressing a patient's decision to permit or deny use of AI **SHALL** conform to the Consent about AI profile.§
 
-The profile requires the patient, the dateTime, and a root provision carrying the type (permit or deny) and the applicable PurposeOfUse code(s). AI-specific rules are expressed in the `aiProvision` slice on the nested provisions, which is distinguished by a `purpose` from the [AI Purposes Of Use](ValueSet-ai-purposeofuse.html) ValueSet. Within the `aiProvision` slice:
+The profile requires the subject, the date, and the decision carrying the default (permit or deny); each provision is an exception to that default. AI-specific rules are expressed in the `aiProvision` slice on the provisions (root and nested), which is distinguished by a `purpose` from the [AI Purposes Of Use](ValueSet-ai-purposeofuse.html) ValueSet. Within the `aiProvision` slice:
 
-- §AIC-2^AiConsentAuthor,AccessControl:the `aiDevice` actor slice **MAY** identify a specific AI system or model as a Device conforming to the [AI Device](https://build.fhir.org/ig/HL7/aitransparency-ig/StructureDefinition-AI-Device.html) profile§, and
+- §AIC-2^AiConsentAuthor,AccessControl:the `aiDevice` actor slice **MAY** identify a specific AI system or model as a Device carrying the Artificial-Intelligence device type§, and
 - §AIC-3^AiConsentAuthor,AccessControl:the `limit` modifierExtension **MAY** carry limits, such as an obligation to de-identify, placed on a permit.§
 
 ### PurposeOfUse
@@ -108,10 +108,12 @@ Further we look to [PurposeOfUse Vocabulary](https://terminology.hl7.org/ValueSe
 
 §AIC-5^DataRequester,AiAgent:Any access by the AI, or by an agent feeding the AI, **SHALL** declare the applicable PurposeOfUse code when accessing data, such as TREATDS, MLTRAINING, or PMTDS.§ This is a trust model that the AI or the agent feeding the AI will accurately indicate the PurposeOfUse when accessing data. However, this is a common trust model used in many other aspects of healthcare data access and thus is not unique to AI.
 
+In FHIR R6 the `Consent.decision` element carries the default action, and each `Consent.provision` is an exception to that default. So a Consent that allows only ML training is expressed as a default of `deny` with a provision naming the `MLTRAINING` purpose, and a Consent that forbids only ML training is a default of `permit` with the same provision.
+
 #### Allow AI for ML Training
 
 ```fsh
-* provision.type = #permit
+* decision = #deny
 * provision.purpose[+] = $purposeOfUse#MLTRAINING
 ```
 
@@ -120,7 +122,7 @@ Consent example: [Allow ML Training](Consent-AllowMLtraining.html)
 #### Deny AI for ML Training
 
 ```fsh
-* provision.type = #deny
+* decision = #permit
 * provision.purpose[+] = $purposeOfUse#MLTRAINING
 ```
 
@@ -129,7 +131,7 @@ Consent example: [Deny ML Training](Consent-DenyMLtraining.html)
 #### Allow AI for Clinical Decision Support
 
 ```fsh
-* provision.type = #permit
+* decision = #deny
 * provision.purpose[+] = $purposeOfUse#TREATDS
 ```
 
@@ -138,7 +140,7 @@ Consent example: [Allow AI for Clinical Decision Support](Consent-AllowCDS.html)
 #### Deny AI for Clinical Decision Support
 
 ```fsh
-* provision.type = #deny
+* decision = #permit
 * provision.purpose[+] = $purposeOfUse#TREATDS
 ```
 
@@ -147,7 +149,7 @@ Consent example: [Deny AI for Clinical Decision Support](Consent-DenyCDS.html)
 #### Allow AI for Payment Decision Support
 
 ```fsh
-* provision.type = #permit
+* decision = #deny
 * provision.purpose[+] = $purposeOfUse#PMTDS
 ```
 
@@ -156,7 +158,7 @@ Consent example: [Allow AI for Payment Decision Support](Consent-AllowPaymentDS.
 #### Deny AI for Payment Decision Support
 
 ```fsh
-* provision.type = #deny
+* decision = #permit
 * provision.purpose[+] = $purposeOfUse#PMTDS
 ```
 
@@ -164,7 +166,7 @@ Consent example: [Deny AI for Payment Decision Support](Consent-DenyPaymentDS.ht
 
 ### Specific AI Systems or Models
 
-For this we look to current identification of [AI as a FHIR Device resource](https://build.fhir.org/ig/HL7/aitransparency-ig/StructureDefinition-AI-Device.html). §AIC-6^AiConsentAuthor,AccessControl:When a specific AI system or model is permitted or denied, the Consent **SHALL** identify that AI in `provision.actor.reference` as a Device conforming to the AI Device profile, with a `permit` or `deny` provision.§ The [Consent about AI](StructureDefinition-ai-consent.html) profile expresses this as the `aiDevice` actor slice within the `aiProvision` slice.
+For this we look to current identification of [AI as a FHIR Device resource](https://build.fhir.org/ig/HL7/aitransparency-ig/StructureDefinition-AI-Device.html). §AIC-6^AiConsentAuthor,AccessControl:When a specific AI system or model is permitted or denied, the Consent **SHALL** identify that AI in `provision.actor.reference` as a Device carrying the Artificial-Intelligence device type, with a provision as an exception to the decision.§ The [Consent about AI](StructureDefinition-ai-consent.html) profile expresses this as the `aiDevice` actor slice within the `aiProvision` slice. Note that the AI-Transparency AI-Device profile is not yet available for FHIR R6, so this guide enforces the Artificial-Intelligence device type coding rather than the profile.
 
 §AIC-7^DataRequester,AiAgent:All data access by the AI **SHALL** be attributed to the FHIR Device describing that AI.§ This might not be the case given how the AI is orchestrated. This model also is fragile as a new model or software would be a new Device, and thus would require a new provision in the Consent to indicate consent or dissent for that new AI.
 
@@ -175,7 +177,7 @@ Device example: [AI Device](Device-AIdevice.html)
 In this case there is simply a provision indicating that the AI is permitted for a given purpose. There are no restrictions on the kinds of actions or the kinds of data, but those could be added as additional restrictions.
 
 ```fsh
-* provision.type = #permit
+* decision = #deny
 * provision.purpose[+] = $purposeOfUse#TREATDS
 * provision.actor[0].reference = Reference(AIdevice)
 * provision.actor[0].role.text = "CDS"
@@ -188,7 +190,7 @@ Consent example: [Allow specific AI for specific purpose](Consent-AllowSpecificA
 In this case there is simply a provision indicating that the AI is denied for a given purpose.
 
 ```fsh
-* provision.type = #deny
+* decision = #permit
 * provision.purpose[+] = $purposeOfUse#TREATDS
 * provision.actor[0].reference = Reference(AIdevice)
 * provision.actor[0].role.text = "CDS"
@@ -198,14 +200,16 @@ Consent example: [Deny specific AI for specific purpose](Consent-DenySpecificAIf
 
 ### Limitations on AI Access
 
-In the FHIR Consent/Permission there is a concept of a "limit" which is limits placed on a `permit` provision/rule. Where the limit might be an obligation or refrain, might be a specific additional data tag, or might be explicit removal of data elements.  A "limit" can not result in exposing data where that limit can't be enforced. Specifically meaning that the recipient of the data needs to be trusted to enforce the obligation or refrain indicated. [Extension Registry Consent Provision Limit](https://build.fhir.org/ig/HL7/fhir-extensions/StructureDefinition-consent-provision-limit.html)
+In the FHIR Extension Registry there is a "limit" extension, which is limits placed on a `permit` rule. Where the limit might be an obligation or refrain, might be a specific additional data tag, or might be explicit removal of data elements by `id` or by FHIRPath. A "limit" can not result in exposing data where that limit can't be enforced. Specifically meaning that the recipient of the data needs to be trusted to enforce the obligation or refrain indicated. [Extension Registry Consent Provision Limit](https://build.fhir.org/ig/HL7/fhir-extensions/StructureDefinition-consent-provision-limit.html)
 
-The [Consent about AI](StructureDefinition-ai-consent.html) profile defines a `limit` modifierExtension slice on both the root provision and the `aiProvision` slice.
+The [Consent about AI](StructureDefinition-ai-consent.html) profile defines a `limit` modifierExtension slice on the `aiProvision` slice at each level of provision nesting.
+
+Example using all the parts of the limit: [non AI example of Consent with Limits](Consent-ex-consent-with-limits.html)
 
 #### Allow AI for ML Training on De-Identified Data
 
 ```fsh
-* provision.type = #permit
+* decision = #deny
 * provision.purpose[+] = $purposeOfUse#MLTRAINING
 * provision.modifierExtension[limit].extension[control].valueCodeableConcept = $obligation#DEID 
 ```
@@ -214,28 +218,25 @@ Consent example: [Allow ML Training on De-Identified Data](Consent-AllowMLtraini
 
 ### Combining AI provisions with normal clinical use
 
-FHIR R4 Consent has only ONE root level `provision`. That root establishes the overall direction, and each nested `provision` is an exception to the rule immediately above it, alternating between `permit` and `deny` at each level. To express several independent AI rules alongside the usual Treatment, Payment, and Operations rules, the nesting therefore has to be deeper than the rules themselves suggest.
+FHIR R6 Consent carries the default action in `Consent.decision` and allows many root level `provision` elements, each an exception to that default. A nested `provision` is in turn an exception to the provision that contains it. This makes a mixed Consent much flatter than the equivalent in R4.
 
 ```text
-permit all of the addressed purposes
-  deny ML training for sensitive data
-    permit ML training for de-identified Normal data
-  deny -- only so a refined permit can be expressed
-    permit TPO for Normal confidentiality
-    permit TPO for the care team including sensitive data
+decision: deny by default
+  permit ML training for de-identified Normal data
+    deny ML training for sensitive data
+  permit TPO for Normal confidentiality
+  permit TPO for the care team including sensitive data
 ```
-
-Note that R4 Consent does not define what applies when none of the provisions match; FHIR R6 adds a default rule at the top level.
 
 Consent example: [Consent with all kinds of Provisions](Consent-AllAiProvisions.html)
 
-The [Consent with provisions three levels deep](Consent-ThreeLevelsDeep.html) example shows a specific AI Device permitted as an exception to a general deny of AI clinical decision support, nesting provisions three levels deep. The [Consent about AI](StructureDefinition-ai-consent.html) profile replicates the AI provisioning at two levels of nesting, which the IG publisher recognizes as applying to any depth of nesting.
+The [Consent with provisions three levels deep](Consent-ThreeLevelsDeep.html) example shows a specific AI Device permitted as an exception to a deny of AI clinical decision support on Restricted data, nesting provisions three levels deep. The [Consent about AI](StructureDefinition-ai-consent.html) profile replicates the AI provisioning at two levels of nesting, which the IG publisher recognizes as applying to any depth of nesting.
 
 Consent example: [Consent with provisions three levels deep](Consent-ThreeLevelsDeep.html)
 
 ### Conclusion
 
-The above examples are showing simply how a Consent.provision iteration can carry permit and deny to indicate consent or dissent for AI. The examples are not exhaustive, and there are many other combinations of provisions that could be used to indicate consent or dissent for AI. The examples are also not indicating any specific data elements that are being allowed or denied, but those could be added as additional restrictions on the provision.
+The above examples are showing simply how a Consent decision and its provisions can carry permit and deny to indicate consent or dissent for AI. The examples are not exhaustive, and there are many other combinations of provisions that could be used to indicate consent or dissent for AI. The examples are also not indicating any specific data elements that are being allowed or denied, but those could be added as additional restrictions on the provision.
 
 §AIC-8^AiConsentAuthor,AccessControl:The Consent requirements indicated here **MAY** be indicated as a standalone Consent, or the provisions **MAY** be combined with other Privacy Consent requirements.§ A quilted Consent that has various provisions indicating consent or dissent for various clinical use (TPO), and add in provisions indicating consent or dissent for various AI use-cases, and thus have a single Consent that indicates the patient's preferences for both traditional clinical use and AI use.
 

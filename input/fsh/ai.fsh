@@ -4,7 +4,21 @@ Alias: $purposeOfUse = http://terminology.hl7.org/CodeSystem/v3-ActReason
 Alias: $obligation = http://terminology.hl7.org/CodeSystem/v3-ActCode
 Alias: $limit = http://hl7.org/fhir/StructureDefinition/consent-provision-limit
 Alias: $obligationExt = http://hl7.org/fhir/StructureDefinition/obligation
-Alias: $AIDevice = http://hl7.org/fhir/uv/aitransparency/StructureDefinition/AI-Device
+Alias: $aiDeviceType = http://johnmoehrke.github.io/ConsentAboutAI/CodeSystem/AIdeviceTypeCS
+
+// HACK: The AI device type CodeSystem is defined by the AI-Transparency IG, which is only available for R4,
+// and that CodeSystem is not yet published in THO (terminology.hl7.org). This local definition, published under
+// this IG's own canonical, carries the one code this IG uses, so that the R6 build can validate the coding.
+// Remove this local definition, and switch the codings back to the AI-Transparency CodeSystem, when
+// AI-Transparency becomes available for R6, or when the CodeSystem is in THO.
+CodeSystem: AIdeviceTypeCS
+Id: AIdeviceTypeCS
+Title: "AI Device Type CodeSystem (temporary local copy)"
+Description: "HACK: a temporary local CodeSystem for the AI device type, carrying only the one code this IG uses. The equivalent CodeSystem is defined by the AI-Transparency IG, which is not yet available for R6, and it is not yet published in THO (terminology.hl7.org). Remove this local definition, and switch the codings to the AI-Transparency CodeSystem, when either becomes available."
+* ^experimental = false
+* ^caseSensitive = true
+* ^content = #complete
+* #Artificial-Intelligence "Artificial Intelligence"
 
 ValueSet: AiPurposeOfUse
 Id: ai-purposeofuse
@@ -16,9 +30,9 @@ Description: "The PurposeOfUse codes for AI uses of data: machine learning train
 * $purposeOfUse#PMTDS
 
 Invariant: aic-ai-device
-Description: "When the provision purpose includes an AI purpose of use, an actor that is a Device must conform to the AI Device profile. No purpose, or non-AI purposes, place no constraint on the actor."
+Description: "When the provision purpose includes an AI purpose of use, an actor that is a Device must carry the Artificial-Intelligence device type coding. No purpose, or non-AI purposes, place no constraint on the actor. Note the AI-Transparency AI-Device profile is not available for R6, so the device type coding is enforced instead."
 Severity: #error
-Expression: "purpose.where(memberOf('http://johnmoehrke.github.io/ConsentAboutAI/ValueSet/ai-purposeofuse')).exists() implies actor.reference.resolve().ofType(Device).all(conformsTo('http://hl7.org/fhir/uv/aitransparency/StructureDefinition/AI-Device'))"
+Expression: "purpose.where(memberOf('http://johnmoehrke.github.io/ConsentAboutAI/ValueSet/ai-purposeofuse')).exists() implies actor.reference.resolve().ofType(Device).all(type.coding.where(system = 'http://johnmoehrke.github.io/ConsentAboutAI/CodeSystem/AIdeviceTypeCS' and code = 'Artificial-Intelligence').exists())"
 
 Profile: AiConsent
 Parent: Consent
@@ -39,65 +53,55 @@ A Consent profile for recording a patient's decision to permit or deny use of AI
 * ^extension[$obligationExt][=].extension[actor].valueCanonical = Canonical(AiConsentAuthor)
 * ^extension[$obligationExt][+].extension[code].valueCode = #SHALL:process
 * ^extension[$obligationExt][=].extension[actor].valueCanonical = Canonical(AccessControl)
-* scope = http://terminology.hl7.org/CodeSystem/consentscope#patient-privacy
-* patient 1..1 MS
-* dateTime 1..1 MS
-* provision 1..1 MS
+* subject 1..1 MS
+* date 1..1 MS
+* decision 1..1 MS
+* decision ^short = "The default decision (permit or deny); each provision is an exception"
+* provision MS
 * provision obeys aic-ai-device
-* provision.type 1..1 MS
-* provision.period MS
-* provision.purpose ^slicing.discriminator.type = #value
-* provision.purpose ^slicing.discriminator.path = "$this"
-* provision.purpose ^slicing.rules = #open
-* provision.purpose contains aiPurposeOfUse 1..*
-* provision.purpose[aiPurposeOfUse] from AiPurposeOfUse (required)
-* provision.purpose ^short = "PurposeOfUse code(s) addressed, such as MLTRAINING or TREATDS"
-* provision.purpose ^comment = "The consent is an AiConsent if it carries at least one purposeOfUse AI relevant code. In R4 the root provision holds all possible purposeOfUse."
-* provision.actor MS
-* provision.actor ^comment = "When a specific AI system or model is permitted or denied, the actor.reference SHALL identify that AI as a Device, and all data access by the AI SHALL be attributed to that Device."
+* provision.provision obeys aic-ai-device
+// The limit may appear on any provision; defined at two levels of nesting, which the publisher recognizes as applying to infinite levels.
 * provision.modifierExtension contains $limit named limit 0..*
 * provision.modifierExtension[limit] ^short = "Limits, such as an obligation to de-identify, placed on a permit provision"
-* provision.provision ^slicing.discriminator.type = #value
-* provision.provision ^slicing.discriminator.path = "purpose"
-* provision.provision ^slicing.rules = #open
-* provision.provision contains aiProvision 0..*
-* provision.provision obeys aic-ai-device
-* provision.provision[aiProvision] ^short = "Provision addressing an AI purpose of use"
-* provision.provision[aiProvision].type 1..1 MS
-* provision.provision[aiProvision].purpose ^slicing.discriminator.type = #value
-* provision.provision[aiProvision].purpose ^slicing.discriminator.path = "$this"
-* provision.provision[aiProvision].purpose ^slicing.rules = #open
-* provision.provision[aiProvision].purpose contains aiPurposeOfUse 1..*
-* provision.provision[aiProvision].purpose[aiPurposeOfUse] from AiPurposeOfUse (required)
-* provision.provision[aiProvision].actor ^slicing.discriminator.type = #type
-* provision.provision[aiProvision].actor ^slicing.discriminator.path = "reference.resolve()"
-* provision.provision[aiProvision].actor ^slicing.rules = #open
-* provision.provision[aiProvision].actor contains aiDevice 0..*
-* provision.provision[aiProvision].actor[aiDevice] ^short = "The specific AI system or model being permitted or denied"
-* provision.provision[aiProvision].actor[aiDevice].reference only Reference($AIDevice)
-* provision.provision[aiProvision].modifierExtension contains $limit named limit 0..*
-* provision.provision[aiProvision].modifierExtension[limit] ^short = "Limits, such as an obligation to de-identify, placed on a permit provision"
-// The level 2 profiling is replicated at level 3; the publisher recognizes replicated profiling at two levels as applying to infinite levels.
-* provision.provision[aiProvision].provision ^slicing.discriminator.type = #value
-* provision.provision[aiProvision].provision ^slicing.discriminator.path = "purpose"
-* provision.provision[aiProvision].provision ^slicing.rules = #open
-* provision.provision[aiProvision].provision contains aiProvision 0..*
-* provision.provision[aiProvision].provision obeys aic-ai-device
-* provision.provision[aiProvision].provision[aiProvision] ^short = "Provision addressing an AI purpose of use"
-* provision.provision[aiProvision].provision[aiProvision].type 1..1 MS
-* provision.provision[aiProvision].provision[aiProvision].purpose ^slicing.discriminator.type = #value
-* provision.provision[aiProvision].provision[aiProvision].purpose ^slicing.discriminator.path = "$this"
-* provision.provision[aiProvision].provision[aiProvision].purpose ^slicing.rules = #open
-* provision.provision[aiProvision].provision[aiProvision].purpose contains aiPurposeOfUse 1..*
-* provision.provision[aiProvision].provision[aiProvision].purpose[aiPurposeOfUse] from AiPurposeOfUse (required)
-* provision.provision[aiProvision].provision[aiProvision].actor ^slicing.discriminator.type = #type
-* provision.provision[aiProvision].provision[aiProvision].actor ^slicing.discriminator.path = "reference.resolve()"
-* provision.provision[aiProvision].provision[aiProvision].actor ^slicing.rules = #open
-* provision.provision[aiProvision].provision[aiProvision].actor contains aiDevice 0..*
-* provision.provision[aiProvision].provision[aiProvision].actor[aiDevice] ^short = "The specific AI system or model being permitted or denied"
-* provision.provision[aiProvision].provision[aiProvision].actor[aiDevice].reference only Reference($AIDevice)
-* provision.provision[aiProvision].provision[aiProvision].modifierExtension contains $limit named limit 0..*
-* provision.provision[aiProvision].provision[aiProvision].modifierExtension[limit] ^short = "Limits, such as an obligation to de-identify, placed on a permit provision"
+* provision.provision.modifierExtension contains $limit named limit 0..*
+* provision.provision.modifierExtension[limit] ^short = "Limits, such as an obligation to de-identify, placed on a permit provision"
+* provision ^slicing.discriminator.type = #value
+* provision ^slicing.discriminator.path = "purpose"
+* provision ^slicing.rules = #open
+* provision contains aiProvision 0..*
+* provision[aiProvision] ^short = "Provision addressing an AI purpose of use"
+* provision[aiProvision].purpose ^slicing.discriminator.type = #value
+* provision[aiProvision].purpose ^slicing.discriminator.path = "$this"
+* provision[aiProvision].purpose ^slicing.rules = #open
+* provision[aiProvision].purpose contains aiPurposeOfUse 1..*
+* provision[aiProvision].purpose[aiPurposeOfUse] from AiPurposeOfUse (required)
+* provision[aiProvision].purpose ^short = "PurposeOfUse code(s) addressed, such as MLTRAINING or TREATDS"
+* provision[aiProvision].purpose ^comment = "Any access by the AI, or by an agent feeding the AI, SHALL declare the applicable PurposeOfUse code when accessing data."
+* provision[aiProvision].actor MS
+* provision[aiProvision].actor ^comment = "When a specific AI system or model is permitted or denied, the actor.reference SHALL identify that AI as a Device, and all data access by the AI SHALL be attributed to that Device."
+* provision[aiProvision].actor ^slicing.discriminator.type = #type
+* provision[aiProvision].actor ^slicing.discriminator.path = "reference.resolve()"
+* provision[aiProvision].actor ^slicing.rules = #open
+* provision[aiProvision].actor contains aiDevice 0..*
+* provision[aiProvision].actor[aiDevice] ^short = "The specific AI system or model being permitted or denied"
+* provision[aiProvision].actor[aiDevice].reference only Reference(Device)
+// The level 1 profiling is replicated at level 2; the publisher recognizes replicated profiling at two levels as applying to infinite levels.
+* provision[aiProvision].provision ^slicing.discriminator.type = #value
+* provision[aiProvision].provision ^slicing.discriminator.path = "purpose"
+* provision[aiProvision].provision ^slicing.rules = #open
+* provision[aiProvision].provision contains aiProvision 0..*
+* provision[aiProvision].provision[aiProvision] ^short = "Provision addressing an AI purpose of use"
+* provision[aiProvision].provision[aiProvision].purpose ^slicing.discriminator.type = #value
+* provision[aiProvision].provision[aiProvision].purpose ^slicing.discriminator.path = "$this"
+* provision[aiProvision].provision[aiProvision].purpose ^slicing.rules = #open
+* provision[aiProvision].provision[aiProvision].purpose contains aiPurposeOfUse 1..*
+* provision[aiProvision].provision[aiProvision].purpose[aiPurposeOfUse] from AiPurposeOfUse (required)
+* provision[aiProvision].provision[aiProvision].actor ^slicing.discriminator.type = #type
+* provision[aiProvision].provision[aiProvision].actor ^slicing.discriminator.path = "reference.resolve()"
+* provision[aiProvision].provision[aiProvision].actor ^slicing.rules = #open
+* provision[aiProvision].provision[aiProvision].actor contains aiDevice 0..*
+* provision[aiProvision].provision[aiProvision].actor[aiDevice] ^short = "The specific AI system or model being permitted or denied"
+* provision[aiProvision].provision[aiProvision].actor[aiDevice].reference only Reference(Device)
 
 /* asked about nested context - https://chat.fhir.org/#narrow/channel/179252-IG-creation/topic/extension.20context.20on.20nested.20element/with/616962935 */
 
@@ -105,19 +109,18 @@ A Consent profile for recording a patient's decision to permit or deny use of AI
 Instance: AllowMLtraining
 InstanceOf: AiConsent
 Title: "Consent for Machine Learning Training"
-Description: "Consent for using data for machine learning training purposes."
+Description: "Consent for using data for machine learning training purposes. The default decision is deny, with a provision permitting ML training."
 Usage: #example
 * meta.security = $purposeOfUse#HTEST
 * status = #active
-* scope = http://terminology.hl7.org/CodeSystem/consentscope#patient-privacy
 * category[+] = http://loinc.org#64292-6 "Release of information consent"
 * category[+] = http://terminology.hl7.org/CodeSystem/v3-ActCode#IDSCL
-* patient = Reference(Patient/ex-patient)
-* dateTime = "2022-06-13"
-* performer.reference = "http://example.org/organizations/ex-organization"
+* subject = Reference(Patient/ex-patient)
+* date = "2022-06-13"
+* controller.reference = "http://example.org/organizations/ex-organization"
 * sourceReference.reference = "http://example.org/documentreferences/ex-documentreference"
-* policy.uri = "http://example.org/consent-policies#ml-training-consent-policy"
-* provision.type = #permit
+* policyBasis.uri = "http://example.org/consent-policies#ml-training-consent-policy"
+* decision = #deny
 * provision.purpose[+] = $purposeOfUse#MLTRAINING
 
 
@@ -125,19 +128,18 @@ Usage: #example
 Instance: DenyMLtraining
 InstanceOf: AiConsent
 Title: "Consent to disallow Machine Learning Training"
-Description: "Consent to disallow using data for machine learning training purposes."
+Description: "Consent to disallow using data for machine learning training purposes. The default decision is permit, with a provision denying ML training."
 Usage: #example
 * meta.security = $purposeOfUse#HTEST
 * status = #active
-* scope = http://terminology.hl7.org/CodeSystem/consentscope#patient-privacy
 * category[+] = http://loinc.org#64292-6 "Release of information consent"
 * category[+] = http://terminology.hl7.org/CodeSystem/v3-ActCode#IDSCL
-* patient = Reference(Patient/ex-patient)
-* dateTime = "2022-06-13"
-* performer.reference = "http://example.org/organizations/ex-organization"
+* subject = Reference(Patient/ex-patient)
+* date = "2022-06-13"
+* controller.reference = "http://example.org/organizations/ex-organization"
 * sourceReference.reference = "http://example.org/documentreferences/ex-documentreference"
-* policy.uri = "http://example.org/consent-policies#ml-training-consent-policy"
-* provision.type = #deny
+* policyBasis.uri = "http://example.org/consent-policies#ml-training-consent-policy"
+* decision = #permit
 * provision.purpose[+] = $purposeOfUse#MLTRAINING
 
 
@@ -148,17 +150,38 @@ Description: "Consent for using de-identified data for machine learning training
 Usage: #example
 * meta.security = $purposeOfUse#HTEST
 * status = #active
-* scope = http://terminology.hl7.org/CodeSystem/consentscope#patient-privacy
 * category[+] = http://loinc.org#64292-6 "Release of information consent"
 * category[+] = http://terminology.hl7.org/CodeSystem/v3-ActCode#IDSCL
-* patient = Reference(Patient/ex-patient)
-* dateTime = "2022-06-13"
-* performer.reference = "http://example.org/organizations/ex-organization"
+* subject = Reference(Patient/ex-patient)
+* date = "2022-06-13"
+* controller.reference = "http://example.org/organizations/ex-organization"
 * sourceReference.reference = "http://example.org/documentreferences/ex-documentreference"
-* policy.uri = "http://example.org/consent-policies#ml-training-consent-policy"
-* provision.type = #permit
+* policyBasis.uri = "http://example.org/consent-policies#ml-training-consent-policy"
+* decision = #deny
 * provision.purpose[+] = $purposeOfUse#MLTRAINING
 * provision.modifierExtension[limit].extension[control].valueCodeableConcept = $obligation#DEID 
+
+
+Instance: ex-consent-with-limits
+InstanceOf: AiConsent
+Title: "non AI example of Consent with Limits"
+Description: "Consent using all the parts of the limits extension for example sake."
+Usage: #example
+* meta.security = $purposeOfUse#HTEST
+* status = #active
+* category[+] = http://loinc.org#64292-6 "Release of information consent"
+* category[+] = http://terminology.hl7.org/CodeSystem/v3-ActCode#IDSCL
+* subject = Reference(Patient/ex-patient)
+* date = "2022-06-13"
+* controller.reference = "http://example.org/organizations/ex-organization"
+* sourceReference.reference = "http://example.org/documentreferences/ex-documentreference"
+* policyBasis.uri = "http://example.org/consent-policies#ml-training-consent-policy"
+* decision = #deny
+* provision.purpose[+] = $purposeOfUse#MLTRAINING
+* provision.modifierExtension[limit].extension[control].valueCodeableConcept = $obligation#DEID 
+* provision.modifierExtension[limit].extension[tag].valueCodeableConcept = http://terminology.hl7.org/CodeSystem/v3-ActCode#HIV
+* provision.modifierExtension[limit].extension[element].valueId = "elementId1"
+* provision.modifierExtension[limit].extension[path].valueString = "Observation.subject"
 
 
 Instance: AllowCDS
@@ -168,15 +191,14 @@ Description: "Consent for using data for clinical decision support purposes."
 Usage: #example
 * meta.security = $purposeOfUse#HTEST
 * status = #active
-* scope = http://terminology.hl7.org/CodeSystem/consentscope#patient-privacy
 * category[+] = http://loinc.org#64292-6 "Release of information consent"
 * category[+] = http://terminology.hl7.org/CodeSystem/v3-ActCode#IDSCL
-* patient = Reference(Patient/ex-patient)
-* dateTime = "2022-06-13"
-* performer.reference = "http://example.org/organizations/ex-organization"
+* subject = Reference(Patient/ex-patient)
+* date = "2022-06-13"
+* controller.reference = "http://example.org/organizations/ex-organization"
 * sourceReference.reference = "http://example.org/documentreferences/ex-documentreference"
-* policy.uri = "http://example.org/consent-policies#cds-consent-policy"
-* provision.type = #permit
+* policyBasis.uri = "http://example.org/consent-policies#cds-consent-policy"
+* decision = #deny
 * provision.purpose[+] = $purposeOfUse#TREATDS
 
 Instance: DenyCDS
@@ -186,15 +208,14 @@ Description: "Consent to disallow using data for clinical decision support purpo
 Usage: #example
 * meta.security = $purposeOfUse#HTEST
 * status = #active
-* scope = http://terminology.hl7.org/CodeSystem/consentscope#patient-privacy
 * category[+] = http://loinc.org#64292-6 "Release of information consent"
 * category[+] = http://terminology.hl7.org/CodeSystem/v3-ActCode#IDSCL
-* patient = Reference(Patient/ex-patient)
-* dateTime = "2022-06-13"
-* performer.reference = "http://example.org/organizations/ex-organization"
+* subject = Reference(Patient/ex-patient)
+* date = "2022-06-13"
+* controller.reference = "http://example.org/organizations/ex-organization"
 * sourceReference.reference = "http://example.org/documentreferences/ex-documentreference"
-* policy.uri = "http://example.org/consent-policies#cds-consent-policy"
-* provision.type = #deny
+* policyBasis.uri = "http://example.org/consent-policies#cds-consent-policy"
+* decision = #permit
 * provision.purpose[+] = $purposeOfUse#TREATDS
 
 
@@ -205,15 +226,14 @@ Description: "Consent for using data for payment decision support purposes."
 Usage: #example
 * meta.security = $purposeOfUse#HTEST
 * status = #active
-* scope = http://terminology.hl7.org/CodeSystem/consentscope#patient-privacy
 * category[+] = http://loinc.org#64292-6 "Release of information consent"
 * category[+] = http://terminology.hl7.org/CodeSystem/v3-ActCode#IDSCL
-* patient = Reference(Patient/ex-patient)
-* dateTime = "2022-06-13"
-* performer.reference = "http://example.org/organizations/ex-organization"
+* subject = Reference(Patient/ex-patient)
+* date = "2022-06-13"
+* controller.reference = "http://example.org/organizations/ex-organization"
 * sourceReference.reference = "http://example.org/documentreferences/ex-documentreference"
-* policy.uri = "http://example.org/consent-policies#payment-ds-consent-policy"
-* provision.type = #permit
+* policyBasis.uri = "http://example.org/consent-policies#payment-ds-consent-policy"
+* decision = #deny
 * provision.purpose[+] = $purposeOfUse#PMTDS
 
 
@@ -224,34 +244,33 @@ Description: "Consent to disallow using data for payment decision support purpos
 Usage: #example
 * meta.security = $purposeOfUse#HTEST
 * status = #active
-* scope = http://terminology.hl7.org/CodeSystem/consentscope#patient-privacy
 * category[+] = http://loinc.org#64292-6 "Release of information consent"
 * category[+] = http://terminology.hl7.org/CodeSystem/v3-ActCode#IDSCL
-* patient = Reference(Patient/ex-patient)
-* dateTime = "2022-06-13"
-* performer.reference = "http://example.org/organizations/ex-organization"
+* subject = Reference(Patient/ex-patient)
+* date = "2022-06-13"
+* controller.reference = "http://example.org/organizations/ex-organization"
 * sourceReference.reference = "http://example.org/documentreferences/ex-documentreference"
-* policy.uri = "http://example.org/consent-policies#payment-ds-consent-policy"
-* provision.type = #deny
+* policyBasis.uri = "http://example.org/consent-policies#payment-ds-consent-policy"
+* decision = #permit
 * provision.purpose[+] = $purposeOfUse#PMTDS
 
 
 Instance: AIdevice
-InstanceOf: AI-Device
+InstanceOf: Device
 Title: "AI Device"
 Description: """
-A Device that indicates an AI system or model, compliant with the [AI Transparency AI-Device profile](https://build.fhir.org/ig/HL7/aitransparency-ig/StructureDefinition-AI-Device.html).
+A Device that indicates an AI system or model. The AI-Transparency AI-Device profile is not available for R6, so this Device carries the Artificial-Intelligence device type coding that profile requires.
 """
 Usage: #example
 * identifier.system = "http://example.org/ehr/client-ids"
 * identifier.value = "goodhealth"
 * manufacturer = "Acme Devices, Inc"
-* type = http://terminology.hl7.org/CodeSystem/AIdeviceTypeCS#Artificial-Intelligence
-* type.text = "Artificial intelligence device"
-* version.value = "10.23-23423"
+* type[0].coding[0] = $aiDeviceType#Artificial-Intelligence
+* type[0].coding[1] = http://snomed.info/sct#736253002 
+* type[0].text = "Artificial intelligence device"
+* deviceVersion.value = "10.23-23423"
 * contact.system = #url
 * contact.value = "http://example.org"
-
 
 Instance: AllowSpecificAIforSpecificPurpose
 InstanceOf: AiConsent
@@ -261,15 +280,14 @@ In this case a Device is used to represent the specific AI system or model. In t
 Usage: #example
 * meta.security = $purposeOfUse#HTEST
 * status = #active
-* scope = http://terminology.hl7.org/CodeSystem/consentscope#patient-privacy
 * category[+] = http://loinc.org#64292-6 "Release of information consent"
 * category[+] = http://terminology.hl7.org/CodeSystem/v3-ActCode#IDSCL
-* patient = Reference(Patient/ex-patient)
-* dateTime = "2022-06-13"
-* performer.reference = "http://example.org/organizations/ex-organization"
+* subject = Reference(Patient/ex-patient)
+* date = "2022-06-13"
+* controller.reference = "http://example.org/organizations/ex-organization"
 * sourceReference.reference = "http://example.org/documentreferences/ex-documentreference"
-* policy.uri = "http://example.org/consent-policies#specific-ai-consent"
-* provision.type = #permit
+* policyBasis.uri = "http://example.org/consent-policies#specific-ai-consent"
+* decision = #deny
 * provision.purpose[+] = $purposeOfUse#TREATDS
 * provision.actor[0].reference = Reference(AIdevice)
 * provision.actor[0].role.text = "CDS"
@@ -282,15 +300,14 @@ In this case a Device is used to represent the specific AI system or model. In t
 Usage: #example
 * meta.security = $purposeOfUse#HTEST
 * status = #active
-* scope = http://terminology.hl7.org/CodeSystem/consentscope#patient-privacy
 * category[+] = http://loinc.org#64292-6 "Release of information consent"
 * category[+] = http://terminology.hl7.org/CodeSystem/v3-ActCode#IDSCL
-* patient = Reference(Patient/ex-patient)
-* dateTime = "2022-06-13"
-* performer.reference = "http://example.org/organizations/ex-organization"
+* subject = Reference(Patient/ex-patient)
+* date = "2022-06-13"
+* controller.reference = "http://example.org/organizations/ex-organization"
 * sourceReference.reference = "http://example.org/documentreferences/ex-documentreference"
-* policy.uri = "http://example.org/consent-policies#specific-ai-consent"
-* provision.type = #deny
+* policyBasis.uri = "http://example.org/consent-policies#specific-ai-consent"
+* decision = #permit
 * provision.purpose[+] = $purposeOfUse#TREATDS
 * provision.actor[0].reference = Reference(AIdevice)
 * provision.actor[0].role.text = "CDS"
@@ -305,67 +322,55 @@ This consent
 2. permits TPO purposes to have access to Normal data, but not sensitive data
 3. permits ML training purposes to have access to Normal de-identified data, but not sensitive data
 
-Given that FHIR R4 Consent has only ONE root level provision, we need to extra deep nesting:
+Given that FHIR R6 Consent has many root level provision, we can be rather flat:
 
 Provisions
-- Permit all the purposes
+- deny by default
+- permit ML training for de-identified data
   - deny ML training for sensitive data
-    - permit ML training for de-identified data
-  - deny TPO -- just so we can skip to a permit
-    - permit TPO for normal confidentiality
-    - permit TPO for the care team for sensitive data
+- permit TPO for normal confidentiality
+- permit TPO for the care team for sensitive data
 "
 Usage: #example
 * meta.security = $purposeOfUse#HTEST
 * status = #active
-* scope = http://terminology.hl7.org/CodeSystem/consentscope#patient-privacy
 * category[+] = http://loinc.org#64292-6 "Release of information consent"
 * category[+] = http://terminology.hl7.org/CodeSystem/v3-ActCode#IDSCL
-* patient = Reference(Patient/ex-patient)
-* dateTime = "2022-06-13"
-* performer.reference = "http://example.org/organizations/ex-organization"
+* subject = Reference(Patient/ex-patient)
+* date = "2022-06-13"
+* controller.reference = "http://example.org/organizations/ex-organization"
 * sourceReference.reference = "http://example.org/documentreferences/ex-documentreference"
-* policy.uri = "http://example.org/consent-policies#ml-training-consent-policy"
+* policyBasis.uri = "http://example.org/consent-policies#ml-training-consent-policy"
+* decision = #deny
 
-* provision.type = #permit
-  // Permit of all of the purposeOfUse that are addressed positively in this Consent.
-* provision.purpose[+] = $purposeOfUse#TREAT
-* provision.purpose[+] = $purposeOfUse#HPAYMT
-* provision.purpose[+] = $purposeOfUse#HOPERAT
-* provision.purpose[+] = $purposeOfUse#MLTRAINING
-
-* provision.provision[aiProvision].type = #deny
+* provision[+]
+  // permit ML to see Normal data that is de-identified
+  * purpose[+] = $purposeOfUse#MLTRAINING
+  * securityLabel[+] = http://terminology.hl7.org/CodeSystem/v3-Confidentiality#N "Normal"
+  * modifierExtension[limit].extension[control].valueCodeableConcept = $obligation#DEID 
+  * provision[0]
     // deny ML training to see sensitive topics
-* provision.provision[aiProvision].purpose[+] = $purposeOfUse#MLTRAINING
-* provision.provision[aiProvision].securityLabel[+] = http://terminology.hl7.org/CodeSystem/v3-ActCode#ETH
-* provision.provision[aiProvision].securityLabel[+] = http://terminology.hl7.org/CodeSystem/v3-ActCode#BH
-* provision.provision[aiProvision].securityLabel[+] = http://terminology.hl7.org/CodeSystem/v3-ActCode#PREGNANT
+    * purpose[+] = $purposeOfUse#MLTRAINING
+    * securityLabel[+] = http://terminology.hl7.org/CodeSystem/v3-ActCode#ETH
+    * securityLabel[+] = http://terminology.hl7.org/CodeSystem/v3-ActCode#BH
+    * securityLabel[+] = http://terminology.hl7.org/CodeSystem/v3-ActCode#PREGNANT
     // Note this does leave ambiguous any R data that are not these three sensitivity tags.
-* provision.provision[aiProvision].provision[aiProvision][0]
-      // permit ML to see Normal data that is de-identified
-* provision.provision[aiProvision].provision[aiProvision][0].type = #permit
-* provision.provision[aiProvision].provision[aiProvision][0].purpose[+] = $purposeOfUse#MLTRAINING
-* provision.provision[aiProvision].provision[aiProvision][0].securityLabel[+] = http://terminology.hl7.org/CodeSystem/v3-Confidentiality#N "Normal"
-* provision.provision[aiProvision].provision[aiProvision][0].modifierExtension[limit].extension[control].valueCodeableConcept = $obligation#DEID 
 
-* provision.provision[1].type = #deny
-    // This deny is simply so we can get to a refined permit for TPO
-* provision.provision[1].provision[0].type = #permit
-// permit TPO with normal confidentiality and the relevant purposes of use
-* provision.provision[1].provision[0].securityLabel[+] = http://terminology.hl7.org/CodeSystem/v3-Confidentiality#N "Normal"
-* provision.provision[1].provision[0].purpose[+] = $purposeOfUse#TREAT
-* provision.provision[1].provision[0].purpose[+] = $purposeOfUse#HPAYMT
-* provision.provision[1].provision[0].purpose[+] = $purposeOfUse#HOPERAT
-* provision.provision[1].provision[1].type = #permit
-// permit TPO for the careTeam of this patient for sensitive topics
-* provision.provision[1].provision[1].securityLabel[+] = http://terminology.hl7.org/CodeSystem/v3-Confidentiality#R
-* provision.provision[1].provision[1].purpose[+] = $purposeOfUse#TREAT
-* provision.provision[1].provision[1].purpose[+] = $purposeOfUse#HPAYMT
-* provision.provision[1].provision[1].purpose[+] = $purposeOfUse#HOPERAT    
-* provision.provision[1].provision[1].actor.role = http://terminology.hl7.org/CodeSystem/v3-ParticipationFunction#AUTM  
-* provision.provision[1].provision[1].actor.reference.reference = "http://example.org/CareTeam/ex-patient-careteam"
+* provision[+]
+  // permit TPO with normal confidentiality and the relevant purposes of use
+  * securityLabel[+] = http://terminology.hl7.org/CodeSystem/v3-Confidentiality#N "Normal"
+  * purpose[+] = $purposeOfUse#TREAT
+  * purpose[+] = $purposeOfUse#HPAYMT
+  * purpose[+] = $purposeOfUse#HOPERAT
+* provision[+]
+  // permit TPO for the careTeam of this patient for sensitive topics
+  * securityLabel[+] = http://terminology.hl7.org/CodeSystem/v3-Confidentiality#R
+  * purpose[+] = $purposeOfUse#TREAT
+  * purpose[+] = $purposeOfUse#HPAYMT
+  * purpose[+] = $purposeOfUse#HOPERAT    
+  * actor.role = http://terminology.hl7.org/CodeSystem/v3-ParticipationFunction#AUTM  
+  * actor.reference.reference = "http://example.org/CareTeam/ex-patient-careteam"
 
-// Note that R4 Consent does not address what rule applies if NONE of the provisions match. (R6 has a default rule at the top level)
 
 Instance: ThreeLevelsDeep
 InstanceOf: AiConsent
@@ -373,38 +378,43 @@ Title: "Consent with provisions three levels deep"
 Description: "Consent that nests provisions three levels deep to assure that the AiConsent profiling applies at the third level.
 
 Provisions
-- permit TPO and AI clinical decision support purposes (level 1)
-  - deny AI clinical decision support (level 2)
-    - permit a specific AI Device for clinical decision support on Normal data, with a limit prohibiting reuse (level 3)
+- decision: deny by default
+- permit TPO (level 1, not an AI provision)
+- permit AI clinical decision support (level 1)
+  - deny AI clinical decision support for Restricted data (level 2)
+    - permit a specific AI Device for clinical decision support on Restricted data, with a limit prohibiting reuse (level 3)
 "
 Usage: #example
 * meta.security = $purposeOfUse#HTEST
 * status = #active
-* scope = http://terminology.hl7.org/CodeSystem/consentscope#patient-privacy
 * category[+] = http://loinc.org#64292-6 "Release of information consent"
 * category[+] = http://terminology.hl7.org/CodeSystem/v3-ActCode#IDSCL
-* patient = Reference(Patient/ex-patient)
-* dateTime = "2022-06-13"
-* performer.reference = "http://example.org/organizations/ex-organization"
+* subject = Reference(Patient/ex-patient)
+* date = "2022-06-13"
+* controller.reference = "http://example.org/organizations/ex-organization"
 * sourceReference.reference = "http://example.org/documentreferences/ex-documentreference"
-* policy.uri = "http://example.org/consent-policies#three-levels-deep"
+* policyBasis.uri = "http://example.org/consent-policies#three-levels-deep"
+* decision = #deny
 
-* provision.type = #permit
-  // Permit of all of the purposeOfUse that are addressed positively in this Consent. (level 1)
-* provision.purpose[+] = $purposeOfUse#TREAT
-* provision.purpose[+] = $purposeOfUse#HPAYMT
-* provision.purpose[+] = $purposeOfUse#HOPERAT
-* provision.purpose[+] = $purposeOfUse#TREATDS
+* provision[0]
+  // permit TPO (level 1, not an AI provision)
+  * purpose[+] = $purposeOfUse#TREAT
+  * purpose[+] = $purposeOfUse#HPAYMT
+  * purpose[+] = $purposeOfUse#HOPERAT
 
-* provision.provision[aiProvision][0].type = #deny
-    // deny AI clinical decision support generally (level 2)
-* provision.provision[aiProvision][0].purpose[+] = $purposeOfUse#TREATDS
+* provision[1]
+  // permit AI clinical decision support (level 1)
+  * purpose[+] = $purposeOfUse#TREATDS
 
-* provision.provision[aiProvision][0].provision[aiProvision][0].type = #permit
-// permit a specific AI Device for clinical decision support on Normal data, prohibiting reuse (level 3)
-* provision.provision[aiProvision][0].provision[aiProvision][0].purpose[+] = $purposeOfUse#TREATDS
-* provision.provision[aiProvision][0].provision[aiProvision][0].securityLabel[+] = http://terminology.hl7.org/CodeSystem/v3-Confidentiality#N "Normal"
-* provision.provision[aiProvision][0].provision[aiProvision][0].actor[0].reference = Reference(AIdevice)
-* provision.provision[aiProvision][0].provision[aiProvision][0].actor[0].role.text = "CDS"
-* provision.provision[aiProvision][0].provision[aiProvision][0].modifierExtension[limit].extension[control].valueCodeableConcept = $obligation#NOREUSE
+  * provision[0]
+    // deny AI clinical decision support for Restricted data (level 2)
+    * purpose[+] = $purposeOfUse#TREATDS
+    * securityLabel[+] = http://terminology.hl7.org/CodeSystem/v3-Confidentiality#R
 
+    * provision[0]
+      // permit a specific AI Device for clinical decision support on Restricted data, prohibiting reuse (level 3)
+      * purpose[+] = $purposeOfUse#TREATDS
+      * securityLabel[+] = http://terminology.hl7.org/CodeSystem/v3-Confidentiality#R
+      * actor[0].reference = Reference(AIdevice)
+      * actor[0].role.text = "CDS"
+      * modifierExtension[$limit].extension[control].valueCodeableConcept = $obligation#NOREUSE

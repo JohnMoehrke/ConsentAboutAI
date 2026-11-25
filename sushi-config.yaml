@@ -9,7 +9,8 @@ title: John Moehrke Consent About AI
 status: draft
 version: 0.2.0
 #fhirVersion: 4.3.0
-fhirVersion: 4.0.1
+#fhirVersion: 4.0.1
+fhirVersion: 6.0.0-snapshot1
 copyrightYear: 2021+
 releaseLabel: ci-build
 publisher:
@@ -40,14 +41,10 @@ parameters:  # see https://confluence.hl7.org/display/FHIR/Implementation+Guide+
   pin-canonicals: pin-multiples
 
 dependencies:
-  hl7.fhir.uv.extensions.r4:
+  hl7.fhir.uv.extensions.r5:
     version: current
     id: extensions
     uri: http://hl7.org/fhir/extensions/ImplementationGuide/hl7.fhir.uv.extensions
-  hl7.fhir.uv.aitransparency:
-    version: current
-    id: aitransparency
-    uri: http://hl7.org/fhir/uv/aitransparency/ImplementationGuide/hl7.fhir.uv.aitransparency
 
 pages:
   index.md:

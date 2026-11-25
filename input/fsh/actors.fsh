@@ -12,7 +12,6 @@ Usage: #definition
 * experimental = false
 * type = #system
 * description = "The Access Control actor is the abstract technical system given the responsibility to enforce the Consents recorded according to this guide. It makes and enforces access control decisions using the Consent provisions, including the PurposeOfUse declared by the requesting system and any limits placed upon a permit."
-* capabilities = Canonical(AccessControlCapability)
 
 Instance: DataRequester
 InstanceOf: ActorDefinition
@@ -26,7 +25,6 @@ Usage: #definition
 * experimental = false
 * type = #system
 * description = "The Data Requester actor is the AI system that directly requests and accesses data. It declares the applicable PurposeOfUse code when accessing data, and its accesses are attributed to the AI-Device describing the AI."
-* capabilities = Canonical(DataRequesterCapability)
 
 Instance: AiAgent
 InstanceOf: ActorDefinition
@@ -40,7 +38,6 @@ Usage: #definition
 * experimental = false
 * type = #system
 * description = "The AI Agent actor is the agent (gateway) that accesses data on behalf of an AI, feeding that data to the AI. It declares the applicable PurposeOfUse code of the AI it is feeding when accessing data, and attributes those accesses to the AI-Device describing the AI."
-* capabilities = Canonical(AiAgentCapability)
 
 Instance: AiConsentAuthor
 InstanceOf: ActorDefinition
@@ -54,7 +51,6 @@ Usage: #definition
 * experimental = false
 * type = #system
 * description = "The AI-Consent Author actor is the technical system that records the patient's decisions about AI as Consent resources conforming to the Consent about AI profile. It captures the applicable PurposeOfUse codes, any specific AI Device, and any limits, as provisions."
-* capabilities = Canonical(AiConsentAuthorCapability)
 
 // CapabilityStatements for the Actors
 
@@ -64,6 +60,7 @@ Title: "Access Control Actor CapabilityStatement"
 Description: "CapabilityStatement for the Access Control actor, which reads and evaluates Consents conforming to the Consent about AI profile in order to enforce them."
 Usage: #definition
 * url = "http://johnmoehrke.github.io/ConsentAboutAI/CapabilityStatement/AccessControlCapability"
+* actorDefinition = Canonical(AccessControl)
 * name = "AccessControlCapability"
 * title = "Access Control Actor CapabilityStatement"
 * status = #active
@@ -71,7 +68,7 @@ Usage: #definition
 * date = "2026-11-16"
 * description = "The Access Control actor reads and evaluates Consents conforming to the Consent about AI profile in order to enforce them. It enforces the provisions, including the PurposeOfUse declared by the Data Requester or AI Agent, any specific AI Device identified, and any limits placed upon a permit."
 * kind = #requirements
-* fhirVersion = #4.0.1
+* fhirVersion = #6.0.0-snapshot1
 * format[+] = #json
 * format[+] = #xml
 * rest[+].mode = #client
@@ -87,6 +84,7 @@ Title: "AI-Consent Author Actor CapabilityStatement"
 Description: "CapabilityStatement for the AI-Consent Author actor, which records the patient's decisions about AI as Consents conforming to the Consent about AI profile."
 Usage: #definition
 * url = "http://johnmoehrke.github.io/ConsentAboutAI/CapabilityStatement/AiConsentAuthorCapability"
+* actorDefinition = Canonical(AiConsentAuthor)
 * name = "AiConsentAuthorCapability"
 * title = "AI-Consent Author Actor CapabilityStatement"
 * status = #active
@@ -94,7 +92,7 @@ Usage: #definition
 * date = "2026-11-16"
 * description = "The AI-Consent Author actor records the patient's decisions about AI as Consents conforming to the Consent about AI profile."
 * kind = #requirements
-* fhirVersion = #4.0.1
+* fhirVersion = #6.0.0-snapshot1
 * format[+] = #json
 * format[+] = #xml
 * rest[+].mode = #client
@@ -111,6 +109,7 @@ Title: "Data Requester Actor CapabilityStatement"
 Description: "CapabilityStatement for the Data Requester actor, the AI system that directly requests and accesses data."
 Usage: #definition
 * url = "http://johnmoehrke.github.io/ConsentAboutAI/CapabilityStatement/DataRequesterCapability"
+* actorDefinition = Canonical(DataRequester)
 * name = "DataRequesterCapability"
 * title = "Data Requester Actor CapabilityStatement"
 * status = #active
@@ -118,7 +117,7 @@ Usage: #definition
 * date = "2026-11-16"
 * description = "The Data Requester actor is the AI system that directly requests and accesses data. The kinds of data accessed are not constrained by this guide. When accessing data, it declares the applicable PurposeOfUse code, and its accesses are attributed to the AI-Device describing the AI."
 * kind = #requirements
-* fhirVersion = #4.0.1
+* fhirVersion = #6.0.0-snapshot1
 * format[+] = #json
 * format[+] = #xml
 * rest[+].mode = #client
@@ -130,6 +129,7 @@ Title: "AI Agent Actor CapabilityStatement"
 Description: "CapabilityStatement for the AI Agent actor, the agent (gateway) that accesses data on behalf of an AI, feeding that data to the AI."
 Usage: #definition
 * url = "http://johnmoehrke.github.io/ConsentAboutAI/CapabilityStatement/AiAgentCapability"
+* actorDefinition = Canonical(AiAgent)
 * name = "AiAgentCapability"
 * title = "AI Agent Actor CapabilityStatement"
 * status = #active
@@ -137,7 +137,7 @@ Usage: #definition
 * date = "2026-11-16"
 * description = "The AI Agent actor is the agent (gateway) that accesses data on behalf of an AI, feeding that data to the AI. The kinds of data accessed are not constrained by this guide. When accessing data, it declares the applicable PurposeOfUse code of the AI it is feeding, and attributes those accesses to the AI-Device describing the AI."
 * kind = #requirements
-* fhirVersion = #4.0.1
+* fhirVersion = #6.0.0-snapshot1
 * format[+] = #json
 * format[+] = #xml
 * rest[+].mode = #client
